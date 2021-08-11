@@ -27,5 +27,11 @@ export default {
     // signin: (params) => {
     //     return axios.post('/user/login', params, postConfig)
     // },
+    catlist: (params) => {
+        return axios.post('/category/list', params, postConfig)
+    },
+    catcreate:(params) => {
+        return axios.post('/category/create', params, postConfig)
+    },
 
 }

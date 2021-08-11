@@ -30,17 +30,19 @@
 </template>
 
 <script>
+import {  mapActions } from "vuex";
   export default {
     data() {
       return {
-          tap:['js', 'css', 'html'],
+        tap:[],
         dynamicTags: [],
         inputVisible: false,
         inputValue: ''
       };
     },
     methods: {
-      handleClose(tag) {
+        ...mapActions(["catlist"]),
+        handleClose(tag) {
         for(let i=0;i<this.tap.length;i++){
             if(this.tap[i]==tag){
                 this.tap.splice(this.tap.indexOf(tag),1)
@@ -61,15 +63,13 @@
         
         let inputValue = this.inputValue;
         if (inputValue) {
-            console.log("aa");
-              console.log(this.tap.indexOf(inputValue));
-            if(this.tap.indexOf(inputValue)!=-1){
-            this.$alert('你已经有这个类目', '提示', {
-          confirmButtonText: '确定',
-          callback: action => {
-            this.$message({
-              type: 'info',
-              message: `action: ${ action }`
+                 if(this.tap.indexOf(inputValue)!=-1){
+                    this.$alert('你已经有这个类目', '提示', {
+                    confirmButtonText: '确定',
+                    callback: action => {
+                    this.$message({
+                    type: 'info',
+                    message: `action: ${ action }`
             });
           }
         });
@@ -77,13 +77,22 @@
              this.tap.push(inputValue)
             this.dynamicTags.push(inputValue);
         }
-           
         }
         this.inputVisible = false;
         this.inputValue = '';
         
         
       }
+    },
+    async created() {
+        let catlist = await this.catlist({
+            type:"2"
+        });
+        console.log(catlist);
+        // this.tap=catlist.data
+        for(let i=0;i<catlist.data.length;i++){
+            this.tap.push(catlist.data[i].key)
+        }
     }
   }
 </script>
