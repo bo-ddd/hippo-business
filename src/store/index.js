@@ -12,6 +12,12 @@ export default createStore({
         // signin(ctx, payload) {
         //     return Api.signin(payload)
         // },
+        catlist(ctx, payload) {
+                return Api.catlist(payload)
+            },
+        catcreate(ctx, payload) {
+            return Api.catcreate(payload)
+        },
     },
     modules: {}
 })
