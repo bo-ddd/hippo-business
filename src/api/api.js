@@ -33,5 +33,7 @@ export default {
     catcreate:(params) => {
         return axios.post('/category/create', params, postConfig)
     },
-
+    catdelete:(params) => {
+        return axios.post('/category/delete', params, postConfig)
+    },
 }
