@@ -9,9 +9,24 @@ export default createStore({
          * @param username  用户名
          * @param password 密码
          */
-        // signin(ctx, payload) {
-        //     return Api.signin(payload)
-        // },
+        create(ctx, payload) {
+            return Api.create(payload)
+        },
+        catlist(ctx, payload) {
+            return Api.catlist(payload)
+        },
+        catcreate(ctx, payload) {
+            return Api.catcreate(payload)
+        },
+        catdelete(ctx, payload) {
+            return Api.catdelete(payload)
+        },
+        topiclist(ctx, payload) {
+            return Api.topiclist(payload)
+        },
+        detail(ctx, payload) {
+            return Api.detail(payload)
+        },
     },
     modules: {}
 })
