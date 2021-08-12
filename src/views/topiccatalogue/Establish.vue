@@ -7,10 +7,11 @@
                     <el-input type="textarea" autosize v-model="data.title"></el-input>
                 </el-form-item>
                 <el-form-item label="所属类目" prop="data.categoryId">
-                    <el-radio v-model="data.categoryId" :label=1>html</el-radio>
-                    <el-radio v-model="data.categoryId" :label=2>css</el-radio>
-                    <el-radio v-model="data.categoryId" :label=3>js</el-radio>
-                    <el-radio v-model="data.categoryId" :label=4>vue</el-radio>
+                    <div class="listData-content">
+                        <div class="list-content" v-for="item in listData" :key="item">
+                            <el-radio v-model="data.categoryId" :label=item.id>{{item.key}}</el-radio>
+                        </div>
+                    </div>
                 </el-form-item>
                 <el-form-item label="题目类型">
                     <el-select v-model="data.type" placeholder="请选择题目类型">
@@ -99,17 +100,22 @@ export default {
             arr: [],
             option: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
             single: '',
-            result: []
+            result: [],
+            listData: []
         };
     },
     methods: {
-        ...mapActions(["create"]),
+        ...mapActions(["create", 'catlist']),
 
         deleteRow(index, rows) {
             rows.splice(index, 1);
         },
 
         async submitForm() {
+            if (this.single.length != 0) {
+                this.data.result = this.option[this.single]
+                console.log(this.data.result)
+            }
             if (this.data.type != 3 && (this.data.options.length < 2)) {
                 console.log('选择题答案不得低于两个')
             } else if (this.data.type == 2 && (this.data.result.split(',').length < 2)) {
@@ -130,19 +136,17 @@ export default {
                 } else if (this.data.type == '3') {
                     this.data.title = '[简答题]' + this.data.title;
                 }
-                if (this.single.length != 0) {
-                    this.data.result = this.option[this.single]
-                    console.log(this.data.result)
-                }
-                let list = await this.create(this.data);
-                this.data = {
-                    type: '',
-                    title: '',
-                    options: [],
-                    result: "",
-                    categoryId: 0
-                };
-                console.log(list);
+
+                console.log(this.data)
+                // let list = await this.create(this.data);
+                // this.data = {
+                //     type: '',
+                //     title: '',
+                //     options: [],
+                //     result: "",
+                //     categoryId: 0
+                // };
+                // console.log(list);
             }
         },
 
@@ -208,6 +212,13 @@ export default {
         formathtml() {
             return md.render(this.data.title);
         }
+    },
+    async created() {
+        let res = await this.catlist({
+            type: "1"
+        })
+        this.listData = res.data
+        console.log(this.listData)
     }
 
 }
@@ -225,7 +236,18 @@ export default {
     margin: 10px;
 }
 
-.md-border{
+.md-border {
     border: 1px solid #b1d1f7;
+}
+
+.listData-content {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.el-radio__label {
+    padding: 0;
 }
 </style>
