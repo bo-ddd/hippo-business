@@ -49,5 +49,7 @@ export default {
     updateCategory: (params) => {
         return axios.post('/category/update', params, postConfig)
     },
-
+    userLogin(params){
+        return axios.post('/user/login', params, postConfig)
+    }
 }

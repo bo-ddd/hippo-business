@@ -29,6 +29,9 @@ export default createStore({
         },
         updateCategory(ctx, payload) {
             return Api.updateCategory(payload)
+        },
+        userLogin(ctx,payload){
+            return Api.userLogin(payload);
         }
     },
     modules: {}
