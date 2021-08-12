@@ -1,11 +1,11 @@
 
 <template  v-slot:contrite>
 <el-table :data="tableData" max-height="750" border style="width: 100%" :row-class-name="rowClassName">
-    <el-table-column label="题目类型" prop="categoryId">
+    <el-table-column label="题目类型" prop="categoryId" width="80">
     </el-table-column>
     <el-table-column label="题目" prop="title">
     </el-table-column>
-    <el-table-column label="选项" prop="options">
+    <el-table-column label="选项" prop="options" width="600">
       <ul>
         <li v-for="(item,index) in options" :key="(item,index)">
           {{item.key}}：{{item.value}}
@@ -114,7 +114,6 @@ import { mapActions } from 'vuex'
 </script>
 
 <style lang="less" scoped>
-
 </style>
 
 
