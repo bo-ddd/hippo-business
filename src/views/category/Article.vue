@@ -17,7 +17,7 @@
         <el-tag :key="tag" effect="plain" v-for="tag in dynamicTags" closable :disable-transitions="false" @close="handleClose(tag)">
             {{ tag.key }}
         </el-tag>
-        <el-input class="input-new-tag" v-if="inputVisible" v-model="inputValue" ref="saveTagInput" size="small" @keyup.enter="handleInputConfirm" @blur="handleInputConfirm">
+        <el-input class="input-new-tag" v-if="inputVisible"  v-model="inputValue" ref="saveTagInput" size="small" @keyup.enter="handleInputConfirm" @blur="handleInputConfirm">
         </el-input>
         <el-button v-else class="button-new-tag" size="small" @click="showInput">+你要添加的类目</el-button>
     </el-card>
@@ -35,24 +35,25 @@ export default {
             dynamicTags: [],
             inputVisible: false,
             inputValue: "",
+            key:[]
         };
     },
     methods: {
         ...mapActions(["catlist", "catcreate", "catdelete"]),
         async handleClose(tag) {
-            let catdelete = await this.catdelete({
+            await this.catdelete({
                 type: "2",
                 id: tag.id
             })
-            console.log(catdelete);
-            console.log(tag.id);
             let catlist = await this.catlist({
                 type: "2",
             });
+            this.key=[];
             this.tap = [];
             this.dynamicTags = [];
             for (let i = 0; i < catlist.data.length; i++) {
                 this.tap.push(catlist.data[i]);
+                this.key.push(catlist.data[i].key);
             }
             for (let i = 3; i < catlist.data.length; i++) {
                 this.dynamicTags.push(catlist.data[i]);
@@ -69,7 +70,7 @@ export default {
         async handleInputConfirm() {
             let inputValue = this.inputValue;
             if (inputValue) {
-                if (this.tap.indexOf(inputValue) != -1) {
+                    if (this.key.indexOf(inputValue)!=-1) {
                     this.$alert("你已经有这个类目", "提示", {
                         confirmButtonText: "确定",
                         callback: (action) => {
@@ -79,27 +80,28 @@ export default {
                             });
                         },
                     });
-                } else {
-                    //  this.tap.push(inputValue)
-                    // this.dynamicTags.push(inputValue);
-                    // catcreate
-                    let catcreate = await this.catcreate({
+                    } else {
+                     await this.catcreate({
                         type: "2",
                         key: inputValue,
                     });
-                    console.log(catcreate);
                     let catlist = await this.catlist({
                         type: "2",
                     });
+                    this.key=[];
                     this.tap = [];
                     this.dynamicTags = [];
                     for (let i = 0; i < catlist.data.length; i++) {
                         this.tap.push(catlist.data[i]);
+                         this.key.push(catlist.data[i].key);
                     }
                     for (let i = 3; i < catlist.data.length; i++) {
                         this.dynamicTags.push(catlist.data[i]);
                     }
                 }
+                
+               
+                
             }
             this.inputVisible = false;
             this.inputValue = "";
@@ -109,10 +111,9 @@ export default {
         let catlist = await this.catlist({
             type: "2",
         });
-        console.log(catlist);
-        // this.tap=catlist.data
         for (let i = 0; i < catlist.data.length; i++) {
             this.tap.push(catlist.data[i]);
+             this.key.push(catlist.data[i].key);
         }
         for (let i = 3; i < catlist.data.length; i++) {
             this.dynamicTags.push(catlist.data[i]);

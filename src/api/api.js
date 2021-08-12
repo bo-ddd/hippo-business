@@ -11,7 +11,6 @@ axios.interceptors.response.use(function(response) {
     if (response.data.status == 401) {
         location.href = '/'
     }
-    console.log(postConfig)
     return response.data;
 }, function(error) {
     console.log('get error:', error)
