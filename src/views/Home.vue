@@ -1,13 +1,23 @@
 <template>
 <div class="home">
     <el-container>
+
         <el-header class="title">
             <el-breadcrumb>
                 <el-breadcrumb-item><span>学客后台管理系统</span></el-breadcrumb-item>
             </el-breadcrumb>
+            <div class="demo-basic--circle" @click="getQuestions('Login')">
+                <div class="block">
+                    <el-avatar :size="30" :src="circleUrl"></el-avatar>
+                    <span>请登录</span>
+                </div>
+            </div>
         </el-header>
+        
         <el-container>
+
             <el-aside width="200px">
+                
                 <el-menu default-active="1" class="el-menu-vertical-demo aside" @open="handleOpen" @close="handleClose">
                     <el-submenu index="1">
                         <template #title>
@@ -51,6 +61,12 @@
 
 <script>
 export default {
+    data() {
+        return {
+            circleUrl: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
+            squareUrl: "https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png",
+        }
+    },
     methods: {
         getQuestions: function (title) {
             this.$router.push({
@@ -66,6 +82,7 @@ export default {
     border: 1px solid #b1d1f7;
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
 
 .title span {
@@ -75,5 +92,12 @@ export default {
 
 .aside {
     height: calc(100vh - 60px);
+}
+.block{
+    display: flex;
+    align-items: center;
+}
+.block span{
+    font-size: 20px;
 }
 </style>
