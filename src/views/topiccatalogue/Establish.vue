@@ -105,6 +105,13 @@ export default {
         },
 
         async submitForm() {
+            if (this.data.type == '1') {
+                this.data.title = '[单选题]' + this.data.title;
+            } else if (this.data.type == '2') {
+                this.data.title = '[多选题]' + this.data.title;
+            } else if (this.data.type == '3') {
+                this.data.title = '[简答题]' + this.data.title;
+            }
             console.log(this.data)
             if (this.data.type != 3 && (this.data.options.length < 2)) {
                 console.log('选择题答案不得低于两个')
@@ -171,7 +178,7 @@ export default {
 
         },
 
-        answer(key,index) {
+        answer(key, index) {
             if (this.arr.indexOf(key) == -1) {
                 this.arr.push(this.option[index])
             }
