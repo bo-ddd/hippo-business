@@ -27,6 +27,7 @@ export default {
     // signin: (params) => {
     //     return axios.post('/user/login', params, postConfig)
     // },
+
     create: (params) => {
         return axios.post('/topic/create', params, postConfig)
     },
@@ -45,4 +46,5 @@ export default {
     detail: (params) => {
         return axios.post('/article/detail', params, postConfig)
     },
+
 }

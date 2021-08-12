@@ -1,6 +1,7 @@
 <template>
 <div class="home">
     <el-container>
+
         <el-header class="title">
             <el-breadcrumb>
                 <el-breadcrumb-item><span>学客后台管理系统</span></el-breadcrumb-item>
@@ -12,8 +13,11 @@
                 </div>
             </div>
         </el-header>
+        
         <el-container>
+
             <el-aside width="200px">
+                
                 <el-menu default-active="1" class="el-menu-vertical-demo aside" @open="handleOpen" @close="handleClose">
                     <el-submenu index="1">
                         <template #title>
