@@ -3,10 +3,11 @@
     <el-scrollbar max-height="600px">
       <div class="main">
         <div class="badges">
-          <el-badge :value="200" :max="99" class="item">
+          <el-badge :value="3" :max="99" class="item">
             <el-button size="small">评论</el-button>
           </el-badge>
           <el-button icon="el-icon-share" class="item" size="mini">收藏</el-button>
+          <el-button icon="el-icon-delete" class="item" size="mini">删除</el-button>
           <span class="readall">查看全文</span>
         </div>
       </div>

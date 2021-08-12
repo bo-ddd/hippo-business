@@ -46,5 +46,8 @@ export default {
     detail: (params) => {
         return axios.post('/article/detail', params, postConfig)
     },
+    addarticle: (params) => {
+        return axios.post('/article/create', params, postConfig)
+    },
 
 }

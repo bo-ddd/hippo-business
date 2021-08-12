@@ -21,6 +21,15 @@ export default createStore({
         detail(ctx, payload) {
             return Api.detail(payload)
         },
+        catdelete(ctx, payload) {
+            return Api.catdelete(payload)
+        },
+        topiclist(ctx, payload) {
+            return Api.topiclist(payload)
+        },
+        addarticle(ctx, payload) {
+            return Api.addarticle(payload)
+        },
     },
     modules: {}
 })

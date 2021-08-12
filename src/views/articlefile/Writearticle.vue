@@ -55,7 +55,7 @@ export default {
         };
     },
     methods: {
-        ...mapActions(["catlist"]),
+        ...mapActions(["catlist","addarticle"]),
         changeMd(val) {
             // return md.renderInline(val);
             return md.render(val);
@@ -66,25 +66,30 @@ export default {
             }
             this.checked[index] = true;
         },
-        submit(){
-            let type = null
+        async submit(){
+            let typeId = ''
             for (const key in this.checked) {
                 if (this.checked[key]) {
-                    type=this.tap[key].key
+                    typeId=this.tap[key].id
                 }
             }
-            if (!type) {
+            if (!typeId) {
                 alert('请选择文章类型')
             }else if (!this.text) {
                 alert('请填写标题')
             }else if (!this.textarea) {
                 alert('内容不能为空!!!')
             }else {
+                let result = await this.addarticle({
+                    title:this.text,
+                    article:this.textarea,
+                    categoryId:typeId.toString(),
+                });
+                console.log(result.status);
                 this.$router.push({
                     name:'Mainarticle',
                 });
             }
-            console.log(type);
         },
         tomain(){
              this.$router.push({
