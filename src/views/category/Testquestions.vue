@@ -2,9 +2,9 @@
    <div>
          <el-button type="primary" @click="dialogFormVisible = true,show2 = !show2" class="addbtn">添加</el-button>
   <el-table :data="tableData" height="460px" max-height="700" style="width:90%">
-      <el-table-column prop="key"  label="所有试题类目" width="180px"></el-table-column>
-      <el-table-column prop="iconUrl"  label="icon地址" width="640px"></el-table-column>
-      <el-table-column label="图标" width="160px" style="margin-left:130px">
+      <el-table-column prop="key"  label="试题类目" width="160px"></el-table-column>
+      <el-table-column prop="iconUrl"  label="icon地址" width="620px"></el-table-column>
+      <el-table-column label="图标" width="140px">
       <template #default="scope">
         <img :src="scope.row.iconUrl" class="iconShow">
       </template>
