@@ -18,14 +18,17 @@ export default createStore({
         catcreate(ctx, payload) {
             return Api.catcreate(payload)
         },
+        detail(ctx, payload) {
+            return Api.detail(payload)
+        },
         catdelete(ctx, payload) {
             return Api.catdelete(payload)
         },
         topiclist(ctx, payload) {
             return Api.topiclist(payload)
         },
-        detail(ctx, payload) {
-            return Api.detail(payload)
+        addarticle(ctx, payload) {
+            return Api.addarticle(payload)
         },
         catupdate(ctx,payload){
              return Api.catupdate(payload)

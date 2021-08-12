@@ -25,8 +25,12 @@
 </el-pagination>
 </div>
 
-  <!-- Form -->
+    <div class="block">
+        <el-pagination background layout="prev, pager, next" :total="1000">
+        </el-pagination>
+    </div>
 
+    <!-- Form -->
 
 <el-dialog title="添加类目" v-model="dialogFormVisible">
     <el-form :model="form">
@@ -66,8 +70,9 @@
   </template>
 </el-dialog>
 
-   </div>
 
+
+</div>
 </template>
 
 <script>
@@ -177,22 +182,20 @@ async addtitle(){
         iconu:""
       }
     }
-  }
+}
 </script>
-
 
 <style scoped>
 .addbtn{
  float: right;
 }
 
-.iconShow{
-   width: 30px;
+.iconShow {
+    width: 30px;
 }
 
-.block{
-  margin-top: 20px;
-  float: left;
+.block {
+    margin-top: 20px;
+    float: left;
 }
-
 </style>

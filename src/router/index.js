@@ -1,7 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
-import Login from '../views/loginregisration/Login.vue'
-import Registration from '../views/loginregisration/Registration.vue'
 const routes = [{
     path: '/',
     name: 'Home',
@@ -36,16 +34,16 @@ const routes = [{
         name: 'Writearticle',
         component: () =>
             import ('../views/articlefile/Writearticle.vue'),
-    }]
-}, {
-    path: '/login',
-    name: 'Login',
-    component: Login,
-}, {
-    path: '/registration',
-    name: 'Registration',
-    component: Registration,
-}]
+    },
+    {
+        path: '/mainarticle',
+        name: 'Mainarticle',
+        component: () =>
+            import ('../views/articlefile/Mainarticle.vue'),
+    },
+    ],
+},
+]
 
 const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
