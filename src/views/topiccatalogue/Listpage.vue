@@ -38,7 +38,7 @@ import { mapActions } from 'vuex'
       }
     },
     methods: {
-      ...mapActions(['topiclist']),
+      ...mapActions(['getTopicList']),
       handleEdit(index, row) {
         console.log(index, row);
         this.$router.push({
@@ -66,7 +66,7 @@ import { mapActions } from 'vuex'
           }else if(categoryId=='vue'){
             categoryId='4'
           }
-          this.res =await this.topiclist({
+          this.res =await this.getTopicList({
               categoryId:categoryId
             });
             this.tableData = this.res.data.rows
@@ -94,7 +94,7 @@ import { mapActions } from 'vuex'
       },
     },
     async created(){
-      this.res = await this.topiclist();
+      this.res = await this.getTopicList();
       this.tableData = this.res.data.rows
         // console.log(this.res)
           console.log(this.tableData)
