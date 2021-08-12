@@ -1,6 +1,6 @@
 <template>
   <div class="wrap">
-    <el-scrollbar max-height="60vh">
+    <el-scrollbar max-height="600px">
       <div class="main">
         <div class="badges">
           <el-badge :value="200" :max="99" class="item">
@@ -11,9 +11,6 @@
         </div>
       </div>
     </el-scrollbar>
-    <el-backtop
-      target=".page-component__scroll .el-scrollbar__wrap"
-    ></el-backtop>
   </div>
 </template>
 
