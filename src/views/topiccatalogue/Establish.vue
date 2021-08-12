@@ -67,13 +67,18 @@
                 </el-form-item>
             </el-form>
         </el-col>
-        <el-col :span="12">
+        <el-col :span="1">
+        </el-col>
+        <el-col class="md-border" :span="11">
+            <div v-html="formathtml"></div>
         </el-col>
     </el-row>
 </div>
 </template>
 
 <script>
+import MarkdownIt from "markdown-it";
+let md = MarkdownIt();
 import {
     mapActions
 } from "vuex";
@@ -198,6 +203,11 @@ export default {
             this.data.result = '';
             this.dynamicTag = ''
         }
+    },
+    computed: {
+        formathtml() {
+            return md.render(this.data.title);
+        }
     }
 
 }
@@ -213,5 +223,9 @@ export default {
     align-items: center;
     flex-direction: column;
     margin: 10px;
+}
+
+.md-border{
+    border: 1px solid #b1d1f7;
 }
 </style>
