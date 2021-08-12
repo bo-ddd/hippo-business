@@ -10,11 +10,6 @@
           <el-button type="primary" @click="categorIdget(4)" plain>vue</el-button>
         </el-form-item> -->
             <el-check-tag @change="onChange(index)" :checked="checked[index]" class="type" v-for="(item, index) in tap" :key="(index, item)">{{ item.key }}</el-check-tag>
-            <!-- <select name="type" id="">
-          <option value="HTML">HTML</option>
-          <option value="js">js</option>
-          <option value="Vue">Vue</option>
-        </select> -->
         </div>
         <div class="article-title">
             文章题目:&nbsp;&nbsp;
@@ -27,6 +22,7 @@
             <el-input type="textarea" :rows="22" placeholder="说点什么吧" v-model="textarea">
             </el-input>
         </div>
+        <!-- <el-button icon="el-icon-edit" size="mini" @></el-button> -->
         <div class="right">
             <el-scrollbar max-height="400px">
                 <div v-html="changeMd(this.textarea)"></div>
