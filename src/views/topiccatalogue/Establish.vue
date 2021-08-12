@@ -20,42 +20,45 @@
                     </el-select>
                 </el-form-item>
 
+                <!-- 单选 -->
                 <el-form-item v-if="data.type==1" label="题目答案" prop="type">
                     <el-button type="primary" @click="showInput" plain>添加答案</el-button>
                     <el-input class="input-new-tag" v-if="inputVisible" v-model="dynamicTag" ref="saveTagInput" size="small" @keyup.enter="handleInputConfirm2" @blur="handleInputConfirm2">
                     </el-input>
                     <div class="answer">
-                        <div class="answer-content" :key="(tag,index)" v-for="(tag,index) in data.options">
-                            <el-tag closable :disable-transitions="false" @close="handleClose(tag)">
-                                {{tag}}
+                        <div class="answer-content" :key="(item,index)" v-for="(item,index) in data.options">
+                            <el-tag closable :disable-transitions="false" @close="handleClose(index)">
+                                {{item.value}}
                             </el-tag>
-                            <el-radio v-model="data.result" :label=index>正确</el-radio>
+                            <el-radio v-model="single" :label=index>正确</el-radio>
                         </div>
                     </div>
                 </el-form-item>
 
+                <!-- 多选 -->
                 <el-form-item v-if="data.type==2" label="题目答案" prop="type">
                     <el-button type="primary" @click="showInput" plain>添加答案</el-button>
                     <el-input class="input-new-tag" v-if="inputVisible" v-model="dynamicTag" ref="saveTagInput" size="small" @keyup.enter="handleInputConfirm2" @blur="handleInputConfirm2">
                     </el-input>
                     <div class="answer">
-                        <div class="answer-content" :key="(tag,index)" v-for="(tag,index) in data.options">
-                            <el-tag closable :disable-transitions="false" @close="handleClose(tag)">
-                                {{tag}}
+                        <div class="answer-content" :key="(item,index)" v-for="(item,index) in data.options">
+                            <el-tag closable :disable-transitions="false" @close="handleClose(index)">
+                                {{item.value}}
                             </el-tag>
-                            <el-checkbox @click="answer(index)" label=""></el-checkbox>
+                            <el-checkbox @click="answer(item.key,index)" label=""></el-checkbox>
                         </div>
                     </div>
                 </el-form-item>
 
+                <!-- 简答 -->
                 <el-form-item v-else-if="data.type==3" label="题目答案" prop="type">
                     <el-checkbox-group v-model="data.type">
-                        <el-tag :key="tag" v-for="tag in data.options" closable :disable-transitions="false" @close="handleClose(tag)">
-                            {{tag}}
+                        <el-tag closable :disable-transitions="false" @close="handleClose2()">
+                            {{data.result}}
                         </el-tag>
-                        <el-input class="input-new-tag" v-if="inputVisible" v-model="dynamicTag" ref="saveTagInput" size="small" @keyup.enter="handleInputConfirm" @blur="handleInputConfirm">
+                        <el-input class="input-new-tag" v-if="inputVisible" v-model="data.result" ref="saveTagInput" size="small" @keyup.enter="handleInputConfirm" @blur="handleInputConfirm">
                         </el-input>
-                        <el-button v-else class="button-new-tag" size="small" @click="showInput">添加答案</el-button>
+                        <el-button v-else class="button-new-tag" size="small" @click="showInput">答案</el-button>
                     </el-checkbox-group>
                 </el-form-item>
                 <el-form-item>
@@ -89,6 +92,9 @@ export default {
             tableData: [],
             dynamicTag: '',
             arr: [],
+            option: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
+            single: '',
+            result: []
         };
     },
     methods: {
@@ -99,13 +105,16 @@ export default {
         },
 
         async submitForm() {
-            console.log(this.data);
-            console.log(this.arr)
+            console.log(this.data)
             if (this.data.type != 3 && (this.data.options.length < 2)) {
                 console.log('选择题答案不得低于两个')
             } else if (this.data.type == 2 && (this.data.result.split(',').length < 2)) {
                 console.log('多选题答案不得小于两个')
             } else {
+                if (this.single.length != 0) {
+                    this.data.result = this.option[this.single]
+                    console.log(this.data.result)
+                }
                 let list = await this.create(this.data);
                 this.data = {
                     type: '',
@@ -114,7 +123,7 @@ export default {
                     result: "",
                     categoryId: 0
                 };
-                console.log(list)
+                console.log(list);
             }
         },
 
@@ -122,11 +131,13 @@ export default {
             this.$refs[formName].resetFields();
         },
 
-        handleClose(tag) {
-            this.data.options.splice(this.data.options.indexOf(tag), 1);
+        handleClose(index) {
+            this.data.options.splice(index, 1);
             this.dynamicTag = ''
         },
-
+        handleClose2() {
+            this.data.result = ''
+        },
         showInput() {
             this.inputVisible = true;
             this.$nextTick(() => {
@@ -134,23 +145,25 @@ export default {
             });
         },
 
-        handleInputConfirm() {
-            let inputValue = this.dynamicTag;
-            if (inputValue) {
-                this.data.options.shift();
-                this.data.options.push(inputValue);
-            }
-            this.inputVisible = false;
-        },
-
         handleInputConfirm2() {
             let inputValue = this.dynamicTag;
             if (inputValue) {
-                this.data.options.push(inputValue);
+                let josn = {
+                    key: this.option[this.data.options.length],
+                    value: inputValue
+                }
+                this.data.options.push(josn);
             }
             this.inputVisible = false;
             this.dynamicTag = '';
+        },
 
+        handleInputConfirm() {
+            let inputValue = this.dynamicTag;
+            if (inputValue) {
+                this.data.result += inputValue;
+            }
+            this.inputVisible = false;
         },
 
         categorIdget(index) {
@@ -158,9 +171,9 @@ export default {
 
         },
 
-        answer(index) {
-            if (this.arr.indexOf(index) == -1) {
-                this.arr.push(index)
+        answer(key,index) {
+            if (this.arr.indexOf(key) == -1) {
+                this.arr.push(this.option[index])
             }
             this.data.result = this.arr.join()
             this.data.result.trim()
@@ -168,6 +181,7 @@ export default {
 
         choice() {
             this.data.options = [];
+            this.data.result = '';
             this.dynamicTag = ''
         }
     }
