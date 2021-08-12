@@ -68,12 +68,15 @@
             </el-form>
         </el-col>
         <el-col :span="12">
+            <div v-html="formathtml"></div>
         </el-col>
     </el-row>
 </div>
 </template>
 
 <script>
+import MarkdownIt from "markdown-it";
+let md = MarkdownIt(); 
 import {
     mapActions
 } from "vuex";
@@ -197,6 +200,11 @@ export default {
             this.data.options = [];
             this.data.result = '';
             this.dynamicTag = ''
+        }
+    },
+    computed:{
+        formathtml(){
+            return md.render(this.data.title);
         }
     }
 
