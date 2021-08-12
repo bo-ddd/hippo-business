@@ -96,9 +96,11 @@
            
          }
       },
-
+ 
       showupdate(index,rows){
             this.dialogFormupdate = true;
+            let a = 1;
+            console.log(a);
             this.updateId = rows[index].id
       },
       
