@@ -34,8 +34,16 @@ const routes = [{
         name: 'Writearticle',
         component: () =>
             import ('../views/articlefile/Writearticle.vue'),
-    }]
-}]
+    },
+    {
+        path: '/mainarticle',
+        name: 'Mainarticle',
+        component: () =>
+            import ('../views/articlefile/Mainarticle.vue'),
+    },
+    ],
+},
+]
 
 const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),

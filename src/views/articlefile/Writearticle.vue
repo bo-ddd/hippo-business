@@ -35,6 +35,7 @@
     </div>
     <div class="foot">
         <el-button type="primary" @click="submit">确认发布<i class="el-icon-upload el-icon--right"></i></el-button>
+        <el-button type="primary" @click="tomain">我的文章</el-button>
     </div>
 </div>
 </template>
@@ -46,7 +47,7 @@ let md = MarkdownIt();
 export default {
     data() {
         return {
-            tap: [],
+            tap:[],
             textarea: "",
             text: "",
             checked: {},
@@ -65,8 +66,30 @@ export default {
             }
             this.checked[index] = true;
         },
-        async submit(){
-
+        submit(){
+            let type = null
+            for (const key in this.checked) {
+                if (this.checked[key]) {
+                    type=this.tap[key].key
+                }
+            }
+            if (!type) {
+                alert('请选择文章类型')
+            }else if (!this.text) {
+                alert('请填写标题')
+            }else if (!this.textarea) {
+                alert('内容不能为空!!!')
+            }else {
+                this.$router.push({
+                    name:'Mainarticle',
+                });
+            }
+            console.log(type);
+        },
+        tomain(){
+             this.$router.push({
+                name:'Mainarticle',
+            });
         }
     },
     async created() {
@@ -128,7 +151,7 @@ export default {
     width: 100%;
     height: 80px;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
 }
 </style>
