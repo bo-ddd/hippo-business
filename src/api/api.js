@@ -46,5 +46,8 @@ export default {
     detail: (params) => {
         return axios.post('/article/detail', params, postConfig)
     },
+    catupdate:(params) =>{
+           return axios.post('/category/update',params,postConfig)
+    },
 
 }

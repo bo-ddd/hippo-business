@@ -1,20 +1,18 @@
 <template>
    <div>
-     <!-- <el-button type="text" @click="dialogFormVisible = true" >添加</el-button> -->
          <el-button type="primary" @click="dialogFormVisible = true" class="addbtn">添加</el-button>
-  <el-table :data="tableData" height="460px" max-height="700" style="width:100%">
-      <el-table-column prop="key"  label="所有试题类目" width="200px"></el-table-column>
-      <el-table-column prop="iconUrl"  label="icon地址" width="460px"></el-table-column>
-      <el-table-column label="图标" width="200px">
-    
-      <img :src="this.tableData[4].iconUrl" class="iconShow">
-        <!-- <span v-for="(item,index) in this.tableData" :key="(item,index)"></span>
-        <span>{{this.tableData[this.index].iconUrl}}</span> -->
+  <el-table :data="tableData" height="460px" max-height="700" style="width:90%">
+      <el-table-column prop="key"  label="所有试题类目" width="180px"></el-table-column>
+      <el-table-column prop="iconUrl"  label="icon地址" width="670"></el-table-column>
+      <el-table-column label="图标" width="160px" style="margin-left:130px">
+      <template #default="scope">
+        <img :src="scope.row.iconUrl" class="iconShow">
+      </template>
       </el-table-column>
       <el-table-column label="操作">
            <template #default="scope">
-            <el-button type="primary" icon="el-icon-edit"   circle    @click="dialogFormVisible = true"></el-button>
-            <el-button type="danger" icon="el-icon-delete"  circle  @click.prevent="deleteRow(scope.$index, tableData)"  size="small"></el-button>
+            <el-button type="primary" icon="el-icon-edit"   circle  @click="showupdate(scope.$index,tableData)"></el-button>
+            <el-button type="danger" icon="el-icon-delete"  circle  @click.prevent="deleteRow(scope.$index,tableData)"  size="small"></el-button>
          </template>
       </el-table-column>
   </el-table>
@@ -48,6 +46,26 @@
   </template>
 </el-dialog>
 
+
+  <!-- 修改 -->
+  <el-dialog title="添加类目" v-model="dialogFormupdate">
+    <el-form :model="form">
+    <el-form-item label="类目标题" :label-width="formLabelWidth">
+      <el-input v-model="form.name" autocomplete="off"></el-input>
+    </el-form-item>
+     <el-form-item label="类目icon" :label-width="formLabelWidth">
+      <el-input v-model="form.iconUrl" autocomplete="off"></el-input>
+    </el-form-item>
+    
+  </el-form>
+  <template #footer>
+    <span class="dialog-footer">
+      <el-button @click="hidd">取 消</el-button>
+      <el-button type="primary" @click="updateRow">确 定</el-button>
+    </span>
+  </template>
+</el-dialog>
+
    </div>
 
 </template>
@@ -64,18 +82,55 @@
     },
   
     methods: {
-      ...mapActions(["catcreate","catlist"]),
+      ...mapActions(["catcreate","catlist","catdelete","catupdate"]),
+
+      icon(){
+         for (let index = 0; index < this.tableData.length; index++) {
+           this.iconu = this.tableData.iconUrl
+             console.log(this.iconu);
+           
+         }
+      },
+
+      showupdate(index,rows){
+            this.dialogFormupdate = true;
+            this.updateId = rows[index].id
+      },
       
-      deleteRow(index, rows) {
-        rows.splice(index, 1);
+  async  deleteRow(index, rows) {
+        let res = await this.catdelete({
+           type:"1",
+           id:rows[index].id
+          })
+        if(res.status==1){
+          this.catlistdata();
+        }else{
+          alert("删除失败")
+        }
       }, 
+ async updateRow(){
+    this.dialogFormupdate = false;
+    let res = await this.catupdate({
+         type:"1",
+         id:this.updateId,
+         key:this.form.name,
+         iconUrl:this.form.iconUrl
+    })
+     if(res.status==1){
+      alert("修改成功")
+    }else{
+      alert("修改失败")
+    }
+    this.form.name= "",
+    this.form.iconUrl="" 
+    this.catlistdata();  
+ },
+
       hidd(){
       this.dialogFormVisible = false
+      this.dialogFormupdate = false
          this.form.name = ""
          this.form.iconUrl = ""
-      },
-      indexi(){
-             this.inde++
       },
     async  catlistdata(){
        let res= await this.catlist({
@@ -100,6 +155,7 @@ async addtitle(){
         iconUrl:this.form.iconUrl
       });
       console.log(res);
+
        this.catlistdata();
        this.form.name = ""
        this.form.iconUrl = ""
@@ -112,12 +168,13 @@ async addtitle(){
       return {
         tableData: [ ],
         dialogFormVisible: false,
+        dialogFormupdate: false,
         form: {
           name: '', 
           iconUrl: ''
         },
-        i:0,
-        inde:0,
+        updateId:'',
+        iconu:""
       }
     }
   }
@@ -126,9 +183,7 @@ async addtitle(){
 
 <style scoped>
 .addbtn{
-  position: absolute;
-  margin-left:1000px;
-  z-index: 99;
+ float: right;
 }
 
 .iconShow{

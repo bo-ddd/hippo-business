@@ -27,6 +27,9 @@ export default createStore({
         detail(ctx, payload) {
             return Api.detail(payload)
         },
+        catupdate(ctx,payload){
+             return Api.catupdate(payload)
+        }
     },
     modules: {}
 })
