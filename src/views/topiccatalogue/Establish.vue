@@ -105,27 +105,26 @@ export default {
         },
 
         async submitForm() {
-            if (this.data.type == '1') {
-                this.data.title = '[单选题]' + this.data.title;
-            } else if (this.data.type == '2') {
-                this.data.title = '[多选题]' + this.data.title;
-            } else if (this.data.type == '3') {
-                this.data.title = '[简答题]' + this.data.title;
-            }
-            console.log(this.data)
             if (this.data.type != 3 && (this.data.options.length < 2)) {
                 console.log('选择题答案不得低于两个')
             } else if (this.data.type == 2 && (this.data.result.split(',').length < 2)) {
                 console.log('多选题答案不得小于两个')
-            }else if(this.data.title==''){
+            } else if (this.data.title == '') {
                 console.log('请输入题目')
-            }else if(this.data.result==''){
-                console.log('请选择答案')
-            }else if(this.data.categoryId==0){
+            } else if (this.data.result == '') {
+                console.log('请填写答案')
+            } else if (this.data.categoryId == 0) {
                 console.log('请选择题目类型')
-            }else if(this.data.type==''){
+            } else if (this.data.type == '') {
                 console.log('请选择该题类型')
             } else {
+                if (this.data.type == '1') {
+                    this.data.title = '[单选题]' + this.data.title;
+                } else if (this.data.type == '2') {
+                    this.data.title = '[多选题]' + this.data.title;
+                } else if (this.data.type == '3') {
+                    this.data.title = '[简答题]' + this.data.title;
+                }
                 if (this.single.length != 0) {
                     this.data.result = this.option[this.single]
                     console.log(this.data.result)
