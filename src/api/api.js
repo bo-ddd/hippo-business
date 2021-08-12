@@ -11,7 +11,7 @@ axios.interceptors.response.use(function(response) {
     if (response.data.status == 401) {
         location.href = '/'
     }
-    console.log(postConfig)
+    // console.log(postConfig)
     return response.data;
 }, function(error) {
     console.log('get error:', error)
@@ -27,11 +27,24 @@ export default {
     // signin: (params) => {
     //     return axios.post('/user/login', params, postConfig)
     // },
+
+    create: (params) => {
+        return axios.post('/topic/create', params, postConfig)
+    },
     catlist: (params) => {
         return axios.post('/category/list', params, postConfig)
     },
-    catcreate:(params) => {
+    catcreate: (params) => {
         return axios.post('/category/create', params, postConfig)
+    },
+    catdelete: (params) => {
+        return axios.post('/category/delete', params, postConfig)
+    },
+    topiclist: (params) => {
+        return axios.post('/topic/list', params, postConfig)
+    },
+    detail: (params) => {
+        return axios.post('/article/detail', params, postConfig)
     },
 
 }
