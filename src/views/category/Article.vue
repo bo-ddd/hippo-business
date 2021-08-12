@@ -60,7 +60,6 @@ import {  mapActions } from "vuex";
       },
 
       handleInputConfirm() {
-        
         let inputValue = this.inputValue;
         if (inputValue) {
                  if(this.tap.indexOf(inputValue)!=-1){
