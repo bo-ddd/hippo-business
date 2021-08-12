@@ -55,7 +55,7 @@
                         </el-tag>
                         <el-input class="input-new-tag" v-if="inputVisible" v-model="dynamicTag" ref="saveTagInput" size="small" @keyup.enter="handleInputConfirm" @blur="handleInputConfirm">
                         </el-input>
-                        <el-button v-else class="button-new-tag" size="small" @click="showInput">answer</el-button>
+                        <el-button v-else class="button-new-tag" size="small" @click="showInput">添加答案</el-button>
                     </el-checkbox-group>
                 </el-form-item>
                 <el-form-item>
@@ -93,9 +93,11 @@ export default {
     },
     methods: {
         ...mapActions(["create"]),
+
         deleteRow(index, rows) {
             rows.splice(index, 1);
         },
+
         async submitForm() {
             console.log(this.data);
             console.log(this.arr)
@@ -105,12 +107,21 @@ export default {
                 console.log('多选题答案不得小于两个')
             } else {
                 let list = await this.create(this.data);
+                this.data = {
+                    type: '',
+                    title: '',
+                    options: [],
+                    result: "",
+                    categoryId: 0
+                };
                 console.log(list)
             }
         },
+
         resetForm(formName) {
             this.$refs[formName].resetFields();
         },
+
         handleClose(tag) {
             this.data.options.splice(this.data.options.indexOf(tag), 1);
             this.dynamicTag = ''
@@ -141,22 +152,23 @@ export default {
             this.dynamicTag = '';
 
         },
+
         categorIdget(index) {
             this.data.categoryId = index;
 
         },
+
         answer(index) {
             if (this.arr.indexOf(index) == -1) {
                 this.arr.push(index)
             }
             this.data.result = this.arr.join()
             this.data.result.trim()
-            // console.log(arr)
-            // this.data.result += index
-            // console.log(this.result)
         },
+
         choice() {
-            this.data.options = []
+            this.data.options = [];
+            this.dynamicTag = ''
         }
     }
 
