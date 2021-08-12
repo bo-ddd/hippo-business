@@ -1,20 +1,21 @@
 <template>
-<div>
-    <!-- <el-button type="text" @click="dialogFormVisible = true" >添加</el-button> -->
-    <el-button type="primary" @click="dialogFormVisible = true" class="addbtn">添加</el-button>
-    <el-table :data="tableData" height="460px" max-height="700" style="width:100%">
-        <el-table-column prop="alltitle" label="所有试题类目" width="260px"></el-table-column>
-        <el-table-column prop="iconUrl" label="icon地址" width="360px"></el-table-column>
-        <el-table-column prop="iconUrl" label="图标" width="200px">
-            <img src="@/assets/logo.png" class="iconShow">
-        </el-table-column>
-        <el-table-column label="操作">
-            <template #default="scope">
-                <el-button type="primary" icon="el-icon-edit" circle @click="dialogFormVisible = true"></el-button>
-                <el-button type="danger" icon="el-icon-delete" circle @click.prevent="deleteRow(scope.$index, tableData)" size="small"></el-button>
-            </template>
-        </el-table-column>
-    </el-table>
+   <div>
+         <el-button type="primary" @click="dialogFormVisible = true,show2 = !show2" class="addbtn">添加</el-button>
+  <el-table :data="tableData" height="460px" max-height="700" style="width:90%">
+      <el-table-column prop="key"  label="试题类目" width="160px"></el-table-column>
+      <el-table-column prop="iconUrl"  label="icon地址" width="620px"></el-table-column>
+      <el-table-column label="图标" width="140px">
+      <template #default="scope">
+        <img :src="scope.row.iconUrl" class="iconShow">
+      </template>
+      </el-table-column>
+      <el-table-column label="操作">
+           <template #default="scope">
+            <el-button type="primary" icon="el-icon-edit"   circle  @click="showupdate(scope.$index,tableData)"></el-button>
+            <el-button type="danger" icon="el-icon-delete"  circle  @click.prevent="deleteRow(scope.$index,tableData)"  size="small"></el-button>
+         </template>
+      </el-table-column>
+  </el-table>
 
     <div class="block">
         <el-pagination background layout="prev, pager, next" :total="1000">
@@ -23,70 +24,152 @@
 
     <!-- Form -->
 
-    <el-dialog title="添加类目" v-model="dialogFormVisible">
-        <el-form :model="form">
-            <el-form-item label="类目标题" :label-width="formLabelWidth">
-                <el-input v-model="form.name" autocomplete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="类目icon" :label-width="formLabelWidth">
-                <el-input v-model="form.iconUrl" autocomplete="off"></el-input>
-            </el-form-item>
+<el-dialog title="添加类目" v-model="dialogFormVisible">
+    <el-form :model="form">
+    <el-form-item label="类目标题" :label-width="formLabelWidth">
+      <el-input v-model="form.name" autocomplete="off"></el-input>
+    </el-form-item>
+     <el-form-item label="类目icon" :label-width="formLabelWidth">
+      <el-input v-model="form.iconUrl" autocomplete="off"></el-input>
+    </el-form-item>
+    
+  </el-form>
+  <template #footer>
+    <span class="dialog-footer">
+      <el-button @click="hidd">取 消</el-button>
+      <el-button type="primary" @click="addtitle">确 定</el-button>
+    </span>
+  </template>
+</el-dialog>
 
-        </el-form>
-        <template #footer>
-            <span class="dialog-footer">
-                <el-button @click="dialogFormVisible = false">取 消</el-button>
-                <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
-            </span>
-        </template>
-    </el-dialog>
+  <!-- 修改 -->
+  <el-dialog title="添加类目" v-model="dialogFormupdate">
+    <el-form :model="form">
+    <el-form-item label="类目标题" :label-width="formLabelWidth">
+      <el-input v-model="form.name" autocomplete="off"></el-input>
+    </el-form-item>
+     <el-form-item label="类目icon" :label-width="formLabelWidth">
+      <el-input v-model="form.iconUrl" autocomplete="off"></el-input>
+    </el-form-item>
+    
+  </el-form>
+  <template #footer>
+    <span class="dialog-footer">
+      <el-button @click="hidd">取 消</el-button>
+      <el-button type="primary" @click="updateRow">确 定</el-button>
+    </span>
+  </template>
+</el-dialog>
+
 
 </div>
 </template>
 
 <script>
-export default {
+ import {mapActions} from 'vuex'
+  export default {
+
+  async  created(){
+      let res= await this.catlist({
+         type:"1"
+       })
+      this.tableData = res.data
+    },
+  
     methods: {
-        deleteRow(index, rows) {
-            rows.splice(index, 1);
-        },
+      ...mapActions(["catcreate","catlist","catdelete","catupdate"]),
+
+      showupdate(index,rows){
+            this.dialogFormupdate = true;
+            this.updateId = rows[index].id
+      },
+      
+  async  deleteRow(index, rows) {
+        let res = await this.catdelete({
+           type:"1",
+           id:rows[index].id
+          })
+        if(res.status==1){
+          this.catlistdata();
+        }else{
+          alert("删除失败")
+        }
+      }, 
+ async updateRow(){
+    this.dialogFormupdate = false;
+    let res = await this.catupdate({
+         type:"1",
+         id:this.updateId,
+         key:this.form.name,
+         iconUrl:this.form.iconUrl
+    })
+     if(res.status==1){
+      alert("修改成功")
+    }else{
+      alert("修改失败")
+    }
+    this.form.name= "",
+    this.form.iconUrl="" 
+    this.catlistdata();  
+ },
+
+      hidd(){
+      this.dialogFormVisible = false
+      this.dialogFormupdate = false
+         this.form.name = ""
+         this.form.iconUrl = ""
+      },
+    async  catlistdata(){
+       let res= await this.catlist({
+         type:"1"
+       })
+      this.tableData = res.data
+      },
+
+async addtitle(){
+  this.i=0;
+  this.dialogFormVisible = false
+  this.tableData.forEach(item => {
+      if(item.key == this.form.name || this.form.name==""){
+            this.i++
+        }
+     });
+        
+    if(!this.i){
+      let res = await this.catcreate({
+        type:"1",
+        key:this.form.name,
+        iconUrl:this.form.iconUrl
+      });
+      console.log(res);
+
+       this.catlistdata();
+       this.form.name = ""
+       this.form.iconUrl = ""
+      }else{  
+       this.form.iconUrl = ""
+      }
+       }  
     },
     data() {
-        return {
-            tableData: [{
-                alltitle: 'Js',
-                iconUrl: 'www.baidu.com'
-            }, {
-                alltitle: 'Node',
-                iconUrl: 'www.baidu.com'
-            }, {
-                alltitle: 'Jquery',
-                iconUrl: 'www.baidu.com'
-            }, {
-                alltitle: 'Java',
-                iconUrl: 'www.baidu.com'
-            }, {
-                alltitle: 'HTML',
-                iconUrl: 'www.baidu.com'
-            }, {
-                alltitle: 'HTML',
-                iconUrl: 'www.baidu.com'
-            }],
-            dialogFormVisible: false,
-            form: {
-                name: '',
-                iconUrl: ''
-            },
-        }
+      return {
+        tableData: [ ],
+        dialogFormVisible: false,
+        dialogFormupdate: false,
+        form: {
+          name: '', 
+          iconUrl: ''
+        },
+        updateId:'',
+        show2: true
+      }
     }
 }
 </script>
 
 <style scoped>
-.addbtn {
-    position: absolute;
-    margin-left: 400px;
-    z-index: 99;
+.addbtn{
+ float: right;
 }
 
 .iconShow {
@@ -97,4 +180,5 @@ export default {
     margin-top: 20px;
     float: left;
 }
+
 </style>

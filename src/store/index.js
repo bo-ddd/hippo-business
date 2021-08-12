@@ -30,6 +30,9 @@ export default createStore({
         addarticle(ctx, payload) {
             return Api.addarticle(payload)
         },
+        catupdate(ctx,payload){
+             return Api.catupdate(payload)
+        }
     },
     modules: {}
 })
