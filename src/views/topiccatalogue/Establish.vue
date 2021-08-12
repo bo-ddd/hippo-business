@@ -105,7 +105,7 @@ export default {
         };
     },
     methods: {
-        ...mapActions(["create", 'catlist']),
+        ...mapActions(["createTopic", 'getCategoryList']),
 
         deleteRow(index, rows) {
             rows.splice(index, 1);
@@ -138,15 +138,15 @@ export default {
                 }
 
                 console.log(this.data)
-                // let list = await this.create(this.data);
-                // this.data = {
-                //     type: '',
-                //     title: '',
-                //     options: [],
-                //     result: "",
-                //     categoryId: 0
-                // };
-                // console.log(list);
+                let list = await this.createTopic(this.data);
+                this.data = {
+                    type: '',
+                    title: '',
+                    options: [],
+                    result: "",
+                    categoryId: 0
+                };
+                console.log(list);
             }
         },
 
@@ -214,7 +214,7 @@ export default {
         }
     },
     async created() {
-        let res = await this.catlist({
+        let res = await this.getCategoryList({
             type: "1"
         })
         this.listData = res.data

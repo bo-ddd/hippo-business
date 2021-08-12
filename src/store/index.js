@@ -9,29 +9,26 @@ export default createStore({
          * @param username  用户名
          * @param password 密码
          */
-        create(ctx, payload) {
-            return Api.create(payload)
+        createTopic(ctx, payload) {
+            return Api.createTopic(payload)
         },
-        catlist(ctx, payload) {
-            return Api.catlist(payload)
+        getCategoryList(ctx, payload) {
+            return Api.getCategoryList(payload)
         },
-        catcreate(ctx, payload) {
-            return Api.catcreate(payload)
+        createCategory(ctx, payload) {
+            return Api.createCategory(payload)
         },
-        detail(ctx, payload) {
-            return Api.detail(payload)
+        deleteCategory(ctx, payload) {
+            return Api.deleteCategory(payload)
         },
-        catdelete(ctx, payload) {
-            return Api.catdelete(payload)
+        getTopicList(ctx, payload) {
+            return Api.getTopicList(payload)
         },
-        topiclist(ctx, payload) {
-            return Api.topiclist(payload)
+        getArticleDetail(ctx, payload) {
+            return Api.getArticleDetail(payload)
         },
-        addarticle(ctx, payload) {
-            return Api.addarticle(payload)
-        },
-        catupdate(ctx,payload){
-             return Api.catupdate(payload)
+        updateCategory(ctx, payload) {
+            return Api.updateCategory(payload)
         }
     },
     modules: {}

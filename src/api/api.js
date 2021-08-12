@@ -28,26 +28,26 @@ export default {
     //     return axios.post('/user/login', params, postConfig)
     // },
 
-    create: (params) => {
+    createTopic: (params) => {
         return axios.post('/topic/create', params, postConfig)
     },
-    catlist: (params) => {
+    getCategoryList: (params) => {
         return axios.post('/category/list', params, postConfig)
     },
-    catcreate: (params) => {
+    createCategory: (params) => {
         return axios.post('/category/create', params, postConfig)
     },
-    catdelete: (params) => {
+    deleteCategory: (params) => {
         return axios.post('/category/delete', params, postConfig)
     },
-    topiclist: (params) => {
+    getTopicList: (params) => {
         return axios.post('/topic/list', params, postConfig)
     },
-    detail: (params) => {
+    getArticleDetail: (params) => {
         return axios.post('/article/detail', params, postConfig)
     },
-    catupdate:(params) =>{
-           return axios.post('/category/update',params,postConfig)
+    updateCategory: (params) => {
+        return axios.post('/category/update', params, postConfig)
     },
 
 }
