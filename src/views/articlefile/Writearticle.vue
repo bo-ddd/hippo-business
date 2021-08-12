@@ -37,13 +37,15 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import {
+    mapActions
+} from "vuex";
 import MarkdownIt from "markdown-it";
 let md = MarkdownIt();
 export default {
     data() {
         return {
-            tap:[],
+            tap: [],
             textarea: "",
             text: "",
             checked: {},
@@ -51,7 +53,7 @@ export default {
         };
     },
     methods: {
-        ...mapActions(["catlist","addarticle"]),
+        ...mapActions(["catlist", "addarticle"]),
         changeMd(val) {
             // return md.renderInline(val);
             return md.render(val);
@@ -62,34 +64,34 @@ export default {
             }
             this.checked[index] = true;
         },
-        async submit(){
+        async submit() {
             let typeId = ''
             for (const key in this.checked) {
                 if (this.checked[key]) {
-                    typeId=this.tap[key].id
+                    typeId = this.tap[key].id
                 }
             }
             if (!typeId) {
                 alert('请选择文章类型')
-            }else if (!this.text) {
+            } else if (!this.text) {
                 alert('请填写标题')
-            }else if (!this.textarea) {
+            } else if (!this.textarea) {
                 alert('内容不能为空!!!')
-            }else {
+            } else {
                 let result = await this.addarticle({
-                    title:this.text,
-                    article:this.textarea,
-                    categoryId:typeId.toString(),
+                    title: this.text,
+                    article: this.textarea,
+                    categoryId: typeId.toString(),
                 });
                 console.log(result.status);
                 this.$router.push({
-                    name:'Mainarticle',
+                    name: 'Mainarticle',
                 });
             }
         },
-        tomain(){
-             this.$router.push({
-                name:'Mainarticle',
+        tomain() {
+            this.$router.push({
+                name: 'Mainarticle',
             });
         }
     },
