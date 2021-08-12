@@ -4,35 +4,60 @@ export default createStore({
     state: {},
     mutations: {},
     actions: {
-        /**
-         * @description 用户登录
-         * @param username  用户名
-         * @param password 密码
-         */
-        create(ctx, payload) {
-            return Api.create(payload)
+        //题
+        createTopic(ctx, payload) {
+            return Api.createTopic(payload)
         },
-        catlist(ctx, payload) {
-            return Api.catlist(payload)
+        getTopicList(ctx, payload) {
+            return Api.getTopicList(payload)
         },
-        catcreate(ctx, payload) {
-            return Api.catcreate(payload)
+        updateTopic(ctx, payload) {
+            return Api.updateTopic(payload)
         },
-        detail(ctx, payload) {
-            return Api.detail(payload)
+        deleteTopic(ctx, payload) {
+            return Api.deleteTopic(payload)
         },
-        catdelete(ctx, payload) {
-            return Api.catdelete(payload)
+
+
+        //类目
+        getCategoryList(ctx, payload) {
+            return Api.getCategoryList(payload)
         },
-        topiclist(ctx, payload) {
-            return Api.topiclist(payload)
+        createCategory(ctx, payload) {
+            return Api.createCategory(payload)
         },
-        addarticle(ctx, payload) {
-            return Api.addarticle(payload)
+        deleteCategory(ctx, payload) {
+            return Api.deleteCategory(payload)
         },
-        catupdate(ctx,payload){
-             return Api.catupdate(payload)
-        }
+        updateCategory(ctx, payload) {
+            return Api.updateCategory(payload);
+        },
+
+        //文章
+        getArticleDetail(ctx, payload) {
+            return Api.getArticleDetail(payload);
+        },
+        createArticle(ctx, payload) {
+            return Api.createArticle(payload);
+        },
+        getArticleList(ctx, payload) {
+            return Api.getArticleList(payload);
+        },
+
+        //用户
+        userLogin(ctx, payload) {
+            return Api.getArticleList(payload);
+        },
+        userRegister(ctx, payload) {
+            return Api.getArticleList(payload);
+        },
+        getUserInfo(ctx, payload) {
+            return Api.getArticleList(payload);
+        },
+        updateUser(ctx, payload) {
+            return Api.getArticleList(payload);
+        },
+
     },
     modules: {}
 })
