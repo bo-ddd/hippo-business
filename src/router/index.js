@@ -44,16 +44,22 @@ const routes = [{
             component: () =>
                 import ('../views/articlefile/Mainarticle.vue'),
         },
+        {
+            path: '/viewtestquestions',
+            name: 'Viewtestquestions',
+            component: () =>
+                import ('../views/topiccatalogue/Viewtestquestions.vue'),
+        },
     ],
-}, {
-    path: '/login',
-    name: 'Login',
-    component: Login,
-}, {
-    path: '/registration',
-    name: 'Registration',
-    component: Registration,
-}]
+    }, {
+        path: '/login',
+        name: 'Login',
+        component: Login,
+    }, {
+        path: '/registration',
+        name: 'Registration',
+        component: Registration,
+    }]
 
 const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),

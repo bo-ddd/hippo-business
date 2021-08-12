@@ -1,6 +1,6 @@
 
 <template  v-slot:contrite>
-<el-table :data="tableData" style="width: 100%" :row-class-name="rowClassName">
+<el-table :data="tableData" max-height="750" border style="width: 100%" :row-class-name="rowClassName">
     <el-table-column label="题目类型" prop="categoryId">
     </el-table-column>
     <el-table-column label="题目" prop="title">
@@ -14,10 +14,12 @@
     </el-table-column>
     <el-table-column align="right">
       <template #header>
-        <el-input v-model="search" size="mini" placeholder="输入关键字搜索"/>
+        <el-input v-model="search" placeholder="请输入题目类型" style="width:70%">
+        </el-input>
+        <el-button type="primary" icon="el-icon-search" @click="selTypeTest(this.search)">搜索</el-button>
       </template>
       <template #default="scope">
-        <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">查看/编辑</el-button>
+        <el-button type="primary" icon="el-icon-search" @click="handleEdit(scope.$index, scope.row)">查看/编辑</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -50,10 +52,37 @@ import { mapActions } from 'vuex'
             result:this.tableData[index].result
           }
         })
-        // console.log(this.res)
-
-
+      
       },
+      async selTypeTest(categoryId){
+        this.res={}
+        this.tableData = []
+          if(categoryId=='html'){
+            categoryId='1'
+          }else if(categoryId=='css'){
+            categoryId='2'
+          }else if(categoryId=='js'){
+            categoryId='3'
+          }else if(categoryId=='vue'){
+            categoryId='4'
+          }
+          this.res =await this.topiclist({
+              categoryId:categoryId
+            });
+            this.tableData = this.res.data.rows
+            console.log(this.res)
+            for(let i = 0; i<this.tableData.length;i++){
+          if(this.tableData[i].categoryId==1){
+            this.tableData[i].categoryId='HTML'
+          }else if(this.tableData[i].categoryId==2){
+            this.tableData[i].categoryId='CSS'
+          }else if(this.tableData[i].categoryId==3){
+            this.tableData[i].categoryId='JS'
+          }else if(this.tableData[i].categoryId==4){
+            this.tableData[i].categoryId='VUE'
+          }
+        }
+        },
       handleDelete(index, row) {
         console.log(index, row);
       },
@@ -67,7 +96,8 @@ import { mapActions } from 'vuex'
     async created(){
       this.res = await this.topiclist();
       this.tableData = this.res.data.rows
-        console.log(this.res)
+        // console.log(this.res)
+          console.log(this.tableData)
         for(let i = 0; i<this.tableData.length;i++){
           if(this.tableData[i].categoryId==1){
             this.tableData[i].categoryId='HTML'
