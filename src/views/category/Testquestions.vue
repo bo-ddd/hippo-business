@@ -3,10 +3,13 @@
      <!-- <el-button type="text" @click="dialogFormVisible = true" >添加</el-button> -->
          <el-button type="primary" @click="dialogFormVisible = true" class="addbtn">添加</el-button>
   <el-table :data="tableData" height="460px" max-height="700" style="width:100%">
-      <el-table-column prop="alltitle"  label="所有试题类目" width="260px"></el-table-column>
-      <el-table-column prop="iconUrl"  label="icon地址" width="360px"></el-table-column>
-      <el-table-column prop="iconUrl"  label="图标" width="200px">
-        <img src="@/assets/logo.png" class="iconShow">
+      <el-table-column prop="key"  label="所有试题类目" width="200px"></el-table-column>
+      <el-table-column prop="iconUrl"  label="icon地址" width="460px"></el-table-column>
+      <el-table-column label="图标" width="200px">
+    
+      <img :src="this.tableData[4].iconUrl" class="iconShow">
+        <!-- <span v-for="(item,index) in this.tableData" :key="(item,index)"></span>
+        <span>{{this.tableData[this.index].iconUrl}}</span> -->
       </el-table-column>
       <el-table-column label="操作">
            <template #default="scope">
@@ -39,8 +42,8 @@
   </el-form>
   <template #footer>
     <span class="dialog-footer">
-      <el-button @click="dialogFormVisible = false">取 消</el-button>
-      <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+      <el-button @click="hidd">取 消</el-button>
+      <el-button type="primary" @click="addtitle">确 定</el-button>
     </span>
   </template>
 </el-dialog>
@@ -50,39 +53,71 @@
 </template>
 
 <script>
+ import {mapActions} from 'vuex'
   export default {
+
+  async  created(){
+      let res= await this.catlist({
+         type:"1"
+       })
+      this.tableData = res.data
+    },
+  
     methods: {
+      ...mapActions(["catcreate","catlist"]),
+      
       deleteRow(index, rows) {
         rows.splice(index, 1);
-      },      
+      }, 
+      hidd(){
+      this.dialogFormVisible = false
+         this.form.name = ""
+         this.form.iconUrl = ""
+      },
+      indexi(){
+             this.inde++
+      },
+    async  catlistdata(){
+       let res= await this.catlist({
+         type:"1"
+       })
+      this.tableData = res.data
+      },
+
+async addtitle(){
+  this.i=0;
+  this.dialogFormVisible = false
+  this.tableData.forEach(item => {
+      if(item.key == this.form.name || this.form.name==""){
+            this.i++
+        }
+     });
+        
+    if(!this.i){
+      let res = await this.catcreate({
+        type:"1",
+        key:this.form.name,
+        iconUrl:this.form.iconUrl
+      });
+      console.log(res);
+       this.catlistdata();
+       this.form.name = ""
+       this.form.iconUrl = ""
+      }else{  
+       this.form.iconUrl = ""
+      }
+       }  
     },
     data() {
       return {
-        tableData: [{
-          alltitle: 'Js',
-          iconUrl:'www.baidu.com'
-        },{
-          alltitle: 'Node',
-          iconUrl:'www.baidu.com'
-        },{
-          alltitle: 'Jquery',
-          iconUrl:'www.baidu.com'
-        },{
-          alltitle: 'Java',
-          iconUrl:'www.baidu.com'
-        },{
-          alltitle: 'HTML',
-          iconUrl:'www.baidu.com'
-        },{
-          alltitle: 'HTML',
-          iconUrl:'www.baidu.com'
-        }
-        ],
+        tableData: [ ],
         dialogFormVisible: false,
         form: {
           name: '', 
           iconUrl: ''
         },
+        i:0,
+        inde:0,
       }
     }
   }
@@ -92,7 +127,7 @@
 <style scoped>
 .addbtn{
   position: absolute;
-  margin-left: 400px;
+  margin-left:1000px;
   z-index: 99;
 }
 
