@@ -67,6 +67,8 @@
 
 <script>
  import {mapActions} from 'vuex'
+//  import { defineComponent } from 'vue'
+import { ElMessage } from 'element-plus'
   export default {
 
   async  created(){
@@ -83,6 +85,13 @@
             this.dialogFormupdate = true;
             this.updateId = rows[index].id
       },
+
+       deletetips(message) {
+          ElMessage.warning({
+            message: message,
+            type: 'warning'
+          });
+        },
       
   async  deleteRow(index, rows) {
         let res = await this.deleteCategory({
@@ -92,7 +101,7 @@
         if(res.status==1){
           this.catlistdata();
         }else{
-          alert("删除失败")
+         this.deletetips(res.message)
         }
       }, 
  async updateRow(){
