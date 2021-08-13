@@ -7,10 +7,11 @@
                     <el-input type="textarea" autosize v-model="data.title"></el-input>
                 </el-form-item>
                 <el-form-item label="所属类目" prop="data.categoryId">
-                    <el-radio v-model="data.categoryId" :label=1>html</el-radio>
-                    <el-radio v-model="data.categoryId" :label=2>css</el-radio>
-                    <el-radio v-model="data.categoryId" :label=3>js</el-radio>
-                    <el-radio v-model="data.categoryId" :label=4>vue</el-radio>
+                    <div class="listData-content">
+                        <div class="list-content" v-for="item in listData" :key="item">
+                            <el-radio v-model="data.categoryId" :label=item.id>{{item.key}}</el-radio>
+                        </div>
+                    </div>
                 </el-form-item>
                 <el-form-item label="题目类型">
                     <el-select v-model="data.type" placeholder="请选择题目类型">
@@ -67,13 +68,18 @@
                 </el-form-item>
             </el-form>
         </el-col>
-        <el-col :span="12">
+        <el-col :span="1">
+        </el-col>
+        <el-col class="md-border" :span="11">
+            <div v-html="formathtml"></div>
         </el-col>
     </el-row>
 </div>
 </template>
 
 <script>
+import MarkdownIt from "markdown-it";
+let md = MarkdownIt();
 import {
     mapActions
 } from "vuex";
@@ -94,35 +100,45 @@ export default {
             arr: [],
             option: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
             single: '',
-            result: []
+            result: [],
+            listData: []
         };
     },
     methods: {
-        ...mapActions(["create"]),
+        ...mapActions(["createTopic", 'getCategoryList']),
 
         deleteRow(index, rows) {
             rows.splice(index, 1);
         },
 
         async submitForm() {
-            if (this.data.type == '1') {
-                this.data.title = '[单选题]' + this.data.title;
-            } else if (this.data.type == '2') {
-                this.data.title = '[多选题]' + this.data.title;
-            } else if (this.data.type == '3') {
-                this.data.title = '[简答题]' + this.data.title;
+            if (this.single.length != 0) {
+                this.data.result = this.option[this.single]
+                console.log(this.data.result)
             }
-            console.log(this.data)
             if (this.data.type != 3 && (this.data.options.length < 2)) {
                 console.log('选择题答案不得低于两个')
             } else if (this.data.type == 2 && (this.data.result.split(',').length < 2)) {
                 console.log('多选题答案不得小于两个')
+            } else if (this.data.title == '') {
+                console.log('请输入题目')
+            } else if (this.data.result == '') {
+                console.log('请填写答案')
+            } else if (this.data.categoryId == 0) {
+                console.log('请选择题目类型')
+            } else if (this.data.type == '') {
+                console.log('请选择该题类型')
             } else {
-                if (this.single.length != 0) {
-                    this.data.result = this.option[this.single]
-                    console.log(this.data.result)
+                if (this.data.type == '1') {
+                    this.data.title = '[单选题]' + this.data.title;
+                } else if (this.data.type == '2') {
+                    this.data.title = '[多选题]' + this.data.title;
+                } else if (this.data.type == '3') {
+                    this.data.title = '[简答题]' + this.data.title;
                 }
-                let list = await this.create(this.data);
+
+                console.log(this.data)
+                let list = await this.createTopic(this.data);
                 this.data = {
                     type: '',
                     title: '',
@@ -191,6 +207,18 @@ export default {
             this.data.result = '';
             this.dynamicTag = ''
         }
+    },
+    computed: {
+        formathtml() {
+            return md.render(this.data.title);
+        }
+    },
+    async created() {
+        let res = await this.getCategoryList({
+            type: "1"
+        })
+        this.listData = res.data
+        console.log(this.listData)
     }
 
 }
@@ -199,6 +227,7 @@ export default {
 <style>
 .answer {
     display: flex;
+    flex-wrap: wrap;
 }
 
 .answer-content {
@@ -206,5 +235,20 @@ export default {
     align-items: center;
     flex-direction: column;
     margin: 10px;
+}
+
+.md-border {
+    border: 1px solid #b1d1f7;
+}
+
+.listData-content {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.el-radio__label {
+    padding: 0;
 }
 </style>

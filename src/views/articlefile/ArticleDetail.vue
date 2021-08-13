@@ -13,7 +13,7 @@
             </div>
             <div class="article" >
                 <el-scrollbar max-height="400px">
-                    <div v-html="changeMd(article.article)"></div>
+                    <div>{{formatHtml}}</div>
                 </el-scrollbar>
             </div>
         </div>
@@ -31,19 +31,23 @@ export default ({
         }
     },
     methods:{
-        ...mapActions(["detail"]),
-        changeMd(val) {
-            // return md.renderInline(val);
-            return md.render(val);
-        },
+        ...mapActions(["getArticleDetail"]),
+       
     },
     async created(){
-        let result = await this.detail({
+        let result = await this.getArticleDetail({
             id:this.$route.query.id
         });
         console.log(this.$route.query.id);
         this.article = result.data
         console.log(this.article);
+    },
+    computed:{
+        formatHtml() {
+            // return md.renderInline(this.article.article);
+            let res = md.render(this.article.article);
+            return res;
+        },
     }
 })
 </script>
@@ -77,6 +81,5 @@ export default ({
 .article{
     width: 100%;
     margin-top: 20px;
-    border: 1px solid #99c3ff;
 }
 </style>

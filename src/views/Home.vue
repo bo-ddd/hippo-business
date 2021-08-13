@@ -22,7 +22,7 @@
                     <el-submenu index="1">
                         <template #title>
                             <i class="el-icon-location"></i>
-                            <span>类目</span>
+                            <span>类目管理</span>
                         </template>
                         <el-menu-item-group>
                             <el-menu-item @click="getQuestions('Testquestions')" index="1-1">试题</el-menu-item>

@@ -26,21 +26,22 @@ export default {
         };
     },
     methods: {
-        ...mapActions(["articlelist","catlist"]),
+        ...mapActions(["getArticleList","getCategoryList"]),
         toAticle(id){
           console.log(id);
         },
         toArticle(data){
           this.$router.push({
               query:{id:data.id},
-              name:'Article',
+              name:'Articlethis',
           })
         }
     },
     async created() {
-        let article = await this.articlelist({});
+        let article = await this.getArticleList({});
+        console.log(article);
         this.tableData = article.data.rows;
-        let catlist = await this.catlist({
+        let catlist = await this.getCategoryList({
             type: "2",
         });
         this.allType = catlist

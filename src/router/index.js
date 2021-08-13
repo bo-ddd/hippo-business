@@ -43,23 +43,28 @@ const routes = [{
             name: 'Mainarticle',
             component: () =>
                 import ('../views/articlefile/Mainarticle.vue'),
-        },
-        {
-            path: '/article',
-            name: 'Article',
+        }, {
+            path: '/viewtestquestions',
+            name: 'Viewtestquestions',
             component: () =>
-                import ('../views/articlefile/Article.vue'),
+                import ('../views/topiccatalogue/Viewtestquestions.vue'),
         },
+         {
+            path: '/articleDetail',
+            name: 'ArticleDetail',
+            component: () =>
+                import ('../views/articlefile/ArticleDetail.vue'),
+        }
     ],
-}, {
-    path: '/login',
-    name: 'Login',
-    component: Login,
-}, {
-    path: '/registration',
-    name: 'Registration',
-    component: Registration,
-}]
+    }, {
+        path: '/login',
+        name: 'Login',
+        component: Login,
+    }, {
+        path: '/registration',
+        name: 'Registration',
+        component: Registration,
+    }]
 
 const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),

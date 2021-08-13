@@ -1,11 +1,11 @@
 
 <template  v-slot:contrite>
-<el-table :data="tableData" style="width: 100%" :row-class-name="rowClassName">
-    <el-table-column label="题目类型" prop="categoryId">
+<el-table :data="tableData" max-height="750" border style="width: 100%" :row-class-name="rowClassName">
+    <el-table-column label="题目类型" prop="categoryId" width="80">
     </el-table-column>
     <el-table-column label="题目" prop="title">
     </el-table-column>
-    <el-table-column label="选项" prop="options">
+    <el-table-column label="选项" prop="options" width="600">
       <ul>
         <li v-for="(item,index) in options" :key="(item,index)">
           {{item.key}}：{{item.value}}
@@ -14,10 +14,12 @@
     </el-table-column>
     <el-table-column align="right">
       <template #header>
-        <el-input v-model="search" size="mini" placeholder="输入关键字搜索"/>
+        <el-input v-model="search" placeholder="请输入题目类型" style="width:70%">
+        </el-input>
+        <el-button type="primary" icon="el-icon-search" @click="selTypeTest(this.search)">搜索</el-button>
       </template>
       <template #default="scope">
-        <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">查看/编辑</el-button>
+        <el-button type="primary" icon="el-icon-search" @click="handleEdit(scope.$index, scope.row)">查看/编辑</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -36,7 +38,7 @@ import { mapActions } from 'vuex'
       }
     },
     methods: {
-      ...mapActions(['topiclist']),
+      ...mapActions(['getTopicList']),
       handleEdit(index, row) {
         console.log(index, row);
         this.$router.push({
@@ -50,10 +52,37 @@ import { mapActions } from 'vuex'
             result:this.tableData[index].result
           }
         })
-        // console.log(this.res)
-
-
+      
       },
+      async selTypeTest(categoryId){
+        this.res={}
+        this.tableData = []
+          if(categoryId=='html'){
+            categoryId='1'
+          }else if(categoryId=='css'){
+            categoryId='2'
+          }else if(categoryId=='js'){
+            categoryId='3'
+          }else if(categoryId=='vue'){
+            categoryId='4'
+          }
+          this.res =await this.getTopicList({
+              categoryId:categoryId
+            });
+            this.tableData = this.res.data.rows
+            console.log(this.res)
+            for(let i = 0; i<this.tableData.length;i++){
+          if(this.tableData[i].categoryId==1){
+            this.tableData[i].categoryId='HTML'
+          }else if(this.tableData[i].categoryId==2){
+            this.tableData[i].categoryId='CSS'
+          }else if(this.tableData[i].categoryId==3){
+            this.tableData[i].categoryId='JS'
+          }else if(this.tableData[i].categoryId==4){
+            this.tableData[i].categoryId='VUE'
+          }
+        }
+        },
       handleDelete(index, row) {
         console.log(index, row);
       },
@@ -65,9 +94,10 @@ import { mapActions } from 'vuex'
       },
     },
     async created(){
-      this.res = await this.topiclist();
+      this.res = await this.getTopicList();
       this.tableData = this.res.data.rows
-        console.log(this.res)
+        // console.log(this.res)
+          console.log(this.tableData)
         for(let i = 0; i<this.tableData.length;i++){
           if(this.tableData[i].categoryId==1){
             this.tableData[i].categoryId='HTML'
@@ -84,7 +114,6 @@ import { mapActions } from 'vuex'
 </script>
 
 <style lang="less" scoped>
-
 </style>
 
 
