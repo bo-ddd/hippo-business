@@ -3,15 +3,17 @@
     <el-table :data="tableData" style="width: 800px" border="true">
         <el-table-column type="index" label="序号" width="50" header-align="center"> </el-table-column>
         <el-table-column prop="title" label="标题" width="250" header-align="center"> </el-table-column>
-        <el-table-column prop="uuid" label="作者" width="150" header-align="center"> </el-table-column>
-        <el-table-column  label="类型"  width="150" header-align="center"> 
+        <el-table-column prop="uuid" label="作者" width="100" header-align="center"> </el-table-column>
+        <el-table-column  label="类型"  width="100" header-align="center"> 
               <template #default="scope">
             <p>{{ formatType(scope.row)}}</p>
           </template>
         </el-table-column>
-        <el-table-column label="操作" header-align="center" prop="id">
+        <el-table-column label="操作" header-align="center" prop="id" >
             <template #default="scope">
-                <el-button type="primary" icon="el-icon-edit" size="small" @click="toArticle(scope.row)">查看</el-button>
+                <el-button icon="el-icon-search" size="mini" @click="toArticle(scope.row)">查看</el-button>
+                <el-button type="primary" icon="el-icon-edit" size="mini" @click="updateArticle(scope.row)">编辑</el-button>
+                <el-button type="danger" icon="el-icon-delete" size="mini" @click="deleteArticle(scope.row)">删除</el-button>
             </template>
         </el-table-column>
     </el-table>
