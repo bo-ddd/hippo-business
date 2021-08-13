@@ -4,7 +4,11 @@
         <el-table-column type="index" label="序号" width="50" header-align="center"> </el-table-column>
         <el-table-column prop="title" label="标题" width="250" header-align="center"> </el-table-column>
         <el-table-column prop="uuid" label="作者" width="150" header-align="center"> </el-table-column>
-        <el-table-column prop="categoryId" label="类型" width="150" header-align="center"> </el-table-column>
+        <el-table-column  label="类型"  width="150" header-align="center"> 
+              <template #default="scope">
+            <p>{{ formatType(scope.row)}}</p>
+          </template>
+        </el-table-column>
         <el-table-column label="操作" header-align="center" prop="id">
             <template #default="scope">
                 <el-button type="primary" icon="el-icon-edit" size="small" @click="toArticle(scope.row)">查看</el-button>
@@ -23,29 +27,38 @@ export default {
         return {
             tableData: [],
             allType:null,
+            caregoryList:[],
         };
     },
     methods: {
-        ...mapActions(["getArticleList","getCategoryList"]),
-        toAticle(id){
-          console.log(id);
-        },
+        ...mapActions(["getArticleList","getCategoryList","getCategoryList"]),
         toArticle(data){
           this.$router.push({
               query:{id:data.id},
-              name:'Articlethis',
+              name:'ArticleDetail',
           })
+        },
+        formatType(data){
+            let type = ''
+            this.caregoryList.forEach(item => {
+                if (data.categoryId==item.id) {
+                    type=item.key
+                }
+            });
+            return type
         }
     },
     async created() {
         let article = await this.getArticleList({});
-        console.log(article);
         this.tableData = article.data.rows;
         let catlist = await this.getCategoryList({
             type: "2",
         });
         this.allType = catlist
-        console.log(catlist);
+        let caregoryList = await this.getCategoryList({
+            type: "2",
+        });
+        this.caregoryList=caregoryList.data
     },
 };
 </script>
