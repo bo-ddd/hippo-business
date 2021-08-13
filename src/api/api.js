@@ -49,5 +49,8 @@ export default {
     addarticle: (params) => {
         return axios.post('/article/create', params, postConfig)
     },
+    articlelist: (params) => {
+        return axios.post('/article/list', params, postConfig)
+    },
 
 }
