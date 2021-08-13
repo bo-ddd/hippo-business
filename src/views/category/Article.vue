@@ -84,6 +84,7 @@ export default {
                 if (this.key.indexOf(inputValue) != -1) {
                     this.$alert("你已经有这个类目", "提示", {
                         confirmButtonText: "确定",
+
                     });
                 } else {
                     await this.createCategory({
