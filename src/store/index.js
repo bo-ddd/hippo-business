@@ -46,6 +46,9 @@ export default createStore({
         deleteArticle(ctx, payload) {
             return Api.getArticleList(payload);
         },
+        updateArticle(ctx, payload) {
+            return Api.updateArticle(payload);
+        },
 
         //用户
         userLogin(ctx, payload) {
