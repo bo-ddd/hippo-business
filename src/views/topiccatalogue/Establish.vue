@@ -70,7 +70,7 @@
         <el-col :span="1">
         </el-col>
         <el-col class="md-border" :span="11">
-            <el-empty v-if="formathtml==''" image="https://inews.gtimg.com/newsapp_bt/0/13684665753/641" description="题目样式" :image-size="500"></el-empty>
+            <el-empty v-if="formathtml==''" image="https://img1.baidu.com/it/u=294607534,2513203338&fm=26&fmt=auto&gp=0.jpg" description="题目样式" :image-size="500"></el-empty>
             <div v-else v-html="formathtml"></div>
         </el-col>
     </el-row>
@@ -224,7 +224,7 @@ export default {
 
 <style>
 .wrap{
-    min-width: 1150px;
+    min-width: 1100px;
 }
 .answer {
     display: flex;

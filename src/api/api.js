@@ -113,9 +113,7 @@ export default {
     createArticle: (params) => {
         return axios.post('/article/create', params, postConfig)
     },
-    articlelist: (params) => {
-        return axios.post('/article/list', params, postConfig)
-    },
+
 
     /**
      * @description  获取文章列表
@@ -123,6 +121,15 @@ export default {
      * */
     getArticleList: (params) => {
         return axios.post('/article/list', params, postConfig)
+    },
+
+
+    /**
+     * @description  获取文章列表
+     * @params {categoryId:[String],pageNum:[String],pageSize:[String]}  categoryId:非必填 文章类型  pageNum:非必填 第几页  pageSize:非必填 获取几条数据 默认为10
+     * */
+    deleteArticle: (params) => {
+        return axios.post('/article/delete', params, postConfig)
     },
     //文章的结束
 
