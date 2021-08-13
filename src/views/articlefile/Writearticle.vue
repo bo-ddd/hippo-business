@@ -53,7 +53,7 @@ export default {
         };
     },
     methods: {
-        ...mapActions(["catlist", "addarticle"]),
+        ...mapActions(["getCategoryList", "createArticle"]),
         changeMd(val) {
             // return md.renderInline(val);
             return md.render(val);
@@ -78,7 +78,7 @@ export default {
             } else if (!this.textarea) {
                 alert('内容不能为空!!!')
             } else {
-                let result = await this.addarticle({
+                let result = await this.createArticle({
                     title: this.text,
                     article: this.textarea,
                     categoryId: typeId.toString(),
@@ -96,7 +96,7 @@ export default {
         }
     },
     async created() {
-        let catlist = await this.catlist({
+        let catlist = await this.getCategoryList({
             type: "2",
         });
         this.tap = catlist.data
