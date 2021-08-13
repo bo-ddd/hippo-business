@@ -131,6 +131,14 @@ export default {
     deleteArticle: (params) => {
         return axios.post('/article/delete', params, postConfig)
     },
+
+    /**
+     * @description  修改文章
+     * @params {title[String],article:[String],categoryId:[String]}
+     * */
+    updateArticle: (params) => {
+        return axios.post('/article/update', params, postConfig)
+    },
     //文章的结束
 
 
