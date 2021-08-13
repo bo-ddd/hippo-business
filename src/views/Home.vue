@@ -13,11 +13,11 @@
                 </div>
             </div>
         </el-header>
-        
+
         <el-container>
 
             <el-aside width="200px">
-                
+
                 <el-menu default-active="1" class="el-menu-vertical-demo aside" @open="handleOpen" @close="handleClose">
                     <el-submenu index="1">
                         <template #title>
@@ -46,7 +46,16 @@
                         </template>
                         <el-menu-item-group>
                             <el-menu-item @click="getQuestions('Writearticle')" index="3-1">写文章</el-menu-item>
-                            <el-menu-item @click="getQuestions('Rolemanagement')" index="3-2">角色管理</el-menu-item>
+                            <el-menu-item @click="getQuestions('ArticleDetail')" index="3-2">文章列表</el-menu-item>
+                        </el-menu-item-group>
+                    </el-submenu>
+                    <el-submenu index="4">
+                        <template #title>
+                            <i class="el-icon-s-order"></i>
+                            <span>角色管理</span>
+                        </template>
+                        <el-menu-item-group>
+                            <el-menu-item @click="getQuestions('Rolemanagement')" index="4-1">创建角色</el-menu-item>
                         </el-menu-item-group>
                     </el-submenu>
                 </el-menu>
@@ -93,11 +102,13 @@ export default {
 .aside {
     height: calc(100vh - 60px);
 }
-.block{
+
+.block {
     display: flex;
     align-items: center;
 }
-.block span{
+
+.block span {
     font-size: 20px;
 }
 </style>
