@@ -3,7 +3,7 @@
 <el-table :data="tableData" max-height="750" border style="width: 100%" :row-class-name="rowClassName">
     <el-table-column label="题目类型" prop="categoryId" width="80">
     </el-table-column>
-    <el-table-column label="题目" prop="title">
+    <el-table-column label="题目" prop="title"  width="700">
     </el-table-column>
     <el-table-column label="选项" prop="options" width="600">
       <ul>
@@ -49,7 +49,8 @@ import { mapActions } from 'vuex'
             type:this.tableData[index].type,
             title:this.tableData[index].title,
             options:JSON.stringify(this.tableData[index].options),
-            result:this.tableData[index].result
+            result:this.tableData[index].result,
+            categoryId:this.tableData[index].categoryId
           }
         })
       
@@ -96,7 +97,7 @@ import { mapActions } from 'vuex'
     async created(){
       this.res = await this.getTopicList();
       this.tableData = this.res.data.rows
-        // console.log(this.res)
+        console.log(this.tableData)
           console.log(this.tableData)
         for(let i = 0; i<this.tableData.length;i++){
           if(this.tableData[i].categoryId==1){
