@@ -3,9 +3,9 @@
 <el-table :data="tableData" max-height="750" border style="width: 100%" :row-class-name="rowClassName">
     <el-table-column label="题目类型" prop="categoryId" width="80">
     </el-table-column>
-    <el-table-column label="题目" prop="title"  width="700">
+    <el-table-column label="题目" prop="title">
     </el-table-column>
-    <el-table-column label="选项" prop="options" width="600">
+    <el-table-column label="选项" prop="options">
       <ul>
         <li v-for="(item,index) in options" :key="(item,index)">
           {{item.key}}：{{item.value}}

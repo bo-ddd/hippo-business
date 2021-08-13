@@ -1,4 +1,5 @@
 <template>
+<el-button type="primary" icon="el-icon-arrow-left" @click="backPage">返回列表</el-button>
 <el-table :data="tableData" max-height="400" style="width: 100%">
     <el-table-column fixed prop="id" label="题号" width="80">
     </el-table-column>
@@ -32,7 +33,7 @@
                     <el-form-item label="所属类目">
                         <div class="listData-content">
                             <div class="list-content" v-for="(item,index) in listData" :key="(item,index)">
-                                <el-tag :class="{active: currentIndex === index}" plain @click="changeColor(index,item.id)" type="button" style="cursor:pointer;">{{item.key}}--{{index}}</el-tag>
+                                <el-tag :class="{active: currentIndex === index}" plain @click="changeColor(index,item.id)" type="button" style="cursor:pointer;">{{item.key}}</el-tag>
                             </div>
                         </div>
                     </el-form-item>
@@ -97,7 +98,6 @@
                     </el-form-item>
                     <el-form-item>
                         <el-button type="primary" @click="submitForm">确认修改</el-button>
-                        <el-button>取消</el-button>
                     </el-form-item>
                 </el-form>
                 <template #footer>
@@ -201,6 +201,9 @@ export default {
             this.form.categoryId = id
             console.log(this.form.categoryId)
             console.log(index)
+        },
+        backPage(){
+            this.$router.go(-1)
         },
         answer(key, index) {
             if (this.arr.indexOf(key) == -1) {
@@ -315,11 +318,36 @@ li {
     border: none;
     background: #ff40898e;
 }
-.answer{
-    /* width: 80%; */
-    display: flex;
-    justify-content: space-around;
-    margin-top: 10px;
+.icon-input{
+    display: inline-block;
+    width: 300px;
+    height: 50px;
+    padding: 5px;
 }
-
+.answer{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
+.el-tag {
+    width: 80px;
+    background-color: #ecf5ff;
+    border-color: #d9ecff;
+    color: #409eff;
+    display: inline-block;
+    height: 28px;
+    padding: var(--el-tag-padding);
+    line-height: 30px;
+    font-size: var(--el-tag-font-size);
+    color: #409eff;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: var(--el-tag-border-radius);
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    white-space: nowrap;
+    text-align: center;
+    line-height: 28px;
+}
 </style>
