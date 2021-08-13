@@ -46,7 +46,7 @@
                         </template>
                         <el-menu-item-group>
                             <el-menu-item @click="getQuestions('Writearticle')" index="3-1">写文章</el-menu-item>
-                            <el-menu-item @click="getQuestions('ArticleDetail')" index="3-2">文章列表</el-menu-item>
+                            <el-menu-item @click="getQuestions('Mainarticle')" index="3-2">文章列表</el-menu-item>
                         </el-menu-item-group>
                     </el-submenu>
                     <el-submenu index="4">

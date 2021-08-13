@@ -13,7 +13,7 @@
             </div>
             <div class="article" >
                 <el-scrollbar max-height="400px">
-                    <div>{{formatHtml}}</div>
+                    <div v-html="formatHtml"></div>
                 </el-scrollbar>
             </div>
         </div>
@@ -38,9 +38,7 @@ export default ({
         let result = await this.getArticleDetail({
             id:this.$route.query.id
         });
-        console.log(this.$route.query.id);
-        this.article = result.data
-        console.log(this.article);
+        this.article = JSON.parse(JSON.stringify(result.data))
     },
     computed:{
         formatHtml() {
