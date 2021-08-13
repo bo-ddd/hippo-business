@@ -1,6 +1,8 @@
 <template>
-<el-table :data="tableData" height="400" border style="width: 100%">
+<el-table :data="tableData" max-height="400" style="width: 100%">
     <el-table-column fixed prop="id" label="题号" width="80">
+    </el-table-column>
+    <el-table-column fixed prop="categoryId" label="所属类目" width="80">
     </el-table-column>
     <el-table-column prop="uuid" label="出题人" width="100">
     </el-table-column>
@@ -17,15 +19,24 @@
     <el-table-column prop="result" label="答案" width="200">
     </el-table-column>
     <el-table-column fixed="right" label="操作" width="280">
-        <template #default="scope">
+        <template #default="scope" class="operation">
 
             <el-button type="primary" @click="dialogFormVisible = true" icon="el-icon-delete">编辑</el-button>
 
-            <el-dialog title="收货地址" v-model="dialogFormVisible">
+            <el-dialog title="修改信息" v-model="dialogFormVisible">
                 <el-form :model="form">
                     <el-form-item label="题目id">
                         {{form.id}}
                     </el-form-item>
+
+                    <el-form-item label="所属类目">
+                        <div class="listData-content">
+                            <div class="list-content" v-for="(item,index) in listData" :key="(item,index)">
+                                <el-tag :class="{active: currentIndex === index}" plain @click="changeColor(index,item.id)" type="button" style="cursor:pointer;">{{item.key}}--{{index}}</el-tag>
+                            </div>
+                        </div>
+                    </el-form-item>
+
                     <el-form-item label="题类型">
                         <el-select v-model="form.type" placeholder="请选择活动区域">
                             <el-option label="单选题" value="1"></el-option>
@@ -41,16 +52,21 @@
                     <!-- 单选题 -->
                     <el-form-item v-if="form.type=='1'" label="答案">
                         <el-button type="primary" @click="showInput" plain>添加答案</el-button>
+                        <el-button type="primary" @click="showInput2" plain>修改答案</el-button>
                         <el-input class="input-new-tag" v-if="inputVisible" v-model="dynamicTag" ref="saveTagInput" size="small" @keyup.enter="handleInputConfirm2" @blur="handleInputConfirm2">
                         </el-input>
+
                         <div class="answer">
                             <div class="answer-content" :key="(item,index)" v-for="(item,index) in form.options">
-                                <el-tag closable :disable-transitions="false" @close="handleClose(index)">
-                                    {{item.value}}
-                                </el-tag>
+
+                                <div>
+                                    <input v-model="item.value" :type="zhuangtai" :class="[zhuangtai=='button'?'icon-button':'icon-input']" @keyup.enter="handleInputConfirm" @blur="handleInputConfirm" />
+                                </div>
+
                                 <el-radio v-model="single" :label=index>正确</el-radio>
                             </div>
                         </div>
+
                     </el-form-item>
 
                     <!--多选题  -->
@@ -103,7 +119,9 @@
 <script>
 import MarkdownIt from "markdown-it";
 let md = MarkdownIt();
-import { mapActions } from 'vuex'
+import {
+    mapActions
+} from 'vuex'
 export default {
     data() {
         return {
@@ -119,6 +137,8 @@ export default {
             single: '',
             result: [],
             listData: [],
+            currentIndex: 0,
+            zhuangtai:'button',
             form: {
                 id: '',
                 type: '',
@@ -130,7 +150,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['updateTopic']),
+        ...mapActions(['updateTopic', 'getCategoryList']),
         deleteRow(index, rows) {
             rows.splice(index, 1);
         },
@@ -143,6 +163,11 @@ export default {
             this.$nextTick(() => {
                 this.$refs.saveTagInput.$refs.input.focus();
             });
+        },
+        showInput2(index) {
+            this.zhuangtai = 'text';
+            console.log(this.zhuangtai)
+            console.log(index)
         },
         handleInputConfirm2() {
             let inputValue = this.dynamicTag;
@@ -162,6 +187,7 @@ export default {
                 this.form.result += inputValue;
             }
             this.inputVisible = false;
+            this.zhuangtai = "button"
         },
         handleClose(index) {
             this.form.options.splice(index, 1);
@@ -169,6 +195,12 @@ export default {
         },
         handleClose2() {
             this.form.result = ''
+        },
+        changeColor(index, id) {
+            this.currentIndex = index
+            this.form.categoryId = id
+            console.log(this.form.categoryId)
+            console.log(index)
         },
         answer(key, index) {
             if (this.arr.indexOf(key) == -1) {
@@ -201,8 +233,19 @@ export default {
                 } else if (this.form.type == '3') {
                     this.form.title = '[简答题]' + this.form.title;
                 }
+                if ((this.tableData[0].categoryId).toLowerCase() == 'html') {
+                    this.tableData[0].categoryId = '1'
+                } else if ((this.tableData[0].categoryId).toLowerCase() == 'css') {
+                    this.tableData[0].categoryId = '2'
+                } else if ((this.tableData[0].categoryId).toLowerCase() == 'js') {
+                    this.tableData[0].categoryId = '3'
+                } else if ((this.tableData[0].categoryId).toLowerCase() == 'vue') {
+                    this.tableData[0].categoryId = '4'
+                }
                 let list = await this.updateTopic(this.form);
-                console.log(list);
+                if(list.status == 1){
+                    this.$options.methods.created()
+                }
             }
         },
     },
@@ -216,7 +259,7 @@ export default {
         this.form.result = this.tableData[0].result
         this.form.categoryId = this.tableData[0].categoryId
         console.log(this.form.options)
-        // console.log(this.tableData[0])
+        console.log(this.tableData[0])
         if (this.tableData[0].uuid == 'vip') {
             this.tableData[0].uuid = '老苏'
         }
@@ -227,6 +270,56 @@ export default {
         } else if (this.tableData[0].type == 3) {
             this.tableData[0].type = '简答'
         }
+        let res = await this.getCategoryList({
+            type: "1"
+        })
+        this.listData = res.data
+        console.log(this.listData)
     }
 }
 </script>
+
+<style>
+.el-table .cell {
+    box-sizing: border-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    word-break: break-all;
+    line-height: 23px;
+    padding-left: 10px;
+    padding-right: 10px;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+li {
+    list-style: none;
+}
+
+.listData-content {
+    display: flex;
+    align-items: center;
+    /* flex-wrap: wrap; */
+    justify-content: space-around;
+}
+
+.active {
+    cursor: pointer;
+    background: #409eff;
+    color: #fff;
+}
+.icon-button{
+    padding: 5px;
+    border: none;
+    background: #ff40898e;
+}
+.answer{
+    /* width: 80%; */
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10px;
+}
+
+</style>
