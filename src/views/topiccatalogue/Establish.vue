@@ -227,6 +227,7 @@ export default {
 <style>
 .answer {
     display: flex;
+    flex-wrap: wrap;
 }
 
 .answer-content {

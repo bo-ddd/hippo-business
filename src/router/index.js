@@ -48,13 +48,7 @@ const routes = [{
             name: 'Viewtestquestions',
             component: () =>
                 import ('../views/topiccatalogue/Viewtestquestions.vue'),
-        },
-        {
-            path: '/viewtestquestions',
-            name: 'Viewtestquestions',
-            component: () =>
-                import ('../views/topiccatalogue/Viewtestquestions.vue'),
-        },
+        }
     ],
     }, {
         path: '/login',
