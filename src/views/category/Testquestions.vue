@@ -70,14 +70,14 @@
   export default {
 
   async  created(){
-      let res= await this.catlist({
+      let res= await this.getCategoryList({
          type:"1"
        })
       this.tableData = res.data
     },
   
     methods: {
-      ...mapActions(["catcreate","catlist","catdelete","catupdate"]),
+      ...mapActions(["createCategory","getCategoryList","deleteCategory","updateCategory"]),
 
       showupdate(index,rows){
             this.dialogFormupdate = true;
@@ -85,7 +85,7 @@
       },
       
   async  deleteRow(index, rows) {
-        let res = await this.catdelete({
+        let res = await this.deleteCategory({
            type:"1",
            id:rows[index].id
           })
@@ -97,7 +97,7 @@
       }, 
  async updateRow(){
     this.dialogFormupdate = false;
-    let res = await this.catupdate({
+    let res = await this.updateCategory({
          type:"1",
          id:this.updateId,
          key:this.form.name,
@@ -120,7 +120,7 @@
          this.form.iconUrl = ""
       },
     async  catlistdata(){
-       let res= await this.catlist({
+       let res= await this.getCategoryList({
          type:"1"
        })
       this.tableData = res.data
@@ -136,7 +136,7 @@ async addtitle(){
      });
         
     if(!this.i){
-      let res = await this.catcreate({
+      let res = await this.createCategory({
         type:"1",
         key:this.form.name,
         iconUrl:this.form.iconUrl
