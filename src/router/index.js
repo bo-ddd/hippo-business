@@ -48,7 +48,8 @@ const routes = [{
             name: 'Viewtestquestions',
             component: () =>
                 import ('../views/topiccatalogue/Viewtestquestions.vue'),
-        }, {
+        },
+        {
             path: '/articleDetail',
             name: 'ArticleDetail',
             component: () =>
