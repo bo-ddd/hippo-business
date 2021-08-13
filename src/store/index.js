@@ -44,7 +44,7 @@ export default createStore({
             return Api.getArticleList(payload);
         },
         deleteArticle(ctx, payload) {
-            return Api.getArticleList(payload);
+            return Api.deleteArticle(payload);
         },
         updateArticle(ctx, payload) {
             return Api.updateArticle(payload);

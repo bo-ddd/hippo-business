@@ -13,7 +13,7 @@
             <template #default="scope">
                 <el-button icon="el-icon-search" size="mini" @click="toArticle(scope.row)">查看</el-button>
                 <el-button type="primary" icon="el-icon-edit" size="mini" @click="updateArticle(scope.row)">编辑</el-button>
-                <el-button type="danger" icon="el-icon-delete" size="mini" @click="deleteArticle(scope.row)">删除</el-button>
+                <el-button type="danger" icon="el-icon-delete" size="mini" @click="deleteArticlee(scope.row)">删除</el-button>
             </template>
         </el-table-column>
     </el-table>
@@ -33,11 +33,17 @@ export default {
         };
     },
     methods: {
-        ...mapActions(["getArticleList","getCategoryList","getCategoryList"]),
+        ...mapActions(["getArticleList","getCategoryList","getCategoryList","updateArticle","deleteArticle"]),
         toArticle(data){
           this.$router.push({
               query:{id:data.id},
               name:'ArticleDetail',
+          })
+        },
+        updateArticle(data){
+            this.$router.push({
+              query:{id:data.id},
+              name:'UpdateArticle',
           })
         },
         formatType(data){
@@ -48,6 +54,12 @@ export default {
                 }
             });
             return type
+        },
+        async deleteArticlee(data){
+            let delres = await this.deleteArticle({
+                id:data.id.toString(),
+            })
+            console.log(delres);
         }
     },
     async created() {
