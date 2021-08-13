@@ -19,7 +19,7 @@
         </el-tag>
         <el-input class="input-new-tag" v-if="inputVisible" v-model="inputValue" ref="saveTagInput" size="small" @keyup.enter="handleInputConfirm" @blur="handleInputConfirm">
         </el-input>
-        <el-button v-else class="button-new-tag" size="small" @click="showInput">+你要添加的类目asdasd</el-button>
+        <el-button v-else class="button-new-tag" size="small" @click="showInput">+你要添加的类目</el-button>
     </el-card>
 </el-space>
 </template>
