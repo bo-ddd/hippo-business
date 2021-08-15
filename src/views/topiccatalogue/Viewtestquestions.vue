@@ -108,7 +108,7 @@
                 </template>
             </el-dialog>
 
-            <el-button @click.prevent="deleteRow(scope.$index, tableData)" type="primary" icon="el-icon-delete">
+            <el-button @click="deleteRow(scope.$index,form)" type="primary" icon="el-icon-delete">
                 移除
             </el-button>
         </template>
@@ -130,7 +130,6 @@ export default {
             dialogFormVisible: false,
             inputVisible: false,
             falg: true,
-            // tableData: [],
             dynamicTag: '',
             arr: [],
             option: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
@@ -138,7 +137,7 @@ export default {
             result: [],
             listData: [],
             currentIndex: 0,
-            zhuangtai:'button',
+            zhuangtai: 'button',
             form: {
                 id: '',
                 type: '',
@@ -150,9 +149,17 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['updateTopic', 'getCategoryList']),
-        deleteRow(index, rows) {
-            rows.splice(index, 1);
+        ...mapActions(['updateTopic', 'getCategoryList', 'deleteTopic']),
+        async deleteRow(index, rows) {
+            // rows.splice(index, 1);
+            console.log(index)
+            console.log(rows)
+            let del = await this.deleteTopic({
+                id: rows.id
+            })
+            if (del.status == 1) {
+                this.$router.go(-1)
+            }
         },
         changeMd(val) {
             // return md.renderInline(val);
@@ -202,7 +209,7 @@ export default {
             console.log(this.form.categoryId)
             console.log(index)
         },
-        backPage(){
+        backPage() {
             this.$router.go(-1)
         },
         answer(key, index) {
@@ -246,7 +253,7 @@ export default {
                     this.tableData[0].categoryId = '4'
                 }
                 let list = await this.updateTopic(this.form);
-                if(list.status == 1){
+                if (list.status == 1) {
                     this.$options.methods.created()
                 }
             }
@@ -313,23 +320,27 @@ li {
     background: #409eff;
     color: #fff;
 }
-.icon-button{
+
+.icon-button {
     padding: 5px;
     border: none;
     background: #ff40898e;
 }
-.icon-input{
+
+.icon-input {
     display: inline-block;
     width: 300px;
     height: 50px;
     padding: 5px;
 }
-.answer{
+
+.answer {
     display: flex;
     justify-content: space-between;
     margin-top: 10px;
     flex-wrap: wrap;
 }
+
 .el-tag {
     width: 80px;
     background-color: #ecf5ff;
