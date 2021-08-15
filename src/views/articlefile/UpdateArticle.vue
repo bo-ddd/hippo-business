@@ -19,13 +19,12 @@
         <!-- <el-button icon="el-icon-edit" size="mini" @></el-button> -->
         <div class="right">
             <el-scrollbar max-height="400px">
-                <div v-html="changeMd(this.textarea)"></div>
+                <div v-html="changeMd(textarea)"></div>
             </el-scrollbar>
         </div>
     </div>
     <div class="foot">
-        <el-button type="primary" @click="submit">确认发布<i class="el-icon-upload el-icon--right"></i></el-button>
-        <el-button type="primary" @click="tomain">我的文章</el-button>
+        <el-button type="primary" @click="submit">确认修改<i class="el-icon-upload el-icon--right"></i></el-button>
     </div>
 </div>
 </template>
@@ -43,11 +42,10 @@ export default {
             textarea: "",
             text: "",
             checked: {},
-            region: "",
         };
     },
     methods: {
-        ...mapActions(["getCategoryList", "createArticle"]),
+        ...mapActions(["getCategoryList", "updateArticle","getArticleDetail"]),
         changeMd(val) {
             // return md.renderInline(val);
             return md.render(val);
@@ -72,7 +70,8 @@ export default {
             } else if (!this.textarea) {
                 alert('内容不能为空!!!')
             } else {
-                let result = await this.createArticle({
+                let result = await this.updateArticle({
+                    id:this.$route.query.id,
                     title: this.text,
                     article: this.textarea,
                     categoryId: typeId.toString(),
@@ -83,17 +82,17 @@ export default {
                 });
             }
         },
-        tomain() {
-            this.$router.push({
-                name: 'Mainarticle',
-            });
-        }
     },
     async created() {
         let catlist = await this.getCategoryList({
             type: "2",
         });
         this.tap = catlist.data
+        let selectres = await this.getArticleDetail({
+            id:this.$route.query.id,
+        })
+        this.textarea =selectres.data.article
+        this.text =selectres.data.title
     },
 };
 </script>

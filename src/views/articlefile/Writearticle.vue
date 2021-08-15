@@ -49,7 +49,6 @@ export default {
             textarea: "",
             text: "",
             checked: {},
-            region: "",
         };
     },
     methods: {
