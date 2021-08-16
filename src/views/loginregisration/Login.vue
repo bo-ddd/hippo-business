@@ -1,145 +1,163 @@
 <template>
     <div class="wrap">
-        <div class="header">
-            <img src="../../assets/images/title-img.png" class="header_icon" alt="">
-        </div>
-        <div class="main">
-            <div class="background-imgout">
-            </div>
-            <div class="input-content">
-                <h3 class="title-tips">账号密码登录</h3>
-                <div class="ipt-out">
-                    <input type="text" class="ipt-user" placeholder="请输入您的用户名">
-                    <img src="../../assets/images/icon_user.png"  class="icon_tips" alt="">
-                </div>
-                <div class="ipt-out">
-                    <input type="password" class="ipt-pass" placeholder="请输入您的密码">
-                    <img src="../../assets/images/icon_pen.png" class="icon_tips" alt="">
-                </div>
-                <div class="ipt-out">
-                    <input type="text" placeholder="请输入验证码" class="ipt-code">
-                    <div class="verification-out"></div>
-                </div>
-                <button class="btn-login">登录</button>
-                <div class="content-bottom">
-                    <div class="btm-text">忘记密码?</div>
-                    <div class="btm-text">立即注册</div>
-                </div>
-            </div>
-        </div>
-        <div class="footer"><b>@Copyright  20210308</b></div>
-    </div>
+        <el-row class="header"><img src="../../assets/images/title-img.png" alt=""></el-row>
+        <el-row class="main flex-lc_mc">
+            <el-row class="background-img">
+                <img src="../../assets/images/background-img.png" class="bg_img" alt="">
+            </el-row>
+            <el-row class="login-outside">
+                <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="" class="demo-ruleForm">
+                <center><h3 class="title">账号密码登录</h3></center>
+                        <el-form-item label="" prop="userName">
+                        <el-input type="text" class="ipt" v-model="ruleForm.userName" placeholder="" autocomplete="off"></el-input>
+                        </el-form-item>
+                        <el-form-item  label="" prop="checkPass">
+                        <el-input class="ipt" type="password" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
+                        </el-form-item>
+                <el-form-item label="" prop="age">
+                    <el-input class="ipt" v-model.number="ruleForm.age"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button class="btn-login" type="primary" @click="submitForm('ruleForm'),loginUser()">登录</el-button>
+                    </el-form-item>
+                </el-form>
+            </el-row>
+        </el-row>
+        <el-row class="footer flex-lc_mc">
+            <span>@copyright  20210308</span>
+        </el-row>
+    </div>    
 </template>
 
 <script>
-
+import {mapActions} from "vuex";
 export default{
-    data() {
-        
+     data() {
+      var checkAge = (rule, value, callback) => {
+        if (!value) {
+          return callback(new Error('验证码不能为空'));
+        }else{
+          callback();
+        }
+      };
+      var validatePass = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请输入账号'));
+        } else {
+          callback();
+        }
+      };
+      var validatePass2 = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请再次输入密码'));
+        } else {
+          callback();
+        }
+      };
+      return {
+        ruleForm: {
+          userName: '',
+          checkPass: '',
+          age: ''
+        },
+        rules: {
+          userName: [
+            { validator: validatePass, trigger: 'blur' }
+          ],
+          checkPass: [
+            { validator: validatePass2, trigger: 'blur' }
+          ],
+          age: [
+            { validator: checkAge, trigger: 'blur' }
+          ]
+        }
+      };
     },
+     methods: {
+       ...mapActions(['userLogin']),
+      submitForm(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            alert('submit!');
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
+      },
+      resetForm(formName) {
+        this.$refs[formName].resetFields();
+      },
+      async loginUser(){
+        console.log(this.ruleForm.userName);
+         if(this.ruleForm.userName.indexOf(" ")!=-1){
+          this.$message('提交失败账号不能包含空格');
+         }else if(this.ruleForm.userName.length<6){
+           this.$message('提交失败账号长度不能小于6位');
+         }else if(this.ruleForm.checkPass.indexOf(' ')!=-1){
+           this.$message('提交失败密码不能包含空格');
+         }else if(this.ruleForm.checkPass.length<6){
+           this.$message('提交失败密码长度不能小于6位');
+         }else{
+           let data =await this.userLogin({username:this.ruleForm.userName,password:this.ruleForm.checkPass});
+           console.log(data);
+           console.log(data.data);
+          // if(data.status){
+            //  sessionStorage.setItem('token',data.data);
+            //  this.$router.push({
+            //    path:'/',
+            //  }) 
+          // }
+         }
+      }
+    }
 }
 </script>
 
-<style  scoped>
+<style scoped>
     .header{
         height: 66px;
-        background-color: #fff;
-        display: flex;
-        align-items: center;
-    }
-    .main{
-        height: calc(100vh - 176px);
-        width: 100vw;
-        display: flex;
-        justify-content:center;
-        flex-wrap: wrap;
-        flex-direction: column;
-        background-color: hsl(227.6, 49%, 40.8%);;
-    }
-    .header_icon{
-        padding-left: 80px;
     }
     .footer{
         height: 110px;
+        font-size: 18px;
+        font-weight: 600;
+    }
+    .flex-lc_mc{
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 17px;
     }
-    .input-content{
-        align-self: flex-end;
-        width: 462px;
-        height: 482px;
-        margin-right: 190px;
-        background-color: #fff;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-items: center;
-        border-radius: 1%;
-    }
-    .background-imgout{
-        align-self: flex-end;
-        width: calc(100vw - 650px);
-        height: calc(100vh - 176px);
-        background-image: url(../../assets/images/bg-img.png);
-        background-size: 100% 100%;
-    }
-    .title-tips{
-        margin-top: 35px;
-    }
-    .content-bottom{
-        width:412px;
-        height: 36px;
-        margin: 25px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-    .ipt-out{
-        margin: 25px;
-        display: flex;
+    .main{
         position: relative;
+        height: calc(100vh - 176px);
+        background-color: gold;
+        display: flex;
+        align-items: center;
     }
-    .ipt-code{
-        width: 258px;
-        height: 46px;
-        font-size: 18px;
-        outline: none;
-        border: 1px solid #ccc;
-        color:#ccc;
-        text-indent: 2em;
+    .bg_img{
+        width:599px;
+        height: 455px;
+    }
+    .login-outside{
+        position: absolute;
+        background-color: #fff;
+        right: 190px;
+        display: flex;
+        justify-content: center;
+        border-radius: 10px;
+    }
+    .title{
+      padding: 20px;
+      font-weight: 800;
+    }
+    .ipt{
+      width: 412px;
+      height: 45px;
+      margin: 20px;
     }
     .btn-login{
-        width: 412px;
-        height: 46px;
-        border-radius: 10px;
-        color: #fff;
-        font-size: 18px;
-        background-color: #409eff;
-    }
-    .ipt-user,.ipt-pass{
-        width: 412px;
-        height: 46px;
-        font-size: 18px;
-        border: 1px solid #ccc;
-        color: #ccc;
-        outline: none;
-        text-indent: 3em;
-    }
-    .btm-text{
-        font-size: 18px;
-        font-weight: 580;
-    }
-    .icon_tips{
-        position: absolute;
-        left: 15px;
-        top:15px;
-    }
-    .verification-out{
-        height: 46px;
-        width:calc(412px - 258px);
-        background-color: red;
-        background-image: url(../../assets/images/icon_code.png);
+      width: 412px;
+      height:45px;
     }
 </style>
