@@ -1,6 +1,6 @@
 <template>
     <div class="wrap">
-        <el-row class="header"><img src="../../assets/images/title-img.png" alt=""></el-row>
+        <el-row class="header"><img src="../../assets/images/title-img.png" class="icon_title" alt=""></el-row>
         <el-row class="main flex-lc_mc">
             <el-row class="background-img">
                 <img src="../../assets/images/background-img.png" class="bg_img" alt="">
@@ -8,18 +8,30 @@
             <el-row class="login-outside">
                 <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="" class="demo-ruleForm">
                 <center><h3 class="title">账号密码登录</h3></center>
-                        <el-form-item label="" prop="userName">
-                        <el-input type="text" class="ipt" v-model="ruleForm.userName" placeholder="" autocomplete="off"></el-input>
+                        <el-form-item class="ipt-out" prop="userName">
+                        <el-input prefix-icon="../../assets/images/icon_user.png" type="text" class="ipt" v-model="ruleForm.userName" placeholder="请输入您的用户名" autocomplete="off"></el-input>
+                        <img src="../../assets/images/icon_user.png" class="icon_tips" alt="">
                         </el-form-item>
-                        <el-form-item  label="" prop="checkPass">
-                        <el-input class="ipt" type="password" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
+                        <el-form-item class="ipt-out" prop="checkPass">
+                        <el-input class="ipt" type="password" prefix-icon="../../assets/images/icon_user.png" placeholder="请输入您的密码" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
+                        <img src="../../assets/images/icon_pen.png" class="icon_tips" alt="">
                         </el-form-item>
-                <el-form-item label="" prop="age">
-                    <el-input class="ipt" v-model.number="ruleForm.age"></el-input>
+                <el-form-item class="ipt-out" prop="age">
+                    <el-row>
+                      <el-col class="code-out" :span='15'>
+                        <el-input prefix-icon="../../assets/images/icon_user.png" class="ipt-code" placeholder="请输入验证码" v-model.number="ruleForm.age"></el-input>
+                        <img src="../../assets/images/icon_pen.png" class="icon_tips2" alt="">
+                      </el-col>
+                      <el-col :span="6">
+                        <img src="../../assets/images/icon_code.png" alt="">
+                      </el-col>
+                    </el-row>
                 </el-form-item>
                 <el-form-item>
+                  <center>
                     <el-button class="btn-login" type="primary" @click="submitForm('ruleForm'),loginUser()">登录</el-button>
-                    </el-form-item>
+                  </center>
+                </el-form-item>
                 </el-form>
             </el-row>
         </el-row>
@@ -78,9 +90,9 @@ export default{
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            alert('submit!');
+            alert('提交信息!');
           } else {
-            console.log('error submit!!');
+            console.log('提交信息有误!!');
             return false;
           }
         });
@@ -100,14 +112,14 @@ export default{
            this.$message('提交失败密码长度不能小于6位');
          }else{
            let data =await this.userLogin({username:this.ruleForm.userName,password:this.ruleForm.checkPass});
-           console.log(data);
-           console.log(data.data);
-          // if(data.status){
-            //  sessionStorage.setItem('token',data.data);
-            //  this.$router.push({
-            //    path:'/',
-            //  }) 
-          // }
+          if(data.status){
+             sessionStorage.setItem('token',data.data);
+             this.$router.push({
+               path:'/',
+             }) 
+          }else{
+            this.$message('账号或者密码有误');
+          }
          }
       }
     }
@@ -131,7 +143,7 @@ export default{
     .main{
         position: relative;
         height: calc(100vh - 176px);
-        background-color: gold;
+        background-color:#202e77;
         display: flex;
         align-items: center;
     }
@@ -145,7 +157,7 @@ export default{
         right: 190px;
         display: flex;
         justify-content: center;
-        border-radius: 10px;
+        border-radius: 5px;
     }
     .title{
       padding: 20px;
@@ -156,8 +168,32 @@ export default{
       height: 45px;
       margin: 20px;
     }
+    .ipt-code{
+      width: 262px;
+      height: 45px;
+      margin-left: 20px;
+    }
     .btn-login{
       width: 412px;
       height:45px;
     }
+    .ipt-out{
+      position:relative;
+    }
+   .icon_tips{
+     position: absolute;
+     left:30px;
+     top: 33px;
+   }
+  .code-out{
+    position: relative;
+  }
+  .icon_tips2{
+    position: absolute;
+    left: 30px;
+    top: 12px;
+  }
+  .icon_title{
+    padding-left: 80px;
+  }
 </style>
