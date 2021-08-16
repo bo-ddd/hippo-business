@@ -1,10 +1,10 @@
 <template>
-<div>
+<div class="wrap">
     <el-row>
         <el-col :span="12">
             <el-form label-width="100px" class="demo-ruleForm">
                 <el-form-item label="题目名称" prop="data.title">
-                    <el-input type="textarea" autosize v-model="data.title"></el-input>
+                    <el-input type="textarea" :rows="10" v-model="data.title"></el-input>
                 </el-form-item>
                 <el-form-item label="所属类目" prop="data.categoryId">
                     <div class="listData-content">
@@ -64,14 +64,14 @@
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="submitForm()">提交</el-button>
-                    <el-button @click="resetForm('data')">重置</el-button>
                 </el-form-item>
             </el-form>
         </el-col>
         <el-col :span="1">
         </el-col>
         <el-col class="md-border" :span="11">
-            <div v-html="formathtml"></div>
+            <el-empty v-if="formathtml==''" image="https://img1.baidu.com/it/u=294607534,2513203338&fm=26&fmt=auto&gp=0.jpg" description="题目样式" :image-size="500"></el-empty>
+            <div v-else v-html="formathtml"></div>
         </el-col>
     </el-row>
 </div>
@@ -150,17 +150,15 @@ export default {
             }
         },
 
-        resetForm(formName) {
-            this.$refs[formName].resetFields();
-        },
-
         handleClose(index) {
             this.data.options.splice(index, 1);
             this.dynamicTag = ''
         },
+
         handleClose2() {
             this.data.result = ''
         },
+
         showInput() {
             this.inputVisible = true;
             this.$nextTick(() => {
@@ -225,8 +223,12 @@ export default {
 </script>
 
 <style>
+.wrap{
+    min-width: 1100px;
+}
 .answer {
     display: flex;
+    flex-wrap: wrap;
 }
 
 .answer-content {
@@ -248,6 +250,7 @@ export default {
 }
 
 .el-radio__label {
-    padding: 0;
+    font-size: var(--el-radio-font-size);
+    padding-left: 5px;
 }
 </style>

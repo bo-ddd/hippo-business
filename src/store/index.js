@@ -43,6 +43,12 @@ export default createStore({
         getArticleList(ctx, payload) {
             return Api.getArticleList(payload);
         },
+        deleteArticle(ctx, payload) {
+            return Api.deleteArticle(payload);
+        },
+        updateArticle(ctx, payload) {
+            return Api.updateArticle(payload);
+        },
 
         //用户
         userLogin(ctx, payload) {

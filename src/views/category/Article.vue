@@ -39,13 +39,24 @@ export default {
         };
     },
     methods: {
-        ...mapActions(["catlist", "catcreate", "catdelete"]),
+        ...mapActions(["getCategoryList", "createCategory", "deleteCategory"]),
         async handleClose(tag) {
-            await this.catdelete({
+            let deletecat = await this.deleteCategory({
                 type: "2",
                 id: tag.id
             })
-            let catlist = await this.catlist({
+            if(deletecat.status==0){
+                this.$alert(deletecat.message, "提示", {
+                        confirmButtonText: "确定",
+                    });
+            }else{
+                this.$alert("该类目已经被删除", "提示", {
+                        confirmButtonText: "确定",
+                    });
+            }
+            console.log("------------------------");
+            console.log(deletecat);
+            let catlist = await this.getCategoryList({
                 type: "2",
             });
             this.key = [];
@@ -73,19 +84,14 @@ export default {
                 if (this.key.indexOf(inputValue) != -1) {
                     this.$alert("你已经有这个类目", "提示", {
                         confirmButtonText: "确定",
-                        callback: (action) => {
-                            this.$message({
-                                type: "info",
-                                message: `action: ${action}`,
-                            });
-                        },
+
                     });
                 } else {
-                    await this.catcreate({
+                    await this.createCategory({
                         type: "2",
                         key: inputValue,
                     });
-                    let catlist = await this.catlist({
+                    let catlist = await this.getCategoryList({
                         type: "2",
                     });
                     this.key = [];
@@ -105,7 +111,7 @@ export default {
         },
     },
     async created() {
-        let catlist = await this.catlist({
+        let catlist = await this.getCategoryList({
             type: "2",
         });
         for (let i = 0; i < catlist.data.length; i++) {
