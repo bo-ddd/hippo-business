@@ -55,16 +55,16 @@ export default createStore({
 
         //用户
         userLogin(ctx, payload) {
-            return Api.getArticleList(payload);
+            return Api.userLogin(payload);
         },
         userRegister(ctx, payload) {
-            return Api.getArticleList(payload);
+            return Api.userRegister(payload);
         },
         getUserInfo(ctx, payload) {
-            return Api.getArticleList(payload);
+            return Api.getUserInfo(payload);
         },
         updateUser(ctx, payload) {
-            return Api.getArticleList(payload);
+            return Api.updateUser(payload);
         },
 
     },
