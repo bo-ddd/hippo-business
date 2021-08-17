@@ -15,10 +15,8 @@
         </el-header>
 
         <el-container>
-
             <el-aside width="200px">
-
-                <el-menu default-active="1" class="el-menu-vertical-demo aside" @open="handleOpen" @close="handleClose">
+                <el-menu :default-active='titleIndex' class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose">
                     <el-submenu index="1">
                         <template #title>
                             <i class="el-icon-location"></i>
@@ -74,6 +72,7 @@ export default {
         return {
             circleUrl: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
             squareUrl: "https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png",
+            index: '1-1'
         }
     },
     methods: {
@@ -81,6 +80,27 @@ export default {
             this.$router.push({
                 name: title,
             })
+        }
+    },
+    computed: {
+        titleIndex(){
+            if(this.$route.name=='Testquestions'){
+                return '1-1'
+            }else if(this.$route.name=='Article'){
+                return '1-2'
+            }else if(this.$route.name=='Establish'){
+                return '2-1'
+            }else if(this.$route.name=='Listpage'){
+                return '2-2'
+            }else if(this.$route.name=='Writearticle'){
+                return '3-1'
+            }else if(this.$route.name=='Mainarticle'){
+                return '3-2'
+            }else if(this.$route.name=='Rolemanagement'){
+                return '4-1'
+            }else{
+                return '1-1'
+            }
         }
     }
 }
@@ -91,7 +111,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom:1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
 }
 
 .title span {
