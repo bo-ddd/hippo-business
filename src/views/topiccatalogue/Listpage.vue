@@ -29,9 +29,9 @@
 </template>
 
 <script>
-import {
-    mapActions
-} from 'vuex'
+import MarkdownIt from "markdown-it";
+let md = MarkdownIt();
+import {mapActions} from 'vuex'
 export default {
     data() {
         return {
@@ -58,6 +58,10 @@ export default {
                 }
             })
 
+        },
+        changeMd(val) {
+            // return md.renderInline(val);
+            return md.render(val);
         },
         handleSizeChange(val) {
             console.log(`每页 ${val} 条`);
@@ -119,7 +123,7 @@ export default {
     async created() {
         this.res = await this.getTopicList();
         this.tableData = this.res.data.rows
-        console.log(this.tableData)
+        console.log(this.res.data)
         console.log(this.tableData)
         for (let i = 0; i < this.tableData.length; i++) {
             if (this.tableData[i].categoryId == 1) {

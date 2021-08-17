@@ -11,6 +11,9 @@ export default createStore({
         getTopicList(ctx, payload) {
             return Api.getTopicList(payload)
         },
+        getTopicAnswer(ctx, payload) {
+            return Api.getTopicAnswer(payload)
+        },
         updateTopic(ctx, payload) {
             return Api.updateTopic(payload)
         },
