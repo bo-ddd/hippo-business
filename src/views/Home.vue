@@ -54,6 +54,7 @@
                         </template>
                         <el-menu-item-group>
                             <el-menu-item @click="getQuestions('Rolemanagement')" index="4-1">创建角色</el-menu-item>
+                            <el-menu-item @click="getQuestions('UsersList')" index="4-2">用户列表</el-menu-item>
                         </el-menu-item-group>
                     </el-submenu>
                 </el-menu>
@@ -98,6 +99,8 @@ export default {
                 return '3-2'
             }else if(this.$route.name=='Rolemanagement'){
                 return '4-1'
+            }else if(this.$route.name=='UsersList'){
+                return '4-2'
             }else{
                 return '1-1'
             }
