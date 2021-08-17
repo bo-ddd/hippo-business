@@ -9,15 +9,16 @@
     </el-table-column>
     <el-table-column prop="type" label="类型" width="180">
     </el-table-column>
-    <el-table-column label="题目" width="460">
+    <el-table-column label="题目" width="460">  
         <div v-html="changeMd(this.tableData[0].title)"></div>
     </el-table-column>
-    <el-table-column prop="options" label="选项" width="380">
+    <el-table-column prop="options" label="选项" width="280">
         <ul v-for="(item,index) in options" :key="(item,index)">
             <li>{{item.key}}：{{item.value}}</li>
         </ul>
     </el-table-column>
     <el-table-column prop="result" label="答案" width="200">
+        {{result}}
     </el-table-column>
     <el-table-column fixed="right" label="操作" width="280">
         <template #default="scope" class="operation">
@@ -60,9 +61,9 @@
                         <div class="answer">
                             <div class="answer-content" :key="(item,index)" v-for="(item,index) in form.options">
 
-                                <div>
+                                <el-tag closable :disable-transitions="false" @close="handleClose(index)">
                                     <input v-model="item.value" :type="zhuangtai" :class="[zhuangtai=='button'?'icon-button':'icon-input']" @keyup.enter="handleInputConfirm" @blur="handleInputConfirm" />
-                                </div>
+                                </el-tag>
 
                                 <el-radio v-model="single" :label=index>正确</el-radio>
                             </div>
@@ -73,12 +74,13 @@
                     <!--多选题  -->
                     <el-form-item v-if="form.type=='2'" label="题目答案" prop="type">
                         <el-button type="primary" @click="showInput" plain>添加答案</el-button>
+                        <el-button type="primary" @click="showInput2" plain>修改答案</el-button>
                         <el-input class="input-new-tag" v-if="inputVisible" v-model="dynamicTag" ref="saveTagInput" size="small" @keyup.enter="handleInputConfirm2" @blur="handleInputConfirm2">
                         </el-input>
                         <div class="answer">
                             <div class="answer-content" :key="(item,index)" v-for="(item,index) in form.options">
                                 <el-tag closable :disable-transitions="false" @close="handleClose(index)">
-                                    {{item.value}}
+                                    <input v-model="item.value" :type="zhuangtai" :class="[zhuangtai=='button'?'icon-button':'icon-input']" @keyup.enter="handleInputConfirm" @blur="handleInputConfirm" />
                                 </el-tag>
                                 <el-checkbox @click="answer(item.key,index)" label=""></el-checkbox>
                             </div>
@@ -149,7 +151,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['updateTopic', 'getCategoryList', 'deleteTopic']),
+        ...mapActions(['updateTopic', 'getCategoryList', 'deleteTopic','getTopicAnswer']),
         async deleteRow(index, rows) {
             // rows.splice(index, 1);
             console.log(index)
@@ -266,10 +268,13 @@ export default {
         this.form.type = this.tableData[0].type
         this.form.title = this.tableData[0].title.substring(5)
         this.form.options = JSON.parse(this.tableData[0].options)
-        this.form.result = this.tableData[0].result
+        this.form.result =await this.getTopicAnswer({
+            ids:this.form.id
+        })
+        this.result = this.form.result.data[0].result
         this.form.categoryId = this.tableData[0].categoryId
         console.log(this.form.options)
-        console.log(this.tableData[0])
+        console.log(this.result)
         if (this.tableData[0].uuid == 'vip') {
             this.tableData[0].uuid = '老苏'
         }
@@ -303,7 +308,15 @@ export default {
     justify-content: space-around;
     flex-wrap: wrap;
 }
-
+.el-table th>.cell {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    position: relative;
+    vertical-align: middle;
+    width: 100%;
+    text-align: center;
+}
 li {
     list-style: none;
 }
@@ -322,15 +335,14 @@ li {
 }
 
 .icon-button {
-    padding: 5px;
     border: none;
-    background: #ff40898e;
+    background: transparent;
 }
 
 .icon-input {
     display: inline-block;
     width: 300px;
-    height: 50px;
+    height: 30px;
     padding: 5px;
 }
 
@@ -340,22 +352,27 @@ li {
     margin-top: 10px;
     flex-wrap: wrap;
 }
+.answer-content{
+    width: 50%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px;
+}
 
 .el-tag {
-    width: 80px;
     background-color: #ecf5ff;
     border-color: #d9ecff;
     color: #409eff;
     display: inline-block;
-    height: 28px;
     padding: var(--el-tag-padding);
     line-height: 30px;
+    height: auto;
+    width: auto;
     font-size: var(--el-tag-font-size);
-    color: #409eff;
     border-width: 1px;
     border-style: solid;
     border-radius: var(--el-tag-border-radius);
-    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     white-space: nowrap;
     text-align: center;

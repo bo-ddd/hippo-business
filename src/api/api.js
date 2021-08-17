@@ -41,7 +41,13 @@ export default {
     getTopicList: (params) => {
         return axios.post('/topic/list', params, postConfig)
     },
-
+/**
+     * @description  获取题答案
+     * @params {ids} 可选 ids:题id 
+     * */
+    getTopicAnswer: (params) => {
+        return axios.post('/topic/answer', params, postConfig)
+},
     /**
      * @description  编辑题
      * @params {id,type,title,options,result,categoryId}
