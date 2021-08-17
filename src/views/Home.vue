@@ -9,7 +9,7 @@
             <div class="demo-basic--circle" @click="getQuestions('Login')">
                 <div class="block">
                     <el-avatar :size="30" :src="circleUrl"></el-avatar>
-                    <span>请登录</span>
+                    <span class="fs-24">请登录</span>
                 </div>
             </div>
         </el-header>
@@ -88,15 +88,15 @@ export default {
 
 <style scoped>
 .title {
-    border: 1px solid #b1d1f7;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    border-bottom:1px solid #e5e5e5;
 }
 
 .title span {
     font-size: 30px;
-    color: #b1d1f7;
+    color: #1890ff;
 }
 
 .aside {
