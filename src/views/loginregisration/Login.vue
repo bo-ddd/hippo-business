@@ -1,13 +1,13 @@
 <template>
     <div class="wrap">
-        <el-row class="header"><img src="../../assets/images/title-img.png" class="icon_title" alt=""></el-row>
+        <el-row class="header"><span class="header-title">学客后台管理系统</span></el-row>
         <el-row class="main flex-lc_mc">
             <el-row class="background-img">
                 <img src="../../assets/images/background-img.png" class="bg_img" alt="">
             </el-row>
             <el-row class="login-outside">
                 <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="" class="demo-ruleForm">
-                <center><h3 class="title">账号密码登录</h3></center>
+                <center><h2 class="title">账号密码登录</h2></center>
                         <el-form-item class="ipt-out" prop="userName">
                         <el-input prefix-icon="../../assets/images/icon_user.png" type="text" class="ipt" v-model="ruleForm.userName" placeholder="请输入您的用户名" autocomplete="off"></el-input>
                         <img src="../../assets/images/icon_user.png" class="icon_tips" alt="">
@@ -32,6 +32,10 @@
                     <el-button class="btn-login" type="primary" @click="submitForm('ruleForm'),loginUser()">登录</el-button>
                   </center>
                 </el-form-item>
+                  <el-row class="text-btm">
+                    <el-col :span='12' class="text-l ft-16">忘记密码?</el-col>
+                    <el-col :span='12' class="text-r ft-16" @click="toRegister">立即注册</el-col>
+                  </el-row>
                 </el-form>
             </el-row>
         </el-row>
@@ -47,21 +51,21 @@ export default{
      data() {
       var checkAge = (rule, value, callback) => {
         if (!value) {
-          return callback(new Error('验证码不能为空'));
+          this.$message('验证码不能为空');
         }else{
           callback();
         }
       };
       var validatePass = (rule, value, callback) => {
         if (value === '') {
-          callback(new Error('请输入账号'));
+          this.$message('请输入账号');
         } else {
           callback();
         }
       };
       var validatePass2 = (rule, value, callback) => {
         if (value === '') {
-          callback(new Error('请再次输入密码'));
+          this.$message('请输入密码');
         } else {
           callback();
         }
@@ -90,9 +94,9 @@ export default{
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            alert('提交信息!');
+            this.$message('提交信息');
           } else {
-            console.log('提交信息有误!!');
+            this.$message('提交信息有误');
             return false;
           }
         });
@@ -100,8 +104,12 @@ export default{
       resetForm(formName) {
         this.$refs[formName].resetFields();
       },
+      toRegister(){
+        this.$router.push({
+          name:"Registration",
+        })
+      },
       async loginUser(){
-        console.log(this.ruleForm.userName);
          if(this.ruleForm.userName.indexOf(" ")!=-1){
           this.$message('提交失败账号不能包含空格');
          }else if(this.ruleForm.userName.length<6){
@@ -129,16 +137,20 @@ export default{
 <style scoped>
     .header{
         height: 66px;
+        display: flex;
+        align-items: center;
     }
     .footer{
         height: 110px;
         font-size: 18px;
         font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     .flex-lc_mc{
         display: flex;
         align-items: center;
-        justify-content: center;
     }
     .main{
         position: relative;
@@ -146,10 +158,6 @@ export default{
         background-color:#202e77;
         display: flex;
         align-items: center;
-    }
-    .bg_img{
-        width:599px;
-        height: 455px;
     }
     .login-outside{
         position: absolute;
@@ -160,40 +168,56 @@ export default{
         border-radius: 5px;
     }
     .title{
-      padding: 20px;
-      font-weight: 800;
+      padding-top: 64px;
+      padding-bottom: 4px;
     }
-    .ipt{
-      width: 412px;
-      height: 45px;
-      margin: 20px;
-    }
-    .ipt-code{
-      width: 262px;
-      height: 45px;
-      margin-left: 20px;
+    .header-title{
+      padding-left: 30px;
+      font-size: 30px;
+      color:#409eff;
     }
     .btn-login{
-      width: 412px;
+      width: 356px;
       height:45px;
     }
     .ipt-out{
       position:relative;
+      margin: 25px 20px;
     }
    .icon_tips{
      position: absolute;
-     left:30px;
-     top: 33px;
+     left:10px;
+     top: 10px;
    }
   .code-out{
     position: relative;
   }
   .icon_tips2{
     position: absolute;
-    left: 30px;
+    left: 10px;
     top: 12px;
   }
   .icon_title{
     padding-left: 80px;
+    width:160px;
+    height: 30px;
+  }
+  .text-l{
+    display: flex;
+    align-items: center;
+    padding-left: 30px;
+  }
+  .text-r{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 30px;
+  }
+  ft-16{
+    font-size: 16px;
+    font-weight: 800;
+  }
+  .text-btm{
+    margin-bottom: 30px;
   }
 </style>
