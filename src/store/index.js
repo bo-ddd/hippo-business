@@ -66,6 +66,9 @@ export default createStore({
         updateUser(ctx, payload) {
             return Api.updateUser(payload);
         },
+        usersList(ctx, payload) {
+            return Api.usersList(payload);
+        },
 
     },
     modules: {}

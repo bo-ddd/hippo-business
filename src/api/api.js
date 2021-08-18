@@ -2,18 +2,18 @@ import axios from 'axios';
 import { postConfig } from './config'
 
 
-axios.interceptors.request.use(function(config) {
+axios.interceptors.request.use(function (config) {
     config.headers.authorization = sessionStorage.getItem('token');
     return config;
 })
 
-axios.interceptors.response.use(function(response) {
+axios.interceptors.response.use(function (response) {
     if (response.data.status == 401) {
         location.href = '/'
     }
     // console.log(postConfig)
     return response.data;
-}, function(error) {
+}, function (error) {
     console.log('get error:', error)
     return {
         code: -1,
@@ -41,13 +41,13 @@ export default {
     getTopicList: (params) => {
         return axios.post('/topic/list', params, postConfig)
     },
-/**
-     * @description  获取题答案
-     * @params {ids} 可选 ids:题id 
-     * */
+    /**
+         * @description  获取题答案
+         * @params {ids} 可选 ids:题id 
+         * */
     getTopicAnswer: (params) => {
         return axios.post('/topic/answer', params, postConfig)
-},
+    },
     /**
      * @description  编辑题
      * @params {id,type,title,options,result,categoryId}
@@ -180,6 +180,14 @@ export default {
      * */
     updateUser(params) {
         return axios.post('/user/update', params, postConfig)
+    },
+
+    /**
+     * @description  获取用户列表信息接口
+     * @params {uuid,pageNum,pageSize}
+     * */
+    usersList(params) {
+        return axios.post('/user/list', params, postConfig)
     },
     //用户接口结束
 }
