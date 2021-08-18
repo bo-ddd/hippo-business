@@ -60,7 +60,13 @@ const routes = [{
             name: 'UpdateArticle',
             component: () =>
                 import ('../views/articlefile/UpdateArticle.vue'),
-        }
+        },
+        {
+            path: '/usersList',
+            name: 'UsersList',
+            component: () =>
+                import ('../views/articlefile/UsersList.vue'),
+        },
     ],
 }, {
     path: '/login',
