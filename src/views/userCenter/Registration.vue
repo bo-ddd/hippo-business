@@ -138,9 +138,14 @@ export default {
         }
     },
     created() {
-        this.$nextTick(() => {
-            Animation()
-        })
+        if (this.$route.name == 'Registration') {
+            this.$nextTick(() => {
+                Animation()
+            })
+        } else {
+            return
+        }
+
     }
 }
 </script>
