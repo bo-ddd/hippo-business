@@ -60,6 +60,24 @@ const routes = [{
             name: 'UpdateArticle',
             component: () =>
                 import ('../views/articlefile/UpdateArticle.vue'),
+        },
+        {
+            path: '/systemnews',
+            name: 'Systemnews',
+            component: () =>
+                import ('../views/news/Systemnews.vue'),
+        },
+        {
+            path: '/increasenews',
+            name: 'Increasenews',
+            component: () =>
+                import ('../views/news/Increasenews.vue'),
+        },
+        {
+            path: '/classmanage',
+            name: 'Classmanage',
+            component: () =>
+                import ('../views/jurisdiction/Classmanage.vue'),
         }
     ],
 }, {

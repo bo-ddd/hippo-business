@@ -29,7 +29,7 @@
                     </el-submenu>
                     <el-submenu index="2">
                         <template #title>
-                            <i class="el-icon-user"></i>
+                            <i class="el-icon-edit"></i>
                             <span>试题</span>
                         </template>
                         <el-menu-item-group>
@@ -49,11 +49,30 @@
                     </el-submenu>
                     <el-submenu index="4">
                         <template #title>
-                            <i class="el-icon-s-order"></i>
+                            <i class="el-icon-user-solid"></i>
                             <span>角色管理</span>
                         </template>
                         <el-menu-item-group>
                             <el-menu-item @click="getQuestions('Rolemanagement')" index="4-1">创建角色</el-menu-item>
+                        </el-menu-item-group>
+                    </el-submenu>
+                    <el-submenu index="5">
+                        <template #title>
+                            <i class="el-icon-s-comment"></i>
+                            <span>消息管理</span>
+                        </template>
+                        <el-menu-item-group>
+                            <el-menu-item @click="getQuestions('Increasenews')" index="5-1">添加消息</el-menu-item>
+                            <el-menu-item @click="getQuestions('Systemnews')" index="5-2">系统消息管理</el-menu-item>
+                        </el-menu-item-group>
+                    </el-submenu>
+                    <el-submenu index="6">
+                        <template #title>
+                            <i class="el-icon-postcard"></i>
+                            <span>我的权限</span>
+                        </template>
+                        <el-menu-item-group>
+                            <el-menu-item @click="getQuestions('Classmanage')" index="6-1">班级管理</el-menu-item>
                         </el-menu-item-group>
                     </el-submenu>
                 </el-menu>
@@ -83,22 +102,26 @@ export default {
         }
     },
     computed: {
-        titleIndex(){
-            if(this.$route.name=='Testquestions'){
+        titleIndex() {
+            if (this.$route.name == 'Testquestions') {
                 return '1-1'
-            }else if(this.$route.name=='Article'){
+            } else if (this.$route.name == 'Article') {
                 return '1-2'
-            }else if(this.$route.name=='Establish'){
+            } else if (this.$route.name == 'Establish') {
                 return '2-1'
-            }else if(this.$route.name=='Listpage'){
+            } else if (this.$route.name == 'Listpage') {
                 return '2-2'
-            }else if(this.$route.name=='Writearticle'){
+            } else if (this.$route.name == 'Writearticle') {
                 return '3-1'
-            }else if(this.$route.name=='Mainarticle'){
+            } else if (this.$route.name == 'Mainarticle') {
                 return '3-2'
-            }else if(this.$route.name=='Rolemanagement'){
+            } else if (this.$route.name == 'Rolemanagement') {
                 return '4-1'
-            }else{
+            } else if (this.$route.name == 'Increasenews') {
+                return '5-1'
+            } else if (this.$route.name == 'Systemnews') {
+                return '5-2'
+            } else {
                 return '1-1'
             }
         }
