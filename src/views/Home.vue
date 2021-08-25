@@ -85,10 +85,10 @@
                             <span>作业管理</span>
                         </template>
                         <el-menu-item-group>
-                            <el-menu-item @click="getQuestions('Releasetask')" index="7-1">发布作业</el-menu-item>
-                            <el-menu-item @click="getQuestions('Correcttask')" index="7-1">批改作业</el-menu-item>
-                            <el-menu-item @click="getQuestions('Modifytask')" index="7-1">修改作业</el-menu-item>
-                            <el-menu-item @click="getQuestions('Querytask')" index="7-1">查询作业信息</el-menu-item>
+                            <el-menu-item @click="getQuestions('Releasetask')" index="8-1">发布作业</el-menu-item>
+                            <el-menu-item @click="getQuestions('Correcttask')" index="8-2">批改作业</el-menu-item>
+                            <el-menu-item @click="getQuestions('Modifytask')" index="8-3">修改作业</el-menu-item>
+                            <el-menu-item @click="getQuestions('Querytask')" index="8-4">查询作业信息</el-menu-item>
                         </el-menu-item-group>
                     </el-submenu>
                 </el-menu>
@@ -112,7 +112,7 @@ export default {
             squareUrl: "https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png",
             resultUser: '',
             index: '1-1',
-            loginImage:'',
+            loginImage: '',
         }
     },
     methods: {
@@ -130,7 +130,7 @@ export default {
             // 返回登录用户的信息
             this.resultUser = data.data;
             //登录后的头像
-            this.loginImage=require(`../assets/images/avator/${(this.resultUser).avatorId}.png`)
+            this.loginImage = require(`../assets/images/avator/${(this.resultUser).avatorId}.png`)
         }
     },
     computed: {
@@ -159,6 +159,14 @@ export default {
                 return '7-1'
             } else if (this.$route.name == 'Datastatistics') {
                 return '1-1'
+            } else if (this.$route.name == 'Releasetask') {
+                return '8-1'
+            } else if (this.$route.name == 'Correcttask') {
+                return '8-2'
+            } else if (this.$route.name == 'Modifytask') {
+                return '8-3'
+            } else if (this.$route.name == 'Querytask') {
+                return '8-4'
             } else {
                 return '1-1'
             }
@@ -209,14 +217,14 @@ export default {
     font-size: 16px !important;
 }
 
-.img-out{
+.img-out {
     width: 40px;
     height: 40px;
     border-radius: 50%;
     overflow: hidden;
 }
 
-.icon_role{
+.icon_role {
     width: 100%;
 }
 </style>
