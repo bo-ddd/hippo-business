@@ -6,10 +6,10 @@
             <el-breadcrumb>
                 <el-breadcrumb-item><span>学客后台管理系统</span></el-breadcrumb-item>
             </el-breadcrumb>
-            <div class="demo-basic--circle" @click="getQuestions('Login')">
+            <div class="demo-basic--circle" @click="resultUser ? '' : getQuestions('Login') ">
                 <div class="block">
                     <el-avatar :size="30" :src="circleUrl"></el-avatar>
-                    <span class="fs-24">请登录</span>
+                    <p :class="['fs-16','pd-10',resultUser ? 'cl-black' : 'cl-blue']" v-text="resultUser ? resultUser.avatorName : '请登录'"></p>
                 </div>
             </div>
         </el-header>
@@ -69,18 +69,29 @@
 </template>
 
 <script>
+import {mapActions} from 'vuex';
 export default {
     data() {
         return {
             circleUrl: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
             squareUrl: "https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png",
+            resultUser:'',
         }
     },
     methods: {
+        ...mapActions(['getUserInfo']),
         getQuestions: function (title) {
             this.$router.push({
                 name: title,
             })
+        },
+    },
+    async created(){
+        let data = await this.getUserInfo();
+        if(data.status){
+
+            // 返回登录用户的信息
+            this.resultUser=data.data;
         }
     }
 }
@@ -95,8 +106,8 @@ export default {
 }
 
 .title span {
-    font-size: 30px;
     color: #1890ff;
+    font-size: 22px;
 }
 
 .aside {
@@ -110,5 +121,20 @@ export default {
 
 .block span {
     font-size: 20px;
+}
+.pd-10{
+    margin: 10px;
+}
+
+.cl-blue{
+    color: #1890ff !important;
+}
+
+.cl-black{
+    color: #000 !important;
+}
+
+.fs-16{
+    font-size: 16px !important;
 }
 </style>
