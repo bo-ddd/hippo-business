@@ -9,7 +9,8 @@ axios.interceptors.request.use(function (config) {
 
 axios.interceptors.response.use(function (response) {
     if (response.data.status == 401) {
-        location.href = '/'
+        location.href = '/login'
+        console.log(response.data);
     }
     // console.log(postConfig)
     return response.data;
@@ -64,7 +65,6 @@ export default {
         return axios.post('/topic/delete', params, postConfig)
     },
     //题的结束
-
 
 
     //类目的开始
