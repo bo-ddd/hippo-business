@@ -100,13 +100,15 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex';
+import {
+    mapActions
+} from 'vuex';
 export default {
     data() {
         return {
             circleUrl: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
             squareUrl: "https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png",
-            resultUser:'',
+            resultUser: '',
             index: '1-1'
         }
     },
@@ -118,12 +120,12 @@ export default {
             })
         },
     },
-    async created(){
+    async created() {
         let data = await this.getUserInfo();
-        if(data.status){
+        if (data.status) {
 
             // 返回登录用户的信息
-            this.resultUser=data.data;
+            this.resultUser = data.data;
         }
     },
     computed: {
@@ -185,19 +187,20 @@ export default {
 .block span {
     font-size: 20px;
 }
-.pd-10{
+
+.pd-10 {
     margin: 10px;
 }
 
-.cl-blue{
+.cl-blue {
     color: #1890ff !important;
 }
 
-.cl-black{
+.cl-black {
     color: #000 !important;
 }
 
-.fs-16{
+.fs-16 {
     font-size: 16px !important;
 }
 </style>
