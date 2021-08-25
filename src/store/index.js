@@ -70,6 +70,20 @@ export default createStore({
             return Api.usersList(payload);
         },
 
+        //消息
+        sendMessage(ctx, payload) {
+            return Api.sendMessage(payload);
+        },
+        getMessageList(ctx, payload) {
+            return Api.getMessageList(payload);
+        },
+        deleteMessage(ctx, payload) {
+            return Api.deleteMessage(payload);
+        },
+        getMessageDetail(ctx, payload) {
+            return Api.getMessageDetail(payload);
+        },
+
     },
     modules: {}
 })
