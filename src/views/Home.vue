@@ -8,7 +8,9 @@
             </el-breadcrumb>
             <div class="demo-basic--circle" @click="resultUser ? '' : getQuestions('Login') ">
                 <div class="block">
-                    <el-avatar :size="30" :src="circleUrl"></el-avatar>
+                    <p class="img-out">
+                        <img :src="resultUser ? loginImage : circleUrl" class="icon_role" alt="">
+                    </p>
                     <p :class="['fs-16','pd-10',resultUser ? 'cl-black' : 'cl-blue']" v-text="resultUser ? resultUser.avatorName : '请登录'"></p>
                 </div>
             </div>
@@ -109,7 +111,8 @@ export default {
             circleUrl: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
             squareUrl: "https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png",
             resultUser: '',
-            index: '1-1'
+            index: '1-1',
+            loginImage:'',
         }
     },
     methods: {
@@ -126,6 +129,8 @@ export default {
 
             // 返回登录用户的信息
             this.resultUser = data.data;
+            //登录后的头像
+            this.loginImage=require(`../assets/images/avator/${(this.resultUser).avatorId}.png`)
         }
     },
     computed: {
@@ -202,5 +207,16 @@ export default {
 
 .fs-16 {
     font-size: 16px !important;
+}
+
+.img-out{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.icon_role{
+    width: 100%;
 }
 </style>
