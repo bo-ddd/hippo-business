@@ -83,6 +83,11 @@ const routes = [{
             name: 'UsersList',
             component: () =>
                 import ('../views/articlefile/UsersList.vue'),
+        }, {
+            path: '/datastatistics',
+            name: 'Datastatistics',
+            component: () =>
+                import ('../views/statistics/Datastatistics.vue'),
         },
     ],
 }, {
