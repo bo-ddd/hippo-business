@@ -22,23 +22,36 @@
         </template>
     </el-table-column>
 </el-table>
-<div class="center-pagination">
-    <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageNum" :page-sizes="pageSizes" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="dataCount">
+
+<div class="block">
+    <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 50, 500, 1000]" :page-size="pagesize" layout="total, sizes, prev, pager, next, jumper" :total="count">
     </el-pagination>
 </div>
+
+<!-- <div class="center-pagination">
+    <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageNum" :page-sizes="pageSizes" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="dataCount">
+    </el-pagination>
+</div> -->
 </template>
 
 <script>
 import MarkdownIt from "markdown-it";
 let md = MarkdownIt();
-import {mapActions} from 'vuex'
+import {
+    mapActions
+} from 'vuex'
 export default {
     data() {
         return {
             res: {},
             tableData: [],
             search: '',
-            options: []
+            options: [],
+
+        currentPage:1,  //初始页是第一页
+        pagesize:10, //每页10条，
+        count:0
+    
         }
     },
     methods: {
@@ -59,20 +72,44 @@ export default {
             })
 
         },
+
+      async   TopicList(){
+           this.res = await this.getTopicList({
+            pageNum:this.currentPage,
+            pageSize:this.pagesize
+        });
+        this.tableData = this.res.data.rows
+        console.log(this.tableData);
+         console.log(this.tableData.length);
+        console.log(this.res.data)
+        console.log(this.tableData)
+        for (let i = 0; i < this.tableData.length; i++) {
+            if (this.tableData[i].categoryId == 1) {
+                this.tableData[i].categoryId = 'HTML'
+            } else if (this.tableData[i].categoryId == 2) {
+                this.tableData[i].categoryId = 'CSS'
+            } else if (this.tableData[i].categoryId == 3) {
+                this.tableData[i].categoryId = 'JS'
+            } else if (this.tableData[i].categoryId == 4) {
+                this.tableData[i].categoryId = 'VUE'
+            }
+        }
+        },
+
         changeMd(val) {
             // return md.renderInline(val);
             return md.render(val);
         },
-        handleSizeChange(val) {
-            console.log(`每页 ${val} 条`);
-            this.pageSize = val; //每页下拉显示数据
-            this.pageNum = 1;
-            this.getOrderData();
+        handleSizeChange(size) {
+            this.pagesize = size;
+            console.log(size);
+              this.currentPage = 1;
+              this.TopicList();
         },
-        handleCurrentChange(val) {
-            console.log(`当前页: ${val}`);
-            this.pageNum = val;
-            this.getOrderData();
+        handleCurrentChange(currentPage) {
+            this.currentPage = currentPage;
+            console.log(currentPage);
+              this.TopicList();
         },
         searchs() {
             this.pageNum = 1;
@@ -121,8 +158,13 @@ export default {
         },
     },
     async created() {
-        this.res = await this.getTopicList();
+     this.res = await this.getTopicList({
+            pageNum:1,
+        });
+        this.count = this.res.data.rows.length
         this.tableData = this.res.data.rows
+        console.log(this.tableData);
+         console.log(this.tableData.length);
         console.log(this.res.data)
         console.log(this.tableData)
         for (let i = 0; i < this.tableData.length; i++) {
@@ -136,9 +178,11 @@ export default {
                 this.tableData[i].categoryId = 'VUE'
             }
         }
+        this.TopicList();
     }
 }
 </script>
 
 <style lang="less" scoped>
 </style>
+ 

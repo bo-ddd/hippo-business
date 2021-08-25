@@ -2,18 +2,19 @@ import axios from 'axios';
 import { postConfig } from './config'
 
 
-axios.interceptors.request.use(function (config) {
+axios.interceptors.request.use(function(config) {
     config.headers.authorization = sessionStorage.getItem('token');
     return config;
 })
 
-axios.interceptors.response.use(function (response) {
+axios.interceptors.response.use(function(response) {
     if (response.data.status == 401) {
-        location.href = '/'
+        location.href = '/login'
+        console.log(response.data);
     }
     // console.log(postConfig)
     return response.data;
-}, function (error) {
+}, function(error) {
     console.log('get error:', error)
     return {
         code: -1,
@@ -42,9 +43,9 @@ export default {
         return axios.post('/topic/list', params, postConfig)
     },
     /**
-         * @description  获取题答案
-         * @params {ids} 可选 ids:题id 
-         * */
+     * @description  获取题答案
+     * @params {ids} 可选 ids:题id 
+     * */
     getTopicAnswer: (params) => {
         return axios.post('/topic/answer', params, postConfig)
     },
@@ -63,8 +64,16 @@ export default {
     deleteTopic: (params) => {
         return axios.post('/topic/delete', params, postConfig)
     },
-    //题的结束
 
+    /**
+     * @description  获取题数量
+     * @params {id}
+     * */
+    getTopicCount: (params) => {
+        return axios.post('/topic/count', params, postConfig)
+    },
+
+    //题的结束
 
 
     //类目的开始
@@ -145,6 +154,13 @@ export default {
     updateArticle: (params) => {
         return axios.post('/article/update', params, postConfig)
     },
+
+    /**
+     * @description  获取文章数量
+     * */
+    getArticleCount: (params) => {
+        return axios.post('/article/count', params, postConfig)
+    },
     //文章的结束
 
 
@@ -198,4 +214,36 @@ export default {
         return axios.post('/role/list', params, postConfig)
     },
     //用户接口结束
+
+
+
+    //消息接口开始
+    /**
+     * @description  新增消息
+     * */
+    sendMessage(params) {
+        return axios.post('/message/send', params, postConfig)
+    },
+
+    /**
+     * @description  获取信息列表
+     * */
+    getMessageList(params) {
+        return axios.post('/message/list', params, postConfig)
+    },
+
+    /**
+     * @description  删除信息
+     * */
+    deleteMessage(params) {
+        return axios.post('/message/delete', params, postConfig)
+    },
+
+    /**
+     * @description  消息详情
+     * */
+    getMessageDetail(params) {
+        return axios.post('/message/detail', params, postConfig)
+    },
+    //信息结束
 }

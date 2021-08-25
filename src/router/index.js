@@ -62,10 +62,56 @@ const routes = [{
                 import ('../views/articlefile/UpdateArticle.vue'),
         },
         {
+            path: '/systemnews',
+            name: 'Systemnews',
+            component: () =>
+                import ('../views/news/Systemnews.vue'),
+        },
+        {
+            path: '/increasenews',
+            name: 'Increasenews',
+            component: () =>
+                import ('../views/news/Increasenews.vue'),
+        },
+        {
+            path: '/classmanage',
+            name: 'Classmanage',
+            component: () =>
+                import ('../views/jurisdiction/Classmanage.vue'),
+        }, {
             path: '/usersList',
             name: 'UsersList',
             component: () =>
                 import ('../views/articlefile/UsersList.vue'),
+        }, {
+            path: '/datastatistics',
+            name: 'Datastatistics',
+            component: () =>
+                import ('../views/statistics/Datastatistics.vue'),
+        },
+        {
+            path: '/releasetask',
+            name: 'Releasetask',
+            component: () =>
+                import ('../views/task/Releasetask.vue'),
+        },
+        {
+            path: '/correcttask',
+            name: 'Correcttask',
+            component: () =>
+                import ('../views/task/Correcttask.vue'),
+        },
+        {
+            path: '/modifytask',
+            name: 'Modifytask',
+            component: () =>
+                import ('../views/task/Modifytask.vue'),
+        },
+        {
+            path: '/querytask',
+            name: 'Querytask',
+            component: () =>
+                import ('../views/task/Querytask.vue'),
         },
     ],
 }, {

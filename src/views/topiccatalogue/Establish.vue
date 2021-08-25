@@ -223,9 +223,10 @@ export default {
 </script>
 
 <style>
-.wrap{
+.wrap {
     min-width: 1100px;
 }
+
 .answer {
     display: flex;
     flex-wrap: wrap;
