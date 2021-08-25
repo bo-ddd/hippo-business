@@ -77,6 +77,18 @@
                             <el-menu-item @click="getQuestions('Classmanage')" index="7-1">班级管理</el-menu-item>
                         </el-menu-item-group>
                     </el-submenu>
+                    <el-submenu index="8">
+                        <template #title>
+                            <i class="el-icon-postcard"></i>
+                            <span>作业管理</span>
+                        </template>
+                        <el-menu-item-group>
+                            <el-menu-item @click="getQuestions('Releasetask')" index="7-1">发布作业</el-menu-item>
+                            <el-menu-item @click="getQuestions('Correcttask')" index="7-1">批改作业</el-menu-item>
+                            <el-menu-item @click="getQuestions('Modifytask')" index="7-1">修改作业</el-menu-item>
+                            <el-menu-item @click="getQuestions('Querytask')" index="7-1">查询作业信息</el-menu-item>
+                        </el-menu-item-group>
+                    </el-submenu>
                 </el-menu>
             </el-aside>
             <el-main>
