@@ -15,47 +15,66 @@
         </el-header>
 
         <el-container>
-
             <el-aside width="200px">
-
-                <el-menu default-active="1" class="el-menu-vertical-demo aside" @open="handleOpen" @close="handleClose">
-                    <el-submenu index="1">
+                <el-menu :default-active='titleIndex' class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose">
+                    <el-menu-item @click="getQuestions('Datastatistics')" index="1-1">数据统计</el-menu-item>
+                    <el-submenu index="2">
                         <template #title>
-                            <i class="el-icon-location"></i>
+                            <i class="el-icon-folder-opened"></i>
                             <span>类目管理</span>
                         </template>
                         <el-menu-item-group>
-                            <el-menu-item @click="getQuestions('Testquestions')" index="1-1">试题</el-menu-item>
-                            <el-menu-item @click="getQuestions('Article')" index="1-2">文章</el-menu-item>
-                        </el-menu-item-group>
-                    </el-submenu>
-                    <el-submenu index="2">
-                        <template #title>
-                            <i class="el-icon-user"></i>
-                            <span>试题</span>
-                        </template>
-                        <el-menu-item-group>
-                            <el-menu-item @click="getQuestions('Establish')" index="2-1">创建</el-menu-item>
-                            <el-menu-item @click="getQuestions('Listpage')" index="2-2">列表</el-menu-item>
+                            <el-menu-item @click="getQuestions('Testquestions')" index="2-1">试题</el-menu-item>
+                            <el-menu-item @click="getQuestions('Article')" index="2-2">文章</el-menu-item>
                         </el-menu-item-group>
                     </el-submenu>
                     <el-submenu index="3">
                         <template #title>
-                            <i class="el-icon-s-order"></i>
-                            <span>文章</span>
+                            <i class="el-icon-edit"></i>
+                            <span>试题</span>
                         </template>
                         <el-menu-item-group>
-                            <el-menu-item @click="getQuestions('Writearticle')" index="3-1">写文章</el-menu-item>
-                            <el-menu-item @click="getQuestions('Mainarticle')" index="3-2">文章列表</el-menu-item>
+                            <el-menu-item @click="getQuestions('Establish')" index="3-1">创建</el-menu-item>
+                            <el-menu-item @click="getQuestions('Listpage')" index="3-2">列表</el-menu-item>
                         </el-menu-item-group>
                     </el-submenu>
                     <el-submenu index="4">
                         <template #title>
-                            <i class="el-icon-s-order"></i>
+                            <i class="el-icon-tickets"></i>
+                            <span>文章</span>
+                        </template>
+                        <el-menu-item-group>
+                            <el-menu-item @click="getQuestions('Writearticle')" index="4-1">写文章</el-menu-item>
+                            <el-menu-item @click="getQuestions('Mainarticle')" index="4-2">文章列表</el-menu-item>
+                        </el-menu-item-group>
+                    </el-submenu>
+                    <el-submenu index="5">
+                        <template #title>
+                            <i class="el-icon-user"></i>
                             <span>角色管理</span>
                         </template>
                         <el-menu-item-group>
-                            <el-menu-item @click="getQuestions('Rolemanagement')" index="4-1">创建角色</el-menu-item>
+                            <el-menu-item @click="getQuestions('Rolemanagement')" index="5-1">创建角色</el-menu-item>
+                            <el-menu-item @click="getQuestions('UsersList')" index="5-2">用户列表</el-menu-item>
+                        </el-menu-item-group>
+                    </el-submenu>
+                    <el-submenu index="6">
+                        <template #title>
+                            <i class="el-icon-chat-dot-square"></i>
+                            <span>消息管理</span>
+                        </template>
+                        <el-menu-item-group>
+                            <el-menu-item @click="getQuestions('Increasenews')" index="6-1">添加消息</el-menu-item>
+                            <el-menu-item @click="getQuestions('Systemnews')" index="6-2">系统消息管理</el-menu-item>
+                        </el-menu-item-group>
+                    </el-submenu>
+                    <el-submenu index="7">
+                        <template #title>
+                            <i class="el-icon-postcard"></i>
+                            <span>我的权限</span>
+                        </template>
+                        <el-menu-item-group>
+                            <el-menu-item @click="getQuestions('Classmanage')" index="7-1">班级管理</el-menu-item>
                         </el-menu-item-group>
                     </el-submenu>
                 </el-menu>
@@ -76,6 +95,7 @@ export default {
             circleUrl: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
             squareUrl: "https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png",
             resultUser:'',
+            index: '1-1'
         }
     },
     methods: {
@@ -93,6 +113,37 @@ export default {
             // 返回登录用户的信息
             this.resultUser=data.data;
         }
+    },
+    computed: {
+        titleIndex() {
+            if (this.$route.name == 'Testquestions') {
+                return '2-1'
+            } else if (this.$route.name == 'Article') {
+                return '2-2'
+            } else if (this.$route.name == 'Establish') {
+                return '3-1'
+            } else if (this.$route.name == 'Listpage') {
+                return '3-2'
+            } else if (this.$route.name == 'Writearticle') {
+                return '4-1'
+            } else if (this.$route.name == 'Mainarticle') {
+                return '4-2'
+            } else if (this.$route.name == 'Rolemanagement') {
+                return '5-1'
+            } else if (this.$route.name == 'UsersList') {
+                return '5-2'
+            } else if (this.$route.name == 'Increasenews') {
+                return '6-1'
+            } else if (this.$route.name == 'Systemnews') {
+                return '6-2'
+            } else if (this.$route.name == 'Classmanage') {
+                return '7-1'
+            } else if (this.$route.name == 'Datastatistics') {
+                return '1-1'
+            } else {
+                return '1-1'
+            }
+        }
     }
 }
 </script>
@@ -102,7 +153,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom:1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
 }
 
 .title span {

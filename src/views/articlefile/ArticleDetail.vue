@@ -7,8 +7,8 @@
                     {{article.title}}
                 </div>
                 <div class="author">
-                    作者:
-                    {{article.uuid}}
+                    作者:老苏
+                    <!-- {{article.uuid}} -->
                 </div>
             </div>
             <div class="article" >
