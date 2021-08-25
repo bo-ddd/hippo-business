@@ -78,7 +78,12 @@ const routes = [{
             name: 'Classmanage',
             component: () =>
                 import ('../views/jurisdiction/Classmanage.vue'),
-        }
+        }, {
+            path: '/usersList',
+            name: 'UsersList',
+            component: () =>
+                import ('../views/articlefile/UsersList.vue'),
+        },
     ],
 }, {
     path: '/login',
