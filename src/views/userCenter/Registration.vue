@@ -138,13 +138,9 @@ export default {
         }
     },
     created() {
-        if (this.$route.name == 'Registration') {
-            this.$nextTick(() => {
-                Animation()
-            })
-        }else{
-            return
-        }
+        this.$nextTick(() => {
+            Animation()
+        })
     }
 }
 </script>
@@ -165,8 +161,7 @@ export default {
 .main {
     position: relative;
     height: calc(100vh - 176px);
-    /* background: #ebe0c2 url(../../assets/images/layout.png) 10% center no-repeat; */
-    background-color: rgba(98, 156, 209, 0.8);
+    background-color: rgba(118, 176, 231, 0.5);
     display: flex;
     align-items: center;
 }
