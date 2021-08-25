@@ -20,6 +20,9 @@ export default createStore({
         deleteTopic(ctx, payload) {
             return Api.deleteTopic(payload)
         },
+        getTopicCount(ctx, payload) {
+            return Api.getTopicCount(payload)
+        },
 
 
         //类目
@@ -52,6 +55,9 @@ export default createStore({
         updateArticle(ctx, payload) {
             return Api.updateArticle(payload);
         },
+        getArticleCount(ctx, payload) {
+            return Api.getArticleCount(payload);
+        },
 
         //用户
         userLogin(ctx, payload) {
@@ -65,6 +71,23 @@ export default createStore({
         },
         updateUser(ctx, payload) {
             return Api.updateUser(payload);
+        },
+        usersList(ctx, payload) {
+            return Api.usersList(payload);
+        },
+
+        //消息
+        sendMessage(ctx, payload) {
+            return Api.sendMessage(payload);
+        },
+        getMessageList(ctx, payload) {
+            return Api.getMessageList(payload);
+        },
+        deleteMessage(ctx, payload) {
+            return Api.deleteMessage(payload);
+        },
+        getMessageDetail(ctx, payload) {
+            return Api.getMessageDetail(payload);
         },
 
     },
