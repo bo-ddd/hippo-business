@@ -83,6 +83,35 @@ const routes = [{
             name: 'UsersList',
             component: () =>
                 import ('../views/articlefile/UsersList.vue'),
+        }, {
+            path: '/datastatistics',
+            name: 'Datastatistics',
+            component: () =>
+                import ('../views/statistics/Datastatistics.vue'),
+        },
+        {
+            path: '/releasetask',
+            name: 'Releasetask',
+            component: () =>
+                import ('../views/task/Releasetask.vue'),
+        },
+        {
+            path: '/correcttask',
+            name: 'Correcttask',
+            component: () =>
+                import ('../views/task/Correcttask.vue'),
+        },
+        {
+            path: '/modifytask',
+            name: 'Modifytask',
+            component: () =>
+                import ('../views/task/Modifytask.vue'),
+        },
+        {
+            path: '/querytask',
+            name: 'Querytask',
+            component: () =>
+                import ('../views/task/Querytask.vue'),
         },
     ],
 }, {
