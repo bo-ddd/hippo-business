@@ -5,7 +5,7 @@
             <el-breadcrumb>
                 <el-breadcrumb-item><img class="logo" src="../assets/images/logo.png" alt=""></el-breadcrumb-item>
             </el-breadcrumb>
-            <div class="demo-basic--circle" @click="resultUser ? '' : getQuestions('Login') ">
+            <div class="demo-basic--circle" @click="resultUser ? '' : jumpPage('Login') ">
                 <div class="block">
                     <p class="img-out">
                         <img :src="resultUser ? loginImage : circleUrl" class="icon_role" alt="">
@@ -18,15 +18,15 @@
         <el-container>
             <el-aside width="200px">
                 <el-menu :default-active='titleIndex' unique-opened='true' class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose">
-                    <el-menu-item @click="getQuestions('Datastatistics')" index="1-1">数据统计</el-menu-item>
+                    <el-menu-item @click="jumpPage('Datastatistics')" index="1-1">数据统计</el-menu-item>
                     <el-submenu index="2">
                         <template #title>
                             <i class="el-icon-folder-opened"></i>
                             <span>类目管理</span>
                         </template>
                         <el-menu-item-group>
-                            <el-menu-item @click="getQuestions('Testquestions')" index="2-1">试题</el-menu-item>
-                            <el-menu-item @click="getQuestions('Article')" index="2-2">文章</el-menu-item>
+                            <el-menu-item @click="jumpPage('Testquestions')" index="2-1">试题</el-menu-item>
+                            <el-menu-item @click="jumpPage('Article')" index="2-2">文章</el-menu-item>
                         </el-menu-item-group>
                     </el-submenu>
                     <el-submenu index="3">
@@ -35,8 +35,8 @@
                             <span>试题</span>
                         </template>
                         <el-menu-item-group>
-                            <el-menu-item @click="getQuestions('Establish')" index="3-1">创建</el-menu-item>
-                            <el-menu-item @click="getQuestions('Listpage')" index="3-2">列表</el-menu-item>
+                            <el-menu-item @click="jumpPage('Establish')" index="3-1">创建</el-menu-item>
+                            <el-menu-item @click="jumpPage('Listpage')" index="3-2">列表</el-menu-item>
                         </el-menu-item-group>
                     </el-submenu>
                     <el-submenu index="4">
@@ -45,8 +45,8 @@
                             <span>文章</span>
                         </template>
                         <el-menu-item-group>
-                            <el-menu-item @click="getQuestions('Writearticle')" index="4-1">写文章</el-menu-item>
-                            <el-menu-item @click="getQuestions('Mainarticle')" index="4-2">文章列表</el-menu-item>
+                            <el-menu-item @click="jumpPage('Writearticle')" index="4-1">写文章</el-menu-item>
+                            <el-menu-item @click="jumpPage('Mainarticle')" index="4-2">文章列表</el-menu-item>
                         </el-menu-item-group>
                     </el-submenu>
                     <el-submenu index="5">
@@ -55,8 +55,8 @@
                             <span>角色管理</span>
                         </template>
                         <el-menu-item-group>
-                            <el-menu-item @click="getQuestions('Rolemanagement')" index="5-1">创建角色</el-menu-item>
-                            <el-menu-item @click="getQuestions('UsersList')" index="5-2">用户列表</el-menu-item>
+                            <el-menu-item @click="jumpPage('Rolemanagement')" index="5-1">创建角色</el-menu-item>
+                            <el-menu-item @click="jumpPage('UsersList')" index="5-2">用户列表</el-menu-item>
                         </el-menu-item-group>
                     </el-submenu>
                     <el-submenu index="6">
@@ -65,8 +65,8 @@
                             <span>消息管理</span>
                         </template>
                         <el-menu-item-group>
-                            <el-menu-item @click="getQuestions('Increasenews')" index="6-1">添加消息</el-menu-item>
-                            <el-menu-item @click="getQuestions('Systemnews')" index="6-2">系统消息管理</el-menu-item>
+                            <el-menu-item @click="jumpPage('Increasenews')" index="6-1">添加消息</el-menu-item>
+                            <el-menu-item @click="jumpPage('Systemnews')" index="6-2">系统消息管理</el-menu-item>
                         </el-menu-item-group>
                     </el-submenu>
                     <el-submenu index="7">
@@ -75,19 +75,41 @@
                             <span>我的权限</span>
                         </template>
                         <el-menu-item-group>
-                            <el-menu-item @click="getQuestions('Classmanage')" index="7-1">班级管理</el-menu-item>
+                            <el-menu-item @click="jumpPage('Routemanage')" index="7-1">路由管理</el-menu-item>
                         </el-menu-item-group>
                     </el-submenu>
                     <el-submenu index="8">
                         <template #title>
-                            <i class="el-icon-postcard"></i>
+                            <i class="el-icon-reading"></i>
                             <span>作业管理</span>
                         </template>
                         <el-menu-item-group>
-                            <el-menu-item @click="getQuestions('Releasetask')" index="8-1">发布作业</el-menu-item>
-                            <el-menu-item @click="getQuestions('Correcttask')" index="8-2">批改作业</el-menu-item>
-                            <el-menu-item @click="getQuestions('Modifytask')" index="8-3">修改作业</el-menu-item>
-                            <el-menu-item @click="getQuestions('Querytask')" index="8-4">查询作业信息</el-menu-item>
+                            <el-menu-item @click="jumpPage('Releasetask')" index="8-1">发布作业</el-menu-item>
+                            <el-menu-item @click="jumpPage('Correcttask')" index="8-2">批改作业</el-menu-item>
+                            <el-menu-item @click="jumpPage('Modifytask')" index="8-3">修改作业</el-menu-item>
+                            <el-menu-item @click="jumpPage('Querytask')" index="8-4">查询作业信息</el-menu-item>
+                        </el-menu-item-group>
+                    </el-submenu>
+                    <el-submenu index="9">
+                        <template #title>
+                            <i class="el-icon-school"></i>
+                            <span>班级管理</span>
+                        </template>
+                        <el-menu-item-group>
+                            <el-menu-item @click="jumpPage('Increaseclass')" index="9-1">添加班级</el-menu-item>
+                            <el-menu-item @click="jumpPage('Manageclass')" index="9-2">管理班级</el-menu-item>
+                            <el-menu-item @click="jumpPage('Classmanage')" index="9-3">班级列表</el-menu-item>
+                        </el-menu-item-group>
+                    </el-submenu>
+                    <el-submenu index="10">
+                        <template #title>
+                            <i class="el-icon-edit-outline"></i>
+                            <span>考试管理</span>
+                        </template>
+                        <el-menu-item-group>
+                            <el-menu-item @click="jumpPage('Createpaper')" index="10-1">创建考卷</el-menu-item>
+                            <el-menu-item @click="jumpPage('Examrecord')" index="10-2">考试记录</el-menu-item>
+                            <el-menu-item @click="jumpPage('Paperlist')" index="10-3">试卷列表</el-menu-item>
                         </el-menu-item-group>
                     </el-submenu>
                 </el-menu>
@@ -116,7 +138,7 @@ export default {
     },
     methods: {
         ...mapActions(['getUserInfo']),
-        getQuestions: function (title) {
+        jumpPage: function (title) {
             this.$router.push({
                 name: title,
             })
@@ -154,7 +176,7 @@ export default {
                 return '6-1'
             } else if (this.$route.name == 'Systemnews') {
                 return '6-2'
-            } else if (this.$route.name == 'Classmanage') {
+            } else if (this.$route.name == 'Routemanage') {
                 return '7-1'
             } else if (this.$route.name == 'Datastatistics') {
                 return '1-1'
@@ -166,6 +188,18 @@ export default {
                 return '8-3'
             } else if (this.$route.name == 'Querytask') {
                 return '8-4'
+            } else if (this.$route.name == 'Increaseclass') {
+                return '9-1'
+            } else if (this.$route.name == 'Manageclass') {
+                return '9-2'
+            } else if (this.$route.name == 'Classmanage') {
+                return '9-3'
+            } else if (this.$route.name == 'Createpaper') {
+                return '10-1'
+            } else if (this.$route.name == 'Examrecord') {
+                return '10-2'
+            } else if (this.$route.name == 'Paperlist') {
+                return '10-3'
             } else {
                 return '1-1'
             }
@@ -228,7 +262,7 @@ export default {
     width: 100%;
 }
 
-.logo{
+.logo {
     height: 65px;
 }
 </style>

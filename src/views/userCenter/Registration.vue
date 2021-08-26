@@ -77,6 +77,7 @@ export default {
             }
         }
         return {
+            date: new Date().getDate(),
             ruleForm: {
                 username: '',
                 password: '',
@@ -108,8 +109,30 @@ export default {
                     message: '请输入手机号',
                     trigger: 'blur'
                 }]
+            },
+            foowwLocalStorage: {
+                set: function (key, value, ttl_ms) {
+                    var data = {
+                        value: value,
+                        expirse: ttl_ms
+                    };
+                    localStorage.setItem(key, JSON.stringify(data));
+                },
+                get: function (key) {
+                    var data = JSON.parse(localStorage.getItem(key));
+                    if (data !== null) {
+                        if (data.expirse != null && data.expirse < new Date().getDate()) {
+                            localStorage.removeItem(key);
+                        } else {
+                            return data.value;
+                        }
+                    }
+                    return null;
+                }
             }
+
         };
+
     },
     methods: {
         ...mapActions(["userRegister"]),
@@ -121,19 +144,29 @@ export default {
             } else if (this.ruleForm.checkPass.length < 6) {
                 this.$message.error("密码长度不能小于6位");
             } else {
-                let data = await this.userRegister({
-                    username: this.ruleForm.username,
-                    password: this.ruleForm.checkPass,
-                });
-                console.log(data)
-                if (data.status == 1) {
-                    this.$message.success('注册成功!');
-                    this.$router.push({
-                        name: "Login",
+
+                var text = this.foowwLocalStorage.get("test");
+                console.log(text);
+                if (!text) {
+                    let data = await this.userRegister({
+                        username: this.ruleForm.username,
+                        password: this.ruleForm.checkPass,
                     });
+                    console.log(data)
+                    if (data.status == 1) {
+                        this.foowwLocalStorage.set("test", "注册过", this.date)
+                        this.$message.success('注册成功!');
+                        this.$router.push({
+                            name: "Login",
+                        });
+                    } else {
+                        this.$message.error('账号已存在!!');
+                    }
+
                 } else {
-                    this.$message.error('账号已存在!!');
+                    this.$message.error('一天只可以注册一次');
                 }
+
             }
         }
     },
