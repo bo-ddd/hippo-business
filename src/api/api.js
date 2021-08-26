@@ -203,7 +203,7 @@ export default {
     //角色信息接口开始
     /**
      * @description  获取角色信息接口
-     * @params {uuid,pageNum,pageSize}    pageNum:非必填,第几页,默认1;  pageSize:非必填,每页几条数据,默认为10;
+     * @params 无
      * */
      getRole(params) {
         return axios.post('/role/list', params, postConfig)
@@ -211,7 +211,7 @@ export default {
 
     /**
      * @description  增加角色信息接口
-     * @params {uuid,pageNum,pageSize}    pageNum:非必填,第几页,默认1;  pageSize:非必填,每页几条数据,默认为10;
+     * @params name[Stringg]  name:角色名
      * */
      createRole(params) {
         return axios.post('/role/create', params, postConfig)
@@ -219,7 +219,7 @@ export default {
 
     /**
      * @description  更改角色信息接口
-     * @params {uuid,pageNum,pageSize}    pageNum:非必填,第几页,默认1;  pageSize:非必填,每页几条数据,默认为10;
+     * @params id[Number] name[Stringg]     id : 角色ID;  name:角色名
      * */
      updateRole(params) {
         return axios.post('/role/update', params, postConfig)
@@ -227,7 +227,7 @@ export default {
 
     /**
      * @description  删除角色信息接口
-     * @params {uuid,pageNum,pageSize}    pageNum:非必填,第几页,默认1;  pageSize:非必填,每页几条数据,默认为10;
+     * @params  id[Number]      id : 角色ID;
      * */
      deleteRole(params) {
         return axios.post('/role/delete', params, postConfig)
