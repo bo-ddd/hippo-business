@@ -239,7 +239,7 @@ export default {
     },
     //信息结束
 
-    //班级
+    //班级开始
     /**
      * @description  创建班级
      * @params {name,admin} 
@@ -247,4 +247,18 @@ export default {
     createClass(params) {
         return axios.post('/class/create', params, postConfig)
     },
+
+    //班级结束
+
+
+    //作业
+    /**
+     * @description  创建作业
+     * @params {content,endTime} 
+     * */
+    createTask(params) {
+        return axios.post('/task/create', params, postConfig)
+    },
+
+    //作业结束
 }
