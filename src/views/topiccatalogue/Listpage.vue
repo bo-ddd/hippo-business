@@ -1,4 +1,5 @@
 <template>
+
 <el-table :data="tableData" max-height="750" border style="width: 100%" :row-class-name="rowClassName">
     <el-table-column label="题目类型" prop="categoryId" width="80">
     </el-table-column>
@@ -28,6 +29,9 @@
     </el-pagination>
 </div>
 
+
+
+
 <!-- <div class="center-pagination">
     <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageNum" :page-sizes="pageSizes" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="dataCount">
     </el-pagination>
@@ -48,10 +52,10 @@ export default {
             search: '',
             options: [],
 
-        currentPage:1,  //初始页是第一页
-        pagesize:10, //每页10条，
-        count:0
-    
+            currentPage: 1, //初始页是第一页
+            pagesize: 10, //每页10条，
+            count: 0
+
         }
     },
     methods: {
@@ -73,27 +77,27 @@ export default {
 
         },
 
-      async   TopicList(){
-           this.res = await this.getTopicList({
-            pageNum:this.currentPage,
-            pageSize:this.pagesize
-        });
-        this.tableData = this.res.data.rows
-        console.log(this.tableData);
-         console.log(this.tableData.length);
-        console.log(this.res.data)
-        console.log(this.tableData)
-        for (let i = 0; i < this.tableData.length; i++) {
-            if (this.tableData[i].categoryId == 1) {
-                this.tableData[i].categoryId = 'HTML'
-            } else if (this.tableData[i].categoryId == 2) {
-                this.tableData[i].categoryId = 'CSS'
-            } else if (this.tableData[i].categoryId == 3) {
-                this.tableData[i].categoryId = 'JS'
-            } else if (this.tableData[i].categoryId == 4) {
-                this.tableData[i].categoryId = 'VUE'
+        async TopicList() {
+            this.res = await this.getTopicList({
+                pageNum: this.currentPage,
+                pageSize: this.pagesize
+            });
+            this.tableData = this.res.data.rows
+            console.log(this.tableData);
+            console.log(this.tableData.length);
+            console.log(this.res.data)
+            console.log(this.tableData)
+            for (let i = 0; i < this.tableData.length; i++) {
+                if (this.tableData[i].categoryId == 1) {
+                    this.tableData[i].categoryId = 'HTML'
+                } else if (this.tableData[i].categoryId == 2) {
+                    this.tableData[i].categoryId = 'CSS'
+                } else if (this.tableData[i].categoryId == 3) {
+                    this.tableData[i].categoryId = 'JS'
+                } else if (this.tableData[i].categoryId == 4) {
+                    this.tableData[i].categoryId = 'VUE'
+                }
             }
-        }
         },
 
         changeMd(val) {
@@ -103,13 +107,13 @@ export default {
         handleSizeChange(size) {
             this.pagesize = size;
             console.log(size);
-              this.currentPage = 1;
-              this.TopicList();
+            this.currentPage = 1;
+            this.TopicList();
         },
         handleCurrentChange(currentPage) {
             this.currentPage = currentPage;
             console.log(currentPage);
-              this.TopicList();
+            this.TopicList();
         },
         searchs() {
             this.pageNum = 1;
@@ -158,13 +162,13 @@ export default {
         },
     },
     async created() {
-     this.res = await this.getTopicList({
-            pageNum:1,
+        this.res = await this.getTopicList({
+            pageNum: 1,
         });
         this.count = this.res.data.rows.length
         this.tableData = this.res.data.rows
         console.log(this.tableData);
-         console.log(this.tableData.length);
+        console.log(this.tableData.length);
         console.log(this.res.data)
         console.log(this.tableData)
         for (let i = 0; i < this.tableData.length; i++) {
@@ -185,4 +189,3 @@ export default {
 
 <style lang="less" scoped>
 </style>
- 
