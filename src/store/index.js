@@ -97,6 +97,9 @@ export default createStore({
         getClassList(ctx, payload) {
             return Api.getClassList(payload);
         },
+        deleteClass(ctx, payload) {
+            return Api.deleteClass(payload);
+        },
 
         //作业
         createTask(ctx, payload) {
