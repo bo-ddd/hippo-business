@@ -114,7 +114,7 @@
                     </el-submenu>
                 </el-menu>
             </el-aside>
-            <el-main>
+            <el-main class="main">
                 <router-view></router-view>
             </el-main>
         </el-container>
@@ -264,5 +264,10 @@ export default {
 
 .logo {
     height: 65px;
+}
+
+.main {
+    height: 88vh;
+    overflow: auto
 }
 </style>
