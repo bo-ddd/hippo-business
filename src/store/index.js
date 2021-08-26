@@ -95,6 +95,11 @@ export default createStore({
             return Api.createClass(payload);
         },
 
+        //作业
+        createTask(ctx, payload) {
+            return Api.createTask(payload);
+        },
+
     },
     modules: {}
 })
