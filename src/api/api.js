@@ -205,7 +205,7 @@ export default {
      * @description  获取角色信息接口
      * @params {uuid,pageNum,pageSize}    pageNum:非必填,第几页,默认1;  pageSize:非必填,每页几条数据,默认为10;
      * */
-     getRole(params) {
+    getRole(params) {
         return axios.post('/role/list', params, postConfig)
     },
 
@@ -213,7 +213,7 @@ export default {
      * @description  增加角色信息接口
      * @params {uuid,pageNum,pageSize}    pageNum:非必填,第几页,默认1;  pageSize:非必填,每页几条数据,默认为10;
      * */
-     createRole(params) {
+    createRole(params) {
         return axios.post('/role/create', params, postConfig)
     },
 
@@ -221,7 +221,7 @@ export default {
      * @description  更改角色信息接口
      * @params {uuid,pageNum,pageSize}    pageNum:非必填,第几页,默认1;  pageSize:非必填,每页几条数据,默认为10;
      * */
-     updateRole(params) {
+    updateRole(params) {
         return axios.post('/role/update', params, postConfig)
     },
 
@@ -229,7 +229,7 @@ export default {
      * @description  删除角色信息接口
      * @params {uuid,pageNum,pageSize}    pageNum:非必填,第几页,默认1;  pageSize:非必填,每页几条数据,默认为10;
      * */
-     deleteRole(params) {
+    deleteRole(params) {
         return axios.post('/role/delete', params, postConfig)
     },
     //角色信息接口结束
@@ -340,4 +340,18 @@ export default {
 
 
     //活动结束
+
+
+    //考试
+    /**
+     * @description  创建试题
+     * @params {classId,categoryId,startTime,endTime,count}
+     * */
+    createExam(params) {
+        return axios.post('/exam/create', params, postConfig)
+    },
+
+
+
+    //考试结束
 }

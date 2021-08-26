@@ -134,6 +134,11 @@ export default createStore({
             return Api.updateActive(payload);
         },
 
+
+        //考试
+        createExam(ctx, payload) {
+            return Api.createExam(payload);
+        },
     },
     modules: {}
 })
