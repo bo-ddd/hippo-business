@@ -1,17 +1,9 @@
 <template>
   <div>
-    <el-card>
+    <div @click="toArticleS">111</div>
+    
+    <el-card v-if="management">
       <el-row :gutter="20">
-        <el-col :span="6">
-          <el-input placeholder="请输入班级名称"
-                    v-model="queryInfo.query"
-                    clearable
-                    @clear="getGradeList">
-            <el-button 
-                       icon="el-icon-search"
-                       @click="getGradeList"></el-button>
-          </el-input>
-        </el-col>
         <el-col :span="4">
           <el-button type="primary"
                      @click="dialogFormVisible = true">添加班级</el-button>
@@ -20,7 +12,7 @@
       <el-table :data="classlist" border stripe>
         <el-table-column prop="id" label="序号"></el-table-column>
         <el-table-column prop="name" label="班级名称"></el-table-column>
-        <el-table-column prop="" label="管理员"></el-table-column>
+        <el-table-column prop="admin" label="管理员"></el-table-column>
               <el-table-column label="操作" header-align="center" prop="id" >
                   <template #default="scope">
                       <el-button icon="el-icon-search" size="mini" @click="toArticle(scope.row)">查看</el-button>
@@ -30,9 +22,36 @@
               </el-table-column> 
       </el-table>
 
-        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" v-model:current-page.sync="queryInfo.nowPage" :page-size="queryInfo.pageSize" layout="sizes, prev, pager, next" :page-count="queryInfo.countPage" :page-sizes="[2,3,4,5,10]">
+        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" v-model:current-page.sync="queryInfo.nowPage" :page-size="pageSize" layout="sizes, prev, pager, next" :page-count="queryInfo.countPage" :page-sizes="[2,3,4,5,10]">
         </el-pagination>
     </el-card>
+
+        
+        <el-container v-if="studentlist">
+            <el-main class="content">
+              <el-table :data="studentsNewList" border style="width: 100%">
+              <el-table-column prop="userId" label="用户ID" header-align="center">
+              </el-table-column>
+              <el-table-column prop="username" label="用户名" header-align="center">
+              </el-table-column>
+              <el-table-column prop="sex" label="性别" header-align="center">
+              </el-table-column>
+              <el-table-column prop="" label="学习成绩" header-align="center">
+              </el-table-column>
+              <el-table-column prop="" label="班级名称" width="180" header-align="center">
+              </el-table-column>
+              <el-table-column prop="" label="操作" width="180" header-align="center">
+                  <template #default="scope">
+                      <el-button type="primary" icon="el-icon-edit" size="mini" @click="updateArticle(scope.row)">加入此学生</el-button>
+                      <el-button type="danger" icon="el-icon-delete" size="mini" @click="deleteArticlee(scope.row)">移除此学生</el-button>
+                  </template>
+              </el-table-column>
+          </el-table>
+          <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" v-model:current-page.sync="queryInfo.nowPage" :page-size="pageSize" layout="sizes, prev, pager, next" :page-count="queryInfo.countPage" :page-sizes="[2,3,4,5,10]">
+          </el-pagination>
+            </el-main>
+    </el-container>
+    
 
 
     <!-- 添加班级的对话框 -->
@@ -100,10 +119,11 @@ export default {
       queryInfo: {
         query: "",
         pageNo: 1,
-        pageSize: 5,
         nowPage:1,
         countPage:1
       },
+      studentsNewList:[],
+      pageSize: 10,
       addForm: {
         classname: "",
       },
@@ -112,9 +132,12 @@ export default {
       form: {},
       Modifyid:[],
       Modifyclass:{
-        name:'',
-        admin:'',
+        name:"",
+        admin:"",
       },
+      studentlist:false,
+      management:true,
+      see:""
     };
   },
   created() {
@@ -122,7 +145,7 @@ export default {
       this.getclasslist()
   },
   methods:{
-    ...mapActions(["createClass","getUserInfo","getClassList",'deleteClass',"updateClass"]),
+    ...mapActions(["createClass","getUserInfo","getClassList",'deleteClass',"updateClass","usersList"]),
         handleCurrentChange(val) {
             this.nowPage = val;
             this.getclasslist();
@@ -130,7 +153,7 @@ export default {
         handleSizeChange(val) {
             this.pageSize = val;
             this.getclasslist();
-        },
+    },
     async getGradeList(){
       let acc = await this.createClass({
           name:this.addForm.classname,
@@ -149,7 +172,7 @@ export default {
     async getclasslist(){
       let classlist = await this.getClassList({
             pageNum: this.queryInfo.nowPage,
-            pageSize: this.queryInfo.pageSize
+            pageSize: this.pageSize
       });
       this.classlist=classlist.data.rows
       this.queryInfo.countPage = classlist.data.countPage;
@@ -159,8 +182,26 @@ export default {
     async updateArticle(data){
       this.dialogTableVisible = true
       this.Modifyid=data
-      console.log(this.Modifyid.id);
+      // console.log(this.Modifyid.id);
     },
+
+    async getStudentsNum() {
+      let studentsNewList = await this.usersList({
+                // uuid:'vip',
+                pageNum: this.queryInfo.nowPage,
+                pageSize: this.pageSize
+      });
+      this.studentsNewList = studentsNewList.data.rows;
+      this.countPage = studentsNewList.data.countPage;
+      console.log(studentsNewList);
+      Object.values(this.studentsNewList).forEach((item) => {
+      if(item.sex==1){
+          item.sex="男"
+          }else{
+          item.sex="女"
+          }
+        })
+      },
 
     async deleteArticlee(data){
             let delres = await this.deleteClass({
@@ -187,6 +228,17 @@ export default {
         console.log(modify);
         this.getclasslist()
         this.dialogFormVisible = false
+    },
+    toArticle(data){
+      this.studentlist=true
+      this.management=false
+      this.getStudentsNum()
+      this.see=data.id
+      console.log(this.see);
+    },
+    toArticleS(){
+      this.studentlist=false
+      this.management=true
     }
   }
 };
