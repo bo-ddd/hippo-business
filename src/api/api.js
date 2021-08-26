@@ -248,6 +248,30 @@ export default {
         return axios.post('/class/create', params, postConfig)
     },
 
+    /**
+     * @description  班级列表
+     * @params {pageNum,pageSize} 
+     * */
+    getClassList(params) {
+        return axios.post('/class/list', params, postConfig)
+    },
+
+    /**
+     * @description  删除班级
+     * @params {id} 
+     * */
+    deleteClass(params) {
+        return axios.post('/class/delete', params, postConfig)
+    },
+
+
+    /**
+     * @description  修改班级
+     * @params {id,name,admin} 
+     * */
+    updateClass(params) {
+        return axios.post('/class/update', params, postConfig)
+    },
     //班级结束
 
 
