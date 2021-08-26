@@ -254,6 +254,7 @@ export default {
     //作业
     /**
      * @description  创建作业
+     * @params {content,endTime} 
      * */
     createTask(params) {
         return axios.post('/task/create', params, postConfig)
