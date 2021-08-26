@@ -264,6 +264,14 @@ export default {
         return axios.post('/class/delete', params, postConfig)
     },
 
+
+    /**
+     * @description  修改班级
+     * @params {id,name,admin} 
+     * */
+    updateClass(params) {
+        return axios.post('/class/update', params, postConfig)
+    },
     //班级结束
 
 
