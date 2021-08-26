@@ -122,6 +122,16 @@
                             <el-menu-item @click="jumpPage('Activitylist')" index="11-2">活动列表</el-menu-item>
                         </el-menu-item-group>
                     </el-submenu>
+                    <el-submenu index="12">
+                        <template #title>
+                            <i class="el-icon-coordinate"></i>
+                            <span>打卡管理</span>
+                        </template>
+                        <el-menu-item-group>
+                            <el-menu-item @click="jumpPage('Historyrecord')" index="12-1">历史记录</el-menu-item>
+                            <el-menu-item @click="jumpPage('Signinsetup')" index="12-2">打卡设置</el-menu-item>
+                        </el-menu-item-group>
+                    </el-submenu>
                 </el-menu>
             </el-aside>
             <el-main class="main">
@@ -214,6 +224,10 @@ export default {
                 return '11-1'
             } else if (this.$route.name == 'Activitylist') {
                 return '11-2'
+            }  else if (this.$route.name == 'Historyrecord') {
+                return '12-1'
+            }  else if (this.$route.name == 'Signinsetup') {
+                return '12-2'
             } else {
                 return '1-1'
             }
