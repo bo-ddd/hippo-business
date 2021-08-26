@@ -8,7 +8,7 @@ const routes = [{
     name: 'Home',
     component: Home,
     children: [{
-            path: '/',
+            path: '/testquestions',
             name: 'Testquestions',
             component: () =>
                 import ('../views/category/Testquestions.vue'),
@@ -77,14 +77,14 @@ const routes = [{
             path: '/classmanage',
             name: 'Classmanage',
             component: () =>
-                import ('../views/jurisdiction/Classmanage.vue'),
+                import ('../views/classroom/Classmanage.vue'),
         }, {
             path: '/usersList',
             name: 'UsersList',
             component: () =>
                 import ('../views/articlefile/UsersList.vue'),
         }, {
-            path: '/datastatistics',
+            path: '/',
             name: 'Datastatistics',
             component: () =>
                 import ('../views/statistics/Datastatistics.vue'),
@@ -112,6 +112,57 @@ const routes = [{
             name: 'Querytask',
             component: () =>
                 import ('../views/task/Querytask.vue'),
+        }, {
+            path: '/manageclass',
+            name: 'Manageclass',
+            component: () =>
+                import ('../views/classroom/Manageclass.vue'),
+        }, {
+            path: '/Increaseclass',
+            name: 'Increaseclass',
+            component: () =>
+                import ('../views/classroom/Increaseclass.vue'),
+        }, {
+            path: '/routemanage',
+            name: 'Routemanage',
+            component: () =>
+                import ('../views/jurisdiction/Routemanage.vue'),
+        },
+
+
+        {
+            path: '/createpaper',
+            name: 'Createpaper',
+            component: () =>
+                import ('../views/exam/Createpaper.vue'),
+        }, {
+            path: '/examrecord',
+            name: 'Examrecord',
+            component: () =>
+                import ('../views/exam/Examrecord.vue'),
+        }, {
+            path: '/paperdetails',
+            name: 'Paperdetails',
+            component: () =>
+                import ('../views/exam/Paperdetails.vue'),
+        }, {
+            path: '/paperlist',
+            name: 'Paperlist',
+            component: () =>
+                import ('../views/exam/Paperlist.vue'),
+        },
+
+        {
+            path: '/createactivity',
+            name: 'Createactivity',
+            component: () =>
+                import ('../views/activity/Createactivity.vue'),
+        },
+        {
+            path: '/activitylist',
+            name: 'Activitylist',
+            component: () =>
+                import ('../views/activity/Activitylist.vue'),
         },
     ],
 }, {
