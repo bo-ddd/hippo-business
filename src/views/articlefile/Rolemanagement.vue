@@ -13,35 +13,25 @@
     </el-space>
 
     <div class="operate">
-        <el-row>
-            <el-input class="input-new-tag create-input" v-if="inputVisible" v-model="inputValue" ref="saveTagInput" @keyup.enter="handleInputConfirm" @blur="handleInputConfirm">
-        </el-input>
-        <el-button type="success" v-else class="button-new-tag" @click="showInput">新增角色</el-button>
-            <el-button type="info" plain>更改角色</el-button>
-            <el-button type="danger" @click="del">删除角色</el-button>
-        </el-row>
-    </div>
-
-    <!-- <div class="operate">
-        <el-tag type="danger" :key="tag" v-for="tag in rolesArr" closable :disable-transitions="false" @close="handleClose(tag)">
-            {{tag}}
-        </el-tag>
-        <el-input class="input-new-tag" v-if="inputVisible" v-model="inputValue" ref="saveTagInput" size="small" @keyup.enter="handleInputConfirm" @blur="handleInputConfirm">
-        </el-input>
-        <el-button type="success" v-else class="button-new-tag" size="small" @click="showInput">新增角色</el-button>
-    </div> -->
-
-    <div class="del" v-if="delShow">
         <el-space wrap>
             <el-card class="box-card" style="width: 80vw">
                 <template #header>
                     <div class="card-header">
-                        <span>删除角色:</span>
+                        <span>管理角色(点击红色字体时更改角色):</span>
                     </div>
                 </template>
-                <el-tag class="create-input" type="danger" :key="tag" v-for="tag in rolesArr" closable :disable-transitions="false" @close="handleClose(tag)">
-            {{tag}}
-        </el-tag>
+                <div class="changeRole">
+                    <div class="updateRole">
+                        <el-input class="input-new-tag" v-if="roleShow" v-model="inputValue" ref="tag" size="small" @blur="updateConfirm" @keyup.enter="handleEnter">
+                        </el-input>
+                        <el-tag v-else type="danger" :key="tag" v-for="(tag,index) in rolesArr" closable :disable-transitions="false" @close="handleClose(tag)" @click="update(index)">
+                            {{tag}}
+                        </el-tag>
+                    </div>
+                    <el-input class="input-new-tag" v-if="inputVisible" v-model="inputValue" ref="saveTagInput" size="small" @keyup.enter="handleEnter" @blur="handleInputConfirm">
+                    </el-input>
+                    <el-button type="success" v-else class="button-new-tag" size="small" @click="showInput">新增角色</el-button>
+                </div>
             </el-card>
         </el-space>
     </div>
@@ -55,49 +45,121 @@ import {
 export default {
     data() {
         return {
+            RoleListArr:[],
             rolesArr: [],
-            delShow: false,
             inputVisible: false,
             inputValue: '',
+            roleShow: false,
+            currentTagIndex: 0,
+            roleId:100,
         }
     },
     methods: {
-        ...mapActions(["createRole"]),
-        del() {
-            this.delShow = true
-        },
+        ...mapActions(["getRole","createRole","updateRole","deleteRole"]),
         handleClose(tag) {
             this.rolesArr.splice(this.rolesArr.indexOf(tag), 1);
+            this.RoleListArr.forEach(item=>{
+                if(item.name==tag){
+                    this.roleId=item.id;
+                    this.deleteRoles();
+                }
+            })
         },
-
         showInput() {
             this.inputVisible = true;
             this.$nextTick(function () {
                 this.$refs.saveTagInput.$refs.input.focus();
             });
         },
-
+        handleEnter(e) {
+            e.target.blur()
+        },
         handleInputConfirm() {
             let inputValue = this.inputValue;
             if (inputValue) {
-                this.rolesArr.push(inputValue);
+                if (this.rolesArr.includes(inputValue)) {
+                    this.$alert('已有该角色,请勿重复添加!', '新增提示', {
+                        confirmButtonText: '确定',
+                    });
+                } else {
+                    this.rolesArr.push(inputValue);
+                    this.createRoles();
+                }
+            } else {
+                this.$alert('角色不能为空!', '新增提示', {
+                    confirmButtonText: '确定',
+                });
             }
             this.inputVisible = false;
             this.inputValue = '';
+        },
+        update(index) {
+            this.currentTagIndex = index;
+            this.roleShow = true;
+            this.$nextTick(function () {
+                this.$refs.tag.$refs.input.focus();
+            });
+        },
+        updateConfirm() {
+            let inputValue = this.inputValue;
+            if (!inputValue) {
+                this.$alert('角色不能为空!', '更改提示', {
+                    confirmButtonText: '确定',
+                });
+            } else if (this.rolesArr.includes(inputValue)) {
+                this.$alert('已有该角色,更改失败!', '更改提示', {
+                    confirmButtonText: '确定',
+                });
+            } else {
+                let index = this.currentTagIndex;
+                this.rolesArr[index] = this.inputValue;
+                this.$alert('更改角色成功!', '更改提示', {
+                    confirmButtonText: '确定',
+                });
+                this.RoleListArr.forEach(item=>{
+                if(item.name==this.inputValue){
+                    this.roleId=item.id;
+                    this.deleteRoles();
+                }
+            })
+                this.updateRoles();
+            }
+            this.roleShow = false;
+            this.inputValue = '';
+        },
+        async getRoles() {
+            let RoleList = await this.getRole({
+
+            });
+            console.log(RoleList);
+            this.RoleListArr=RoleList.data.rows;
+            RoleList.data.rows.forEach(item => {
+                this.rolesArr.push(item.name)
+            });
+        },
+        async createRoles() {
+           let RoleList = await this.createRole({
+               name:this.inputValue
+            });
+            console.log(RoleList);
+        },
+        async updateRoles() {
+           let RoleList = await this.updateRole({
+               id:this.roleId,
+               name:this.inputValue
+            });
+            console.log(RoleList);
+        },
+        async deleteRoles() {
+           let RoleList = await this.deleteRole({
+               id:this.roleId
+            });
+            console.log(RoleList);
         }
     },
-    async created() {
-        let createRole = await this.createRole({
-
-        });
-        console.log(createRole);
-        createRole.rows.forEach(item => {
-            this.rolesArr.push(item.name)
-        });
-
-        console.log(this.rolesArr);
+    created() {
+        this.getRoles();
     },
-
 }
 </script>
 
@@ -114,17 +176,24 @@ export default {
 
     & .currentRole-item {
         margin-left: 10px;
+        margin-bottom: 10px;
     }
 
     & .operate {
         margin-top: 10px;
         margin-bottom: 10px;
-        & .create-input{
+
+        & .changeRole {
+            display: flex;
+        }
+
+        & .create-input {
             margin-right: 10px;
         }
 
         & .el-tag+.el-tag {
             margin-left: 10px;
+            margin-bottom: 10px;
         }
 
         & .button-new-tag {
@@ -136,7 +205,7 @@ export default {
         }
 
         & .input-new-tag {
-            width: 100px;
+            width: 80px;
             margin-left: 10px;
             vertical-align: bottom;
         }

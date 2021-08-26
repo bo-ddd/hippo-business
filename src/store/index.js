@@ -75,8 +75,19 @@ export default createStore({
         usersList(ctx, payload) {
             return Api.usersList(payload);
         },
+
+        //角色
+        getRole(ctx, payload) {
+            return Api.getRole(payload);
+        },
         createRole(ctx, payload) {
             return Api.createRole(payload);
+        },
+        updateRole(ctx, payload) {
+            return Api.updateRole(payload);
+        },
+        deleteRole(ctx, payload) {
+            return Api.deleteRole(payload);
         },
 
         //消息
