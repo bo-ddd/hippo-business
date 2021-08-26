@@ -124,7 +124,7 @@
                     </el-submenu>
                     <el-submenu index="12">
                         <template #title>
-                            <i class="el-icon-coordinate"></i>
+                            <i class="el-icon-s-flag"></i>
                             <span>打卡管理</span>
                         </template>
                         <el-menu-item-group>
