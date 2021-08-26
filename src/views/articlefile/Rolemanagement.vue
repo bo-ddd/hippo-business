@@ -45,22 +45,22 @@ import {
 export default {
     data() {
         return {
-            RoleListArr:[],
+            RoleListArr: [],
             rolesArr: [],
             inputVisible: false,
             inputValue: '',
             roleShow: false,
             currentTagIndex: 0,
-            roleId:100,
+            roleId: 100,
         }
     },
     methods: {
-        ...mapActions(["getRole","createRole","updateRole","deleteRole"]),
+        ...mapActions(["getRole", "createRole", "updateRole", "deleteRole"]),
         handleClose(tag) {
             this.rolesArr.splice(this.rolesArr.indexOf(tag), 1);
-            this.RoleListArr.forEach(item=>{
-                if(item.name==tag){
-                    this.roleId=item.id;
+            this.RoleListArr.forEach(item => {
+                if (item.name == tag) {
+                    this.roleId = item.id;
                     this.deleteRoles();
                 }
             })
@@ -112,17 +112,17 @@ export default {
                 });
             } else {
                 let index = this.currentTagIndex;
-                this.rolesArr[index] = this.inputValue;
-                this.$alert('更改角色成功!', '更改提示', {
-                    confirmButtonText: '确定',
-                });
-                this.RoleListArr.forEach(item=>{
-                if(item.name==this.inputValue){
-                    this.roleId=item.id;
-                    this.deleteRoles();
-                }
-            })
-                this.updateRoles();
+                this.RoleListArr.forEach(item => {
+                    if (item.name == this.rolesArr[index]) {
+                        this.roleId = item.id;
+                        this.updateRoles();
+                        this.rolesArr[index] = this.inputValue;
+                        this.$alert('更改角色成功!', '更改提示', {
+                            confirmButtonText: '确定',
+                        });
+                    }
+                })
+
             }
             this.roleShow = false;
             this.inputValue = '';
@@ -132,27 +132,27 @@ export default {
 
             });
             console.log(RoleList);
-            this.RoleListArr=RoleList.data.rows;
+            this.RoleListArr = RoleList.data.rows;
             RoleList.data.rows.forEach(item => {
                 this.rolesArr.push(item.name)
             });
         },
         async createRoles() {
-           let RoleList = await this.createRole({
-               name:this.inputValue
+            let RoleList = await this.createRole({
+                name: this.inputValue
             });
             console.log(RoleList);
         },
         async updateRoles() {
-           let RoleList = await this.updateRole({
-               id:this.roleId,
-               name:this.inputValue
+            let RoleList = await this.updateRole({
+                id: this.roleId,
+                name: this.inputValue
             });
             console.log(RoleList);
         },
         async deleteRoles() {
-           let RoleList = await this.deleteRole({
-               id:this.roleId
+            let RoleList = await this.deleteRole({
+                id: this.roleId
             });
             console.log(RoleList);
         }
