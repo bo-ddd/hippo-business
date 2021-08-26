@@ -8,7 +8,7 @@ const routes = [{
     name: 'Home',
     component: Home,
     children: [{
-            path: '/',
+            path: '/testquestions',
             name: 'Testquestions',
             component: () =>
                 import ('../views/category/Testquestions.vue'),
@@ -84,7 +84,7 @@ const routes = [{
             component: () =>
                 import ('../views/articlefile/UsersList.vue'),
         }, {
-            path: '/datastatistics',
+            path: '/',
             name: 'Datastatistics',
             component: () =>
                 import ('../views/statistics/Datastatistics.vue'),

@@ -65,14 +65,6 @@ export default {
         return axios.post('/topic/delete', params, postConfig)
     },
 
-    /**
-     * @description  获取题数量
-     * @params {id}
-     * */
-    getTopicCount: (params) => {
-        return axios.post('/topic/count', params, postConfig)
-    },
-
     //题的结束
 
 
@@ -156,10 +148,10 @@ export default {
     },
 
     /**
-     * @description  获取文章数量
+     * @description  获取文章/试题数量
      * */
     getArticleCount: (params) => {
-        return axios.post('/article/count', params, postConfig)
+        return axios.post('/category/count', params, postConfig)
     },
     //文章的结束
 
@@ -200,10 +192,18 @@ export default {
 
     /**
      * @description  获取用户列表信息接口
-     * @params {uuid,pageNum,pageSize}
+     * @params {uuid,pageNum,pageSize}    pageNum:非必填,第几页,默认1;  pageSize:非必填,获取几条数据,默认为10;
      * */
     usersList(params) {
         return axios.post('/user/list', params, postConfig)
+    },
+
+    /**
+     * @description  创建角色信息接口
+     * @params {uuid,pageNum,pageSize}    pageNum:非必填,第几页,默认1;  pageSize:非必填,每页几条数据,默认为10;
+     * */
+     createRole(params) {
+        return axios.post('/role/list', params, postConfig)
     },
     //用户接口结束
 

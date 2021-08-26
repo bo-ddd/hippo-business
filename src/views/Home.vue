@@ -18,7 +18,7 @@
 
         <el-container>
             <el-aside width="200px">
-                <el-menu :default-active='titleIndex' class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose">
+                <el-menu :default-active='titleIndex' unique-opened='true' class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose">
                     <el-menu-item @click="getQuestions('Datastatistics')" index="1-1">数据统计</el-menu-item>
                     <el-submenu index="2">
                         <template #title>
