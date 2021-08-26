@@ -65,14 +65,6 @@ export default {
         return axios.post('/topic/delete', params, postConfig)
     },
 
-    /**
-     * @description  获取题数量
-     * @params {id}
-     * */
-    getTopicCount: (params) => {
-        return axios.post('/topic/count', params, postConfig)
-    },
-
     //题的结束
 
 
@@ -156,10 +148,10 @@ export default {
     },
 
     /**
-     * @description  获取文章数量
+     * @description  获取文章/试题数量
      * */
     getArticleCount: (params) => {
-        return axios.post('/article/count', params, postConfig)
+        return axios.post('/category/count', params, postConfig)
     },
     //文章的结束
 
@@ -272,4 +264,80 @@ export default {
         return axios.post('/message/detail', params, postConfig)
     },
     //信息结束
+
+    //班级开始
+    /**
+     * @description  创建班级
+     * @params {name,admin} 
+     * */
+    createClass(params) {
+        return axios.post('/class/create', params, postConfig)
+    },
+
+    /**
+     * @description  班级列表
+     * @params {pageNum,pageSize} 
+     * */
+    getClassList(params) {
+        return axios.post('/class/list', params, postConfig)
+    },
+
+    /**
+     * @description  删除班级
+     * @params {id} 
+     * */
+    deleteClass(params) {
+        return axios.post('/class/delete', params, postConfig)
+    },
+
+
+    /**
+     * @description  修改班级
+     * @params {id,name,admin} 
+     * */
+    updateClass(params) {
+        return axios.post('/class/update', params, postConfig)
+    },
+    //班级结束
+
+
+    //作业
+    /**
+     * @description  创建作业
+     * @params {content,endTime} 
+     * */
+    createTask(params) {
+        return axios.post('/task/create', params, postConfig)
+    },
+
+    //作业结束
+
+    //活动
+    /**
+     * @description  创建活动
+     * */
+    createActive(params) {
+        return axios.post('/active/create', params, postConfig)
+    },
+    /**
+     * @description  获取活动列表
+     * */
+    getActiveList(params) {
+        return axios.post('/active/list', params, postConfig)
+    },
+    /**
+     * @description  删除活动
+     * */
+    deleteActive(params) {
+        return axios.post('/active/delete', params, postConfig)
+    },
+    /**
+     * @description  修改活动
+     * */
+    updateActive(params) {
+        return axios.post('/active/update', params, postConfig)
+    },
+
+
+    //活动结束
 }

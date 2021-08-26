@@ -1,21 +1,74 @@
 <template>
   <div class="wrap">
       <el-row>
-            <el-col :span="24" class="header">发布作业</el-col>
-            <el-col :span="12">
-              <el-input type="textarea" :rows="22" placeholder="说点什么吧" v-model="textarea"></el-input>
-            </el-col>
+              <el-col :span="24" class="article-content">
+                <el-input type="textarea" :rows="8" placeholder="开始进行布置作业吧！" v-model="textarea"></el-input>
+              </el-col>
+      </el-row>
+      <el-row>
+              <el-col :span="24" class="pd-5_15">
+                  <div class="block">
+                    <span class="demonstration">截止时间:</span>
+                    <el-date-picker
+                      v-model="value2"
+                      type="datetimerange"
+                      :disabled-date="disabledDate"
+                      range-separator="至"
+                      start-placeholder="开始日期"
+                      end-placeholder="结束日期">
+                    </el-date-picker>
+                  </div>
+              </el-col>
+      </el-row>
+      <el-row>
+          <el-col :span="24" class="uploadjob-out"> 
+            <el-button type="primary" @click="publishJob">确认发布<i class="el-icon-upload el-icon--right"></i></el-button>
+          </el-col>
       </el-row>
   </div>
 </template>
 
 <script>
-export default {
+import {mapActions} from "vuex";
+export default { 
     data(){
       return{
+        disabledDate(time) {
+            return time.getTime()+3600*1000*24 < Date.now();
+        },
         textarea:'',
+        value2:'',
+        resultInformation:'',
       };
-    }
+    },
+    async created(){
+      this.$message('布置作业');
+      let data = await this.getUserInfo();
+      if(data.status){
+          console.log(data.data);
+          this.resultInformation=data.data;
+      }else{
+        this.$message('获取个人信息失败');
+      }
+    },
+    methods:{
+      async publishJob(){
+        let endTime = this.value2[1].getTime();
+        let textarea=this.textarea; 
+        let data = await this.createTask({
+            uuid:this.resultInformation.uuid,
+            content:textarea,
+            endTime:endTime,
+        })
+        if(data.status){
+           this.$message('布置作业成功');
+        }else{
+          this.$message('布置作业失败');
+        }
+        console.log(data);
+      },
+      ...mapActions(['createTask','getUserInfo']),
+    },
 }
 </script>
 
@@ -25,5 +78,18 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+  .uploadjob-out{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80px;
+    margin: 20px 0 0 0;
+  }
+  .article-content{
+    padding: 5px 15px;
+  }
+  .pd-5_15{
+    padding: 5px 15px;
   }
 </style>

@@ -20,9 +20,6 @@ export default createStore({
         deleteTopic(ctx, payload) {
             return Api.deleteTopic(payload)
         },
-        getTopicCount(ctx, payload) {
-            return Api.getTopicCount(payload)
-        },
 
 
         //类目
@@ -102,6 +99,39 @@ export default createStore({
         },
         getMessageDetail(ctx, payload) {
             return Api.getMessageDetail(payload);
+        },
+
+        //班级
+        createClass(ctx, payload) {
+            return Api.createClass(payload);
+        },
+        getClassList(ctx, payload) {
+            return Api.getClassList(payload);
+        },
+        deleteClass(ctx, payload) {
+            return Api.deleteClass(payload);
+        },
+        updateClass(ctx, payload) {
+            return Api.updateClass(payload);
+        },
+        //作业
+        createTask(ctx, payload) {
+            return Api.createTask(payload);
+        },
+
+
+        //活动
+        createActive(ctx, payload) {
+            return Api.createActive(payload);
+        },
+        getActiveList(ctx, payload) {
+            return Api.getActiveList(payload);
+        },
+        deleteActive(ctx, payload) {
+            return Api.deleteActive(payload);
+        },
+        updateActive(ctx, payload) {
+            return Api.updateActive(payload);
         },
 
     },
