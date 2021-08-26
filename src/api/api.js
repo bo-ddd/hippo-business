@@ -205,7 +205,7 @@ export default {
      * @description  获取角色信息接口
      * @params 无
      * */
-     getRole(params) {
+    getRole(params) {
         return axios.post('/role/list', params, postConfig)
     },
 
@@ -213,7 +213,7 @@ export default {
      * @description  增加角色信息接口
      * @params name[Stringg]  name:角色名
      * */
-     createRole(params) {
+    createRole(params) {
         return axios.post('/role/create', params, postConfig)
     },
 
@@ -221,7 +221,7 @@ export default {
      * @description  更改角色信息接口
      * @params id[Number] name[Stringg]     id : 角色ID;  name:角色名
      * */
-     updateRole(params) {
+    updateRole(params) {
         return axios.post('/role/update', params, postConfig)
     },
 
@@ -229,7 +229,7 @@ export default {
      * @description  删除角色信息接口
      * @params  id[Number]      id : 角色ID;
      * */
-     deleteRole(params) {
+    deleteRole(params) {
         return axios.post('/role/delete', params, postConfig)
     },
     //角色信息接口结束
@@ -340,4 +340,18 @@ export default {
 
 
     //活动结束
+
+
+    //考试
+    /**
+     * @description  创建试题
+     * @params {classId,categoryId,startTime,endTime,count}
+     * */
+    createExam(params) {
+        return axios.post('/exam/create', params, postConfig)
+    },
+
+
+
+    //考试结束
 }
