@@ -90,6 +90,16 @@ export default createStore({
             return Api.getMessageDetail(payload);
         },
 
+        //班级
+        createClass(ctx, payload) {
+            return Api.createClass(payload);
+        },
+
+        //作业
+        createTask(ctx, payload) {
+            return Api.createTask(payload);
+        },
+
     },
     modules: {}
 })

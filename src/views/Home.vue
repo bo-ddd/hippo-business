@@ -112,6 +112,16 @@
                             <el-menu-item @click="jumpPage('Paperlist')" index="10-3">试卷列表</el-menu-item>
                         </el-menu-item-group>
                     </el-submenu>
+                    <el-submenu index="11">
+                        <template #title>
+                            <i class="el-icon-coordinate"></i>
+                            <span>活动管理</span>
+                        </template>
+                        <el-menu-item-group>
+                            <el-menu-item @click="jumpPage('Createactivity')" index="11-1">创建活动</el-menu-item>
+                            <el-menu-item @click="jumpPage('Activitylist')" index="11-2">活动列表</el-menu-item>
+                        </el-menu-item-group>
+                    </el-submenu>
                 </el-menu>
             </el-aside>
             <el-main class="main">
@@ -200,6 +210,10 @@ export default {
                 return '10-2'
             } else if (this.$route.name == 'Paperlist') {
                 return '10-3'
+            } else if (this.$route.name == 'Createactivity') {
+                return '11-1'
+            } else if (this.$route.name == 'Activitylist') {
+                return '11-2'
             } else {
                 return '1-1'
             }
