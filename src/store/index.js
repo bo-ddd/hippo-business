@@ -20,9 +20,6 @@ export default createStore({
         deleteTopic(ctx, payload) {
             return Api.deleteTopic(payload)
         },
-        getTopicCount(ctx, payload) {
-            return Api.getTopicCount(payload)
-        },
 
 
         //类目
