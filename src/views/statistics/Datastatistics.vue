@@ -1,5 +1,5 @@
 <template>
-<el-space fill wrap fillRatio="30" direction="horizontal" style=" width: 100%">
+<el-space class="aaa" fill wrap fillRatio="30" direction="horizontal" style=" width: 100%">
     <el-card class="box-card">
         <template #header>
             <div class="card-header">
@@ -202,27 +202,27 @@ export default {
 
 <style>
 .box-card {
-    width: 40.9vw;
+    width: 40.4vw;
 
 }
 
 .classNum {
-    width: 40.9vw;
+    width: 40.4vw;
     height: 32vh;
 }
 
 .articleNum {
-    width: 40.9vw;
+    width: 40.4vw;
     height: 29vh;
 }
 
 .questionsNum {
-    width: 40.9vw;
+    width: 40.4vw;
     height: 29vh;
 }
 
 .teacherNum {
-    width: 40.9vw;
+    width: 40.4vw;
     height: 32vh;
 }
 
