@@ -128,6 +128,29 @@ const routes = [{
             component: () =>
                 import ('../views/jurisdiction/Routemanage.vue'),
         },
+
+
+        {
+            path: '/createpaper',
+            name: 'Createpaper',
+            component: () =>
+                import ('../views/exam/Createpaper.vue'),
+        }, {
+            path: '/examrecord',
+            name: 'Examrecord',
+            component: () =>
+                import ('../views/exam/Examrecord.vue'),
+        }, {
+            path: '/paperdetails',
+            name: 'Paperdetails',
+            component: () =>
+                import ('../views/exam/Paperdetails.vue'),
+        }, {
+            path: '/paperlist',
+            name: 'Paperlist',
+            component: () =>
+                import ('../views/exam/Paperlist.vue'),
+        },
     ],
 }, {
     path: '/login',
