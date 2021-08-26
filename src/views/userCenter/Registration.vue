@@ -1,6 +1,6 @@
 <template>
 <div class="wrap">
-    <el-row class="header"><span class="header-title">学客后台管理系统</span></el-row>
+    <el-row class="header"><el-breadcrumb-item><img class="logo" src="../../assets/images/logo.png" alt=""></el-breadcrumb-item></el-row>
     <el-row class="main">
         <el-row class="register-outside">
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
@@ -245,5 +245,10 @@ export default {
 
 canvas {
     background-color: #1890ff;
+}
+
+.logo{
+    height: 65px;
+    padding: 0 20px;
 }
 </style>

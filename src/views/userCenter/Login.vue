@@ -1,7 +1,7 @@
 <template>
   <div class="wrap">
     <el-row class="header"
-      ><span class="header-title">学客后台管理系统</span></el-row
+      ><el-breadcrumb-item><img class="logo" src="../../assets/images/logo.png" alt=""></el-breadcrumb-item></el-row
     >
     <el-row class="main flex-lc_mc">
       <el-row class="login-outside">
@@ -266,5 +266,9 @@ ft-16 {
 }
 .text-btm {
   margin-bottom: 30px;
+}
+.logo{
+  height: 65px;
+  padding: 0 20px;
 }
 </style>
