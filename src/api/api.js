@@ -248,6 +248,14 @@ export default {
         return axios.post('/class/create', params, postConfig)
     },
 
+    /**
+     * @description  班级列表
+     * @params {pageNum,pageSize} 
+     * */
+    getClassList(params) {
+        return axios.post('/class/list', params, postConfig)
+    },
+
     //班级结束
 
 
