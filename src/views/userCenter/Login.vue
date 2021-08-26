@@ -91,6 +91,7 @@
 
 <script>
 import { mapActions } from "vuex";
+import Animation from "@/assets/animation.js";
 export default {
   data() {
     var checkAge = (rule, value, callback) => {
@@ -126,6 +127,11 @@ export default {
         age: [{ validator: checkAge, trigger: "blur" }],
       },
     };
+  },
+  created() {
+    this.$nextTick(() => {
+      Animation();
+    });
   },
   methods: {
     ...mapActions(["userLogin"]),
@@ -196,21 +202,21 @@ export default {
 .main {
   position: relative;
   height: calc(100vh - 176px);
-  background: #ebe0c2 url(../../assets/images/layout.png) 10% center no-repeat;
+  background-color: rgba(118, 176, 231, 0.5);
   display: flex;
   align-items: center;
 }
 .login-outside {
   position: absolute;
   background-color: #fff;
-  right: 5%;
+  right: 15%;
   display: flex;
   justify-content: center;
   border-radius: 5px;
-  padding:20px;
+  padding: 20px;
 }
 .title {
-  padding:30px;
+  padding: 30px;
 }
 .header-title {
   padding-left: 30px;

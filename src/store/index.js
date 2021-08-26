@@ -75,6 +75,9 @@ export default createStore({
         usersList(ctx, payload) {
             return Api.usersList(payload);
         },
+        createRole(ctx, payload) {
+            return Api.createRole(payload);
+        },
 
         //消息
         sendMessage(ctx, payload) {
