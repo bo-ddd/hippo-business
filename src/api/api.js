@@ -197,16 +197,42 @@ export default {
     usersList(params) {
         return axios.post('/user/list', params, postConfig)
     },
-
-    /**
-     * @description  创建角色信息接口
-     * @params {uuid,pageNum,pageSize}    pageNum:非必填,第几页,默认1;  pageSize:非必填,每页几条数据,默认为10;
-     * */
-    createRole(params) {
-        return axios.post('/role/list', params, postConfig)
-    },
     //用户接口结束
 
+
+    //角色信息接口开始
+    /**
+     * @description  获取角色信息接口
+     * @params 无
+     * */
+    getRole(params) {
+        return axios.post('/role/list', params, postConfig)
+    },
+
+    /**
+     * @description  增加角色信息接口
+     * @params name[Stringg]  name:角色名
+     * */
+    createRole(params) {
+        return axios.post('/role/create', params, postConfig)
+    },
+
+    /**
+     * @description  更改角色信息接口
+     * @params id[Number] name[Stringg]     id : 角色ID;  name:角色名
+     * */
+    updateRole(params) {
+        return axios.post('/role/update', params, postConfig)
+    },
+
+    /**
+     * @description  删除角色信息接口
+     * @params  id[Number]      id : 角色ID;
+     * */
+    deleteRole(params) {
+        return axios.post('/role/delete', params, postConfig)
+    },
+    //角色信息接口结束
 
 
     //消息接口开始
@@ -285,4 +311,47 @@ export default {
     },
 
     //作业结束
+
+    //活动
+    /**
+     * @description  创建活动
+     * */
+    createActive(params) {
+        return axios.post('/active/create', params, postConfig)
+    },
+    /**
+     * @description  获取活动列表
+     * */
+    getActiveList(params) {
+        return axios.post('/active/list', params, postConfig)
+    },
+    /**
+     * @description  删除活动
+     * */
+    deleteActive(params) {
+        return axios.post('/active/delete', params, postConfig)
+    },
+    /**
+     * @description  修改活动
+     * */
+    updateActive(params) {
+        return axios.post('/active/update', params, postConfig)
+    },
+
+
+    //活动结束
+
+
+    //考试
+    /**
+     * @description  创建试题
+     * @params {classId,categoryId,startTime,endTime,count}
+     * */
+    createExam(params) {
+        return axios.post('/exam/create', params, postConfig)
+    },
+
+
+
+    //考试结束
 }

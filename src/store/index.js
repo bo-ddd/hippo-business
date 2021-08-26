@@ -72,8 +72,19 @@ export default createStore({
         usersList(ctx, payload) {
             return Api.usersList(payload);
         },
+
+        //角色
+        getRole(ctx, payload) {
+            return Api.getRole(payload);
+        },
         createRole(ctx, payload) {
             return Api.createRole(payload);
+        },
+        updateRole(ctx, payload) {
+            return Api.updateRole(payload);
+        },
+        deleteRole(ctx, payload) {
+            return Api.deleteRole(payload);
         },
 
         //消息
@@ -108,6 +119,26 @@ export default createStore({
             return Api.createTask(payload);
         },
 
+
+        //活动
+        createActive(ctx, payload) {
+            return Api.createActive(payload);
+        },
+        getActiveList(ctx, payload) {
+            return Api.getActiveList(payload);
+        },
+        deleteActive(ctx, payload) {
+            return Api.deleteActive(payload);
+        },
+        updateActive(ctx, payload) {
+            return Api.updateActive(payload);
+        },
+
+
+        //考试
+        createExam(ctx, payload) {
+            return Api.createExam(payload);
+        },
     },
     modules: {}
 })
