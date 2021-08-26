@@ -26,7 +26,7 @@
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item>
-                    <el-button class="submit" type="primary" @click="registerUser()">注册用户</el-button>
+                    <el-button class="submit" type="primary" @click="registerUser">注册用户</el-button>
                 </el-form-item>
             </el-form>
         </el-row>
@@ -38,6 +38,7 @@
 </template>
 
 <script>
+import Animation from '@/assets/animation.js'
 import {
     mapActions
 } from "vuex";
@@ -112,16 +113,6 @@ export default {
     },
     methods: {
         ...mapActions(["userRegister"]),
-        // submitForm(formName) {
-        //     this.$refs[formName].validate((valid) => {
-        //         if (valid) {
-        //             this.$message.success('注册成功!');
-        //         } else {
-        //             this.$message.error('账号已存在!!');
-        //             return false;
-        //         }
-        //     });
-        // },
         async registerUser() {
             if (this.ruleForm.username.indexOf(" ") != -1) {
                 this.$message.error("用户名不能包含空格!");
@@ -146,6 +137,16 @@ export default {
             }
         }
     },
+    created() {
+        if (this.$route.name == 'Registration') {
+            this.$nextTick(() => {
+                Animation()
+            })
+        } else {
+            return
+        }
+
+    }
 }
 </script>
 
@@ -165,7 +166,7 @@ export default {
 .main {
     position: relative;
     height: calc(100vh - 176px);
-    background: #ebe0c2 url(../../assets/images/layout.png) 10% center no-repeat;
+    background-color: rgba(118, 176, 231, 0.5);
     display: flex;
     align-items: center;
 }
@@ -207,5 +208,9 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+canvas {
+    background-color: #1890ff;
 }
 </style>

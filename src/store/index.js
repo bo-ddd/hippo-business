@@ -52,6 +52,9 @@ export default createStore({
         updateArticle(ctx, payload) {
             return Api.updateArticle(payload);
         },
+        getArticleCount(ctx, payload) {
+            return Api.getArticleCount(payload);
+        },
 
         //用户
         userLogin(ctx, payload) {
@@ -68,6 +71,23 @@ export default createStore({
         },
         usersList(ctx, payload) {
             return Api.usersList(payload);
+        },
+        createRole(ctx, payload) {
+            return Api.createRole(payload);
+        },
+
+        //消息
+        sendMessage(ctx, payload) {
+            return Api.sendMessage(payload);
+        },
+        getMessageList(ctx, payload) {
+            return Api.getMessageList(payload);
+        },
+        deleteMessage(ctx, payload) {
+            return Api.deleteMessage(payload);
+        },
+        getMessageDetail(ctx, payload) {
+            return Api.getMessageDetail(payload);
         },
 
     },
