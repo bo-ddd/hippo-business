@@ -108,6 +108,21 @@ export default createStore({
             return Api.createTask(payload);
         },
 
+
+        //活动
+        createActive(ctx, payload) {
+            return Api.createActive(payload);
+        },
+        getActiveList(ctx, payload) {
+            return Api.getActiveList(payload);
+        },
+        deleteActive(ctx, payload) {
+            return Api.deleteActive(payload);
+        },
+        updateActive(ctx, payload) {
+            return Api.updateActive(payload);
+        },
+
     },
     modules: {}
 })

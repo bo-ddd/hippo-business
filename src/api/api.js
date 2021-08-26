@@ -285,4 +285,33 @@ export default {
     },
 
     //作业结束
+
+    //活动
+    /**
+     * @description  创建活动
+     * */
+    createActive(params) {
+        return axios.post('/active/create', params, postConfig)
+    },
+    /**
+     * @description  获取活动列表
+     * */
+    getActiveList(params) {
+        return axios.post('/active/list', params, postConfig)
+    },
+    /**
+     * @description  删除活动
+     * */
+    deleteActive(params) {
+        return axios.post('/active/delete', params, postConfig)
+    },
+    /**
+     * @description  修改活动
+     * */
+    updateActive(params) {
+        return axios.post('/active/update', params, postConfig)
+    },
+
+
+    //活动结束
 }

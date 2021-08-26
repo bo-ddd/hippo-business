@@ -164,6 +164,18 @@ const routes = [{
             component: () =>
                 import ('../views/activity/Activitylist.vue'),
         },
+        {
+            path: '/historyrecord',
+            name: 'Historyrecord',
+            component: () =>
+                import ('../views/sign_in/Historyrecord.vue'),
+        },
+        {
+            path: '/signinsetup',
+            name: 'Signinsetup',
+            component: () =>
+                import ('../views/sign_in/Signinsetup.vue'),
+        },
     ],
 }, {
     path: '/login',
