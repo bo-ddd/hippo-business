@@ -1,10 +1,9 @@
 <template>
 <div class="home">
     <el-container>
-
         <el-header class="title">
             <el-breadcrumb>
-                <el-breadcrumb-item><span>学客后台管理系统</span></el-breadcrumb-item>
+                <el-breadcrumb-item><img class="logo" src="../assets/images/logo.png" alt=""></el-breadcrumb-item>
             </el-breadcrumb>
             <div class="demo-basic--circle" @click="resultUser ? '' : getQuestions('Login') ">
                 <div class="block">
@@ -181,6 +180,7 @@ export default {
     align-items: center;
     justify-content: space-between;
     border-bottom: 1px solid #e5e5e5;
+    height: 80px;
 }
 
 .title span {
@@ -226,5 +226,9 @@ export default {
 
 .icon_role {
     width: 100%;
+}
+
+.logo{
+    height: 65px;
 }
 </style>
