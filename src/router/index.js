@@ -151,6 +151,19 @@ const routes = [{
             component: () =>
                 import ('../views/exam/Paperlist.vue'),
         },
+
+        {
+            path: '/createactivity',
+            name: 'Createactivity',
+            component: () =>
+                import ('../views/activity/Createactivity.vue'),
+        },
+        {
+            path: '/activitylist',
+            name: 'Activitylist',
+            component: () =>
+                import ('../views/activity/Activitylist.vue'),
+        },
     ],
 }, {
     path: '/login',

@@ -202,7 +202,7 @@ export default {
      * @description  创建角色信息接口
      * @params {uuid,pageNum,pageSize}    pageNum:非必填,第几页,默认1;  pageSize:非必填,每页几条数据,默认为10;
      * */
-     createRole(params) {
+    createRole(params) {
         return axios.post('/role/list', params, postConfig)
     },
     //用户接口结束
@@ -238,4 +238,13 @@ export default {
         return axios.post('/message/detail', params, postConfig)
     },
     //信息结束
+
+    //班级
+    /**
+     * @description  创建班级
+     * @params {name,admin} 
+     * */
+    createClass(params) {
+        return axios.post('/class/create', params, postConfig)
+    },
 }
