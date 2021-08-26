@@ -90,6 +90,11 @@ export default createStore({
             return Api.getMessageDetail(payload);
         },
 
+        //班级
+        createClass(ctx, payload) {
+            return Api.createClass(payload);
+        },
+
     },
     modules: {}
 })

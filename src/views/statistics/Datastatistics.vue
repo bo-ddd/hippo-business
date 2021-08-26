@@ -3,7 +3,7 @@
     <el-card class="box-card">
         <template #header>
             <div class="card-header">
-                <span>文章</span>
+                <span>试题</span>
             </div>
         </template>
         <div class="articleNum" ref="articleNum">
@@ -13,7 +13,7 @@
     <el-card class="box-card">
         <template #header>
             <div class="card-header">
-                <span>试题</span>
+                <span>文章</span>
             </div>
         </template>
         <div class="questionsNum" ref="questionsNum">
