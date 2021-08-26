@@ -197,16 +197,42 @@ export default {
     usersList(params) {
         return axios.post('/user/list', params, postConfig)
     },
-
-    /**
-     * @description  创建角色信息接口
-     * @params {uuid,pageNum,pageSize}    pageNum:非必填,第几页,默认1;  pageSize:非必填,每页几条数据,默认为10;
-     * */
-    createRole(params) {
-        return axios.post('/role/list', params, postConfig)
-    },
     //用户接口结束
 
+
+    //角色信息接口开始
+    /**
+     * @description  获取角色信息接口
+     * @params {uuid,pageNum,pageSize}    pageNum:非必填,第几页,默认1;  pageSize:非必填,每页几条数据,默认为10;
+     * */
+     getRole(params) {
+        return axios.post('/role/list', params, postConfig)
+    },
+
+    /**
+     * @description  增加角色信息接口
+     * @params {uuid,pageNum,pageSize}    pageNum:非必填,第几页,默认1;  pageSize:非必填,每页几条数据,默认为10;
+     * */
+     createRole(params) {
+        return axios.post('/role/create', params, postConfig)
+    },
+
+    /**
+     * @description  更改角色信息接口
+     * @params {uuid,pageNum,pageSize}    pageNum:非必填,第几页,默认1;  pageSize:非必填,每页几条数据,默认为10;
+     * */
+     updateRole(params) {
+        return axios.post('/role/update', params, postConfig)
+    },
+
+    /**
+     * @description  删除角色信息接口
+     * @params {uuid,pageNum,pageSize}    pageNum:非必填,第几页,默认1;  pageSize:非必填,每页几条数据,默认为10;
+     * */
+     deleteRole(params) {
+        return axios.post('/role/delete', params, postConfig)
+    },
+    //角色信息接口结束
 
 
     //消息接口开始
