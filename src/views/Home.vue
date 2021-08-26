@@ -1,10 +1,9 @@
 <template>
 <div class="home">
     <el-container>
-
         <el-header class="title">
             <el-breadcrumb>
-                <el-breadcrumb-item><span>学客后台管理系统</span></el-breadcrumb-item>
+                <el-breadcrumb-item><img class="logo" src="../assets/images/logo.png" alt=""></el-breadcrumb-item>
             </el-breadcrumb>
             <div class="demo-basic--circle" @click="resultUser ? '' : getQuestions('Login') ">
                 <div class="block">
@@ -76,12 +75,12 @@
                             <span>我的权限</span>
                         </template>
                         <el-menu-item-group>
-                            <el-menu-item @click="getQuestions('Classmanage')" index="7-1">班级管理</el-menu-item>
+                            <el-menu-item @click="getQuestions('Routemanage')" index="7-1">路由管理</el-menu-item>
                         </el-menu-item-group>
                     </el-submenu>
                     <el-submenu index="8">
                         <template #title>
-                            <i class="el-icon-postcard"></i>
+                            <i class="el-icon-reading"></i>
                             <span>作业管理</span>
                         </template>
                         <el-menu-item-group>
@@ -89,6 +88,17 @@
                             <el-menu-item @click="getQuestions('Correcttask')" index="8-2">批改作业</el-menu-item>
                             <el-menu-item @click="getQuestions('Modifytask')" index="8-3">修改作业</el-menu-item>
                             <el-menu-item @click="getQuestions('Querytask')" index="8-4">查询作业信息</el-menu-item>
+                        </el-menu-item-group>
+                    </el-submenu>
+                    <el-submenu index="9">
+                        <template #title>
+                            <i class="el-icon-school"></i>
+                            <span>班级管理</span>
+                        </template>
+                        <el-menu-item-group>
+                            <el-menu-item @click="getQuestions('Increaseclass')" index="9-1">添加班级</el-menu-item>
+                            <el-menu-item @click="getQuestions('Manageclass')" index="9-2">管理班级</el-menu-item>
+                            <el-menu-item @click="getQuestions('Classmanage')" index="9-3">班级列表</el-menu-item>
                         </el-menu-item-group>
                     </el-submenu>
                 </el-menu>
@@ -155,7 +165,7 @@ export default {
                 return '6-1'
             } else if (this.$route.name == 'Systemnews') {
                 return '6-2'
-            } else if (this.$route.name == 'Classmanage') {
+            } else if (this.$route.name == 'Routemanage') {
                 return '7-1'
             } else if (this.$route.name == 'Datastatistics') {
                 return '1-1'
@@ -167,6 +177,12 @@ export default {
                 return '8-3'
             } else if (this.$route.name == 'Querytask') {
                 return '8-4'
+            } else if (this.$route.name == 'Increaseclass') {
+                return '9-1'
+            } else if (this.$route.name == 'Manageclass') {
+                return '9-2'
+            } else if (this.$route.name == 'Classmanage') {
+                return '9-3'
             } else {
                 return '1-1'
             }
@@ -181,6 +197,7 @@ export default {
     align-items: center;
     justify-content: space-between;
     border-bottom: 1px solid #e5e5e5;
+    height: 80px;
 }
 
 .title span {
@@ -226,5 +243,9 @@ export default {
 
 .icon_role {
     width: 100%;
+}
+
+.logo {
+    height: 65px;
 }
 </style>
