@@ -22,14 +22,15 @@
       </el-row>
       <el-row>
           <el-col :span="24" class="uploadjob-out"> 
-            <el-button type="primary" @click="returnDate">确认发布<i class="el-icon-upload el-icon--right"></i></el-button>
+            <el-button type="primary" @click="publishJob">确认发布<i class="el-icon-upload el-icon--right"></i></el-button>
           </el-col>
       </el-row>
   </div>
 </template>
 
 <script>
-export default {
+import {mapActions} from "vuex";
+export default { 
     data(){
       return{
         disabledDate(time) {
@@ -37,16 +38,36 @@ export default {
         },
         textarea:'',
         value2:'',
+        resultInformation:'',
       };
     },
-    created(){
+    async created(){
       this.$message('布置作业');
+      let data = await this.getUserInfo();
+      if(data.status){
+          console.log(data.data);
+          this.resultInformation=data.data;
+      }else{
+        this.$message('获取个人信息失败');
+      }
     },
     methods:{
-      returnDate(){
-        console.log(this.value2);
-        console.log(this.value2[1].getTime());
-      }
+      async publishJob(){
+        let endTime = this.value2[1].getTime();
+        let textarea=this.textarea; 
+        let data = await this.createTask({
+            uuid:this.resultInformation.uuid,
+            content:textarea,
+            endTime:endTime,
+        })
+        if(data.status){
+           this.$message('布置作业成功');
+        }else{
+          this.$message('布置作业失败');
+        }
+        console.log(data);
+      },
+      ...mapActions(['createTask','getUserInfo']),
     },
 }
 </script>
