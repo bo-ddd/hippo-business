@@ -96,9 +96,9 @@
                             <span>班级管理</span>
                         </template>
                         <el-menu-item-group>
-                            <el-menu-item @click="jumpPage('Increaseclass')" index="9-1">添加班级</el-menu-item>
-                            <el-menu-item @click="jumpPage('Manageclass')" index="9-2">管理班级</el-menu-item>
-                            <el-menu-item @click="jumpPage('Classmanage')" index="9-3">班级列表</el-menu-item>
+                            <el-menu-item @click="jumpPage('Increaseclass')" index="9-1">管理班级</el-menu-item>
+                            <!-- <el-menu-item @click="jumpPage('Manageclass')" index="9-2">管理班级</el-menu-item>
+                            <el-menu-item @click="jumpPage('Classmanage')" index="9-3">班级列表</el-menu-item> -->
                         </el-menu-item-group>
                     </el-submenu>
                     <el-submenu index="10">
