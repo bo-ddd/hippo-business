@@ -67,13 +67,8 @@
           </el-form-item>
           <el-form-item size="large">
             <el-button type="primary" @click="onSubmit">立即创建</el-button>
-            <!-- <el-button>取消</el-button> -->
           </el-form-item>
-          <!-- <el-button
-    type="primary"
-    @click="openFullScreen2">
-    服务方式
-  </el-button> -->
+         <p>&nbsp;</p>
         </el-form>
       </div>
     </transition>
@@ -205,10 +200,11 @@ export default {
 
 <style scoped>
 .transition-box {
-  width: 100%;
+  width: 95%;
   border-radius: 4px;
-  /* background-color: rgb(222, 244, 252); */
+  background-image: url('../../assets/back.png');
   color: #fff;
+  margin:0 auto
 }
 
 .input {
@@ -216,7 +212,8 @@ export default {
 }
 
 .transition-box button {
-  width: 260px;
+  width: 365px;
+  height: 40px;
 }
 </style>
 
