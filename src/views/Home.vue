@@ -17,7 +17,7 @@
 
         <el-container>
             <el-aside width="200px">
-                <el-menu :default-active='titleIndex' unique-opened='true' class="el-menu-vertical-demo">
+                <el-menu :default-active='titleIndex' :unique-opened='opened' class="el-menu-vertical-demo">
                     <el-menu-item @click="jumpPage('Datastatistics')" index="1-1">数据统计</el-menu-item>
                     <el-submenu index="2">
                         <template #title>
@@ -154,6 +154,7 @@ export default {
             resultUser: '',
             index: '1-1',
             loginImage: '',
+            opened: true
         }
     },
     methods: {
