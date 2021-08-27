@@ -3,9 +3,10 @@
     <!-- 动画 -->
     <transition name="el-zoom-in-center">
       <div v-show="showMain" class="transition-box">
-        <!-- 活动表单 -->
         <p>&nbsp;</p>
-        <el-form ref="form" :model="sizeForm" label-width="80px" size="mini">
+        <div class="leftMain">
+        <!-- 活动表单 -->
+           <el-form ref="form" :model="sizeForm" label-width="80px" size="mini">
           <el-form-item label="活动名称">
             <el-input
               class="input"
@@ -70,8 +71,16 @@
           </el-form-item>
          <p>&nbsp;</p>
         </el-form>
+        </div>
+       
+
+      <div class="rightMain">
+      1
       </div>
+      </div>
+
     </transition>
+    
   </div>
 </template>
 
@@ -200,11 +209,11 @@ export default {
 
 <style scoped>
 .transition-box {
-  width: 95%;
+  width: 80%;
   border-radius: 4px;
   background-image: url('../../assets/back.png');
   color: #fff;
-  margin:0 auto
+  margin: 0 auto;
 }
 
 .input {
@@ -215,6 +224,17 @@ export default {
   width: 365px;
   height: 40px;
 }
+
+/* */
+
+
+/* .rightMain{
+ 
+  float: right;
+  background: red;
+  width: 600px;
+  height: 400px;
+} */
 </style>
 
 
