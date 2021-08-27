@@ -4,15 +4,17 @@
         <el-table :data="usersListArr" border style="width: 100%">
             <el-table-column type="index" label="序号" width="50px" align="center" header-align="center">
             </el-table-column>
-            <el-table-column prop="userId" label="用户ID" width="100px" align="center" header-align="center">
+            <el-table-column prop="userId" label="用户ID" width="70px" align="center" header-align="center">
             </el-table-column>
-            <el-table-column prop="username" label="用户名" align="center" header-align="center">
+            <el-table-column prop="username" label="用户名" width="120px" align="center" header-align="center">
+            </el-table-column>
+            <el-table-column prop="avatorName" label="姓名" width="120px" align="center" header-align="center">
             </el-table-column>
             <el-table-column prop="sex" label="性别" width="50px" align="center" header-align="center">
             </el-table-column>
-            <el-table-column prop="phoneNumber" label="电话" align="center" header-align="center">
+            <el-table-column prop="phoneNumber" label="电话" width="120px" align="center" header-align="center">
             </el-table-column>
-            <el-table-column prop="mail" label="邮箱" width="200px" align="center" header-align="center">
+            <el-table-column prop="mail" label="邮箱" width="180px" align="center" header-align="center">
             </el-table-column>
             <el-table-column prop="desc" label="备注" width="180" align="center" header-align="center">
             </el-table-column>
@@ -64,7 +66,7 @@ export default {
         handleCurrentChange(val) {
             this.nowPage = val;
             this.getList();
-            console.log(`当前页: ${val}`);
+            // console.log(`当前页: ${val}`);
         },
         handleSizeChange(val) {
             this.pageSize = val;
@@ -81,11 +83,13 @@ export default {
                 classId:id
             })
             console.log(res);
+            this.getList();
             this.gradeShow = true
         },
         async getList() {
             let usersList = await this.usersList({
                 // uuid:'vip',
+                avatorName:'北风',
                 pageNum: this.nowPage,
                 pageSize: this.pageSize
             });
@@ -104,6 +108,7 @@ export default {
             let classList = await this.getClassList({
 
             });
+            console.log(classList.data);
             this.classListArr = classList.data.rows
         },
     },
