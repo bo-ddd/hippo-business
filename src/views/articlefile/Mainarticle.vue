@@ -32,7 +32,6 @@ export default {
             caregoryList:[],
         };
     },
-    // inject:['reload'],
     methods: {
         ...mapActions(["getArticleList","getCategoryList","getCategoryList","updateArticle","deleteArticle"]),
         toArticle(data){
