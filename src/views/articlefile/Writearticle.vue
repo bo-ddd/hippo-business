@@ -19,19 +19,19 @@
     </div>
     <div class="article">
         <div class="left">
-            <el-input type="textarea" :rows="22" placeholder="说点什么吧" v-model="textarea">
+            <el-input type="textarea" :rows="20" placeholder="说点什么吧" v-model="textarea">
             </el-input>
         </div>
         <!-- <el-button icon="el-icon-edit" size="mini" @></el-button> -->
         <div class="right">
-            <el-scrollbar max-height="400px">
+            <el-scrollbar max-height="380px">
                 <div v-html="changeMd(this.textarea)"></div>
             </el-scrollbar>
         </div>
     </div>
     <div class="foot">
         <el-button type="primary" @click="submit">确认发布<i class="el-icon-upload el-icon--right"></i></el-button>
-        <el-button type="primary" @click="tomain">我的文章</el-button>
+        <!-- <el-button type="primary" @click="tomain">我的文章</el-button> -->
     </div>
 </div>
 </template>
@@ -46,7 +46,7 @@ export default {
     data() {
         return {
             tap: [],
-            textarea: "",
+            textarea: "```javascript\n\n```",
             text: "",
             checked: {},
         };
