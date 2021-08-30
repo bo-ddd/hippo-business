@@ -1,7 +1,6 @@
 <template>
    <div>
-         <el-button type="primary" @click="dialogFormVisible = true,show2 = !show2" class="addbtn">添加</el-button>
-  <el-table :data="tableData" height="600px"  max-height="680px"  style="width:90%;float:left;">
+  <el-table :data="tableData" height="500px"  max-height="680px"  style="width:90%">
       <el-table-column prop="key"  label="试题类目" width="160px"></el-table-column>
       <el-table-column prop="iconUrl"  label="icon地址" width="620px"></el-table-column>
       <el-table-column label="图标" width="140px">
@@ -16,18 +15,9 @@
          </template>
       </el-table-column>
   </el-table>
-
-    <!-- <div class="block">
-     <el-pagination
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page="currentPage4"
-      :page-sizes="[10, 50, 500, 1000]"
-      :page-size="pagesize"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="tableData.length">
-    </el-pagination>
-    </div> -->
+  
+     
+    <el-button type="primary" @click="dialogFormVisible = true,show2 = !show2" class="addbtn">添加</el-button>
 
     <!-- Form -->
 
@@ -195,10 +185,7 @@ async addtitle(){
 
 <style scoped>
 .addbtn{
-  position: relative;
-  margin-left: -100px;
-  z-index: 999;
-  
+  margin-left:940px;
 }
 
 .iconShow {
