@@ -17,7 +17,7 @@
 
         <el-container>
             <el-aside width="200px">
-                <el-menu :default-active='titleIndex' unique-opened='true' class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose">
+                <el-menu :default-active='titleIndex' :unique-opened='opened' class="el-menu-vertical-demo">
                     <el-menu-item @click="jumpPage('Datastatistics')" index="1-1">数据统计</el-menu-item>
                     <el-submenu index="2">
                         <template #title>
@@ -96,9 +96,9 @@
                             <span>班级管理</span>
                         </template>
                         <el-menu-item-group>
-                            <el-menu-item @click="jumpPage('Increaseclass')" index="9-1">添加班级</el-menu-item>
-                            <el-menu-item @click="jumpPage('Manageclass')" index="9-2">管理班级</el-menu-item>
-                            <el-menu-item @click="jumpPage('Classmanage')" index="9-3">班级列表</el-menu-item>
+                            <el-menu-item @click="jumpPage('Increaseclass')" index="9-1">管理班级</el-menu-item>
+                            <!-- <el-menu-item @click="jumpPage('Manageclass')" index="9-2">管理班级</el-menu-item>
+                            <el-menu-item @click="jumpPage('Classmanage')" index="9-3">班级列表</el-menu-item> -->
                         </el-menu-item-group>
                     </el-submenu>
                     <el-submenu index="10">
@@ -154,6 +154,7 @@ export default {
             resultUser: '',
             index: '1-1',
             loginImage: '',
+            opened: true
         }
     },
     methods: {
@@ -224,9 +225,9 @@ export default {
                 return '11-1'
             } else if (this.$route.name == 'Activitylist') {
                 return '11-2'
-            }  else if (this.$route.name == 'Historyrecord') {
+            } else if (this.$route.name == 'Historyrecord') {
                 return '12-1'
-            }  else if (this.$route.name == 'Signinsetup') {
+            } else if (this.$route.name == 'Signinsetup') {
                 return '12-2'
             } else {
                 return '1-1'
