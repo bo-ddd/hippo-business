@@ -1,7 +1,6 @@
 <template>
   <div>
-    <div @click="toArticleS">111</div>
-    
+    <el-button type="primary" @click="toArticleS" v-if="listb">返回班级</el-button>
     <el-card v-if="management">
       <el-row :gutter="20">
         <el-col :span="4">
@@ -127,7 +126,6 @@ export default {
       },
       dialogTableVisible: false,
       dialogFormVisible: false,
-      form: {},
       Modifyid:[],
       Modifyclass:{
         name:"",
@@ -135,7 +133,8 @@ export default {
       },
       studentlist:false,
       management:true,
-      personnel:[]
+      personnel:[],
+      listb:false
     };
   },
   created() {
@@ -212,6 +211,7 @@ export default {
     toArticle(data){
       this.studentlist=true
       this.management=false
+      this.listb=true
       Object.values(this.classlist).filter((item) => {
         if(item.id==data.id){
           this.personnel=item.children.rows
@@ -228,7 +228,9 @@ export default {
     toArticleS(){
       this.studentlist=false
       this.management=true
-    }
+      this.listb=false
+    },
+    
   }
 };
 </script>
