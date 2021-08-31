@@ -1,7 +1,30 @@
 import { createStore } from 'vuex'
 import Api from '@/api/api'
+import { routes } from '../router';
+console.log(routes);
+
+let getRoutes = function() {
+    let defined = ['/', '/registration', '/login'];
+    let arr = routes;
+    let res = [];
+    arr.forEach(item => {
+        if (!defined.includes(item.path)) {
+            res.push(item)
+        }
+    })
+    return res;
+}
+
 export default createStore({
-    state: {},
+    state: {
+        routes: getRoutes()
+    },
+    getters: {
+        routes: (ctx) => {
+            return ctx.routes;
+        }
+
+    },
     mutations: {},
     actions: {
         //题
@@ -142,4 +165,3 @@ export default createStore({
     },
     modules: {}
 })
-console.log(Api);
