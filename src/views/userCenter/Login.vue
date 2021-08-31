@@ -47,9 +47,7 @@
 </template>
 
 <script>
-import {
-    mapActions
-} from "vuex";
+import {mapActions} from "vuex";
 import Animation from "@/assets/animation.js";
 export default {
     data() {
