@@ -194,14 +194,24 @@ export const routes = [{
             title: '班级管理'
         },
         children: [{
-            path: '/classroom/increaseclass',
-            name: 'Increaseclass',
-            component: () =>
-                import ('../views/classroom/Increaseclass.vue'),
-            meta: {
-                title: '管理班级'
+                path: '/classroom/increaseclass',
+                name: 'Increaseclass',
+                component: () =>
+                    import ('../views/classroom/Increaseclass.vue'),
+                meta: {
+                    title: '管理班级'
+                }
+            },
+            {
+                path: '/classroom/detailsclass',
+                name: 'Detailsclass',
+                component: () =>
+                    import ('../views/classroom/Detailsclass.vue'),
+                meta: {
+                    title: ''
+                }
             }
-        }]
+        ]
     },
 
     {
