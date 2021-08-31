@@ -1,6 +1,6 @@
 <template>
 <div class="wrap">
-    <div class="user" v-if="gradeShow">
+    <div class="user">
         <!-- <el-form :inline="true" :model="searchParams" class="demo-form-inline">
             <el-form-item>
                 <el-input v-model="searchParams.chanelName" style="width: 160px;" placeholder="请输入渠道名称" clearable></el-input>
@@ -34,10 +34,7 @@
             </el-input>
             <el-button type="primary">搜索</el-button>
         </div>
-        <!-- <el-select v-model="value" clearable placeholder="请选择">
-            <el-option v-for="item in usersListArr" :key="item.value" :label="item.label" :value="item.value">
-            </el-option>
-        </el-select> -->
+
         <el-table :data="usersListArr" border style="width: 100%">
             <el-table-column type="index" label="序号" width="50px" align="center" header-align="center">
             </el-table-column>
@@ -55,29 +52,42 @@
             </el-table-column>
             <el-table-column prop="desc" label="备注" width="180" align="center" header-align="center">
             </el-table-column>
+            <el-table-column prop="identity" label="角色编号" width="100px" align="center" header-align="center">
+            </el-table-column>
+            <el-table-column label="角色分配" width="180" align="center" header-align="center" #default="scope">
+                <a class="updateClass" @click="updateRole(scope.row)">更改角色</a>
+                <el-dialog title="现有角色类目" v-model="dialogVisible2" width="60%" :before-close="handleClose">
+                            <el-radio-group v-model="radio" v-for="(item) in RoleListArr" :key="item.id">
+                                <el-radio class="roleRadio" :label="item.id" @click="checkRole(item.id)">{{item.name}}</el-radio>
+                            </el-radio-group>
+                    <template #footer>
+                        <span class="dialog-footer">
+                            <el-button @click="dialogVisible2 = false">取 消</el-button>
+                            <el-button type="primary" @click="dialogVisible2 = false">确 定</el-button>
+                        </span>
+                    </template>
+                </el-dialog>
+            </el-table-column>
             <el-table-column prop="classId" label="班级编号" width="100px" align="center" header-align="center">
             </el-table-column>
-            <el-table-column prop="desc" label="更改班级" width="180" align="center" header-align="center" #default="scope">
-                <!-- <el-button type="primary" icon="el-icon-edit" size="mini" @click="updateClass(scope.row)">分班</el-button> -->
-                <a class="updateClass" @click="updateClass(scope.row)">更改</a>
+            <el-table-column label="班级分配" width="180" align="center" header-align="center" #default="scope">
+                <a class="updateClass" @click="updateClass(scope.row)">更改班级</a>
+                <el-dialog title="现有班级类目" v-model="dialogVisible" width="60%" :before-close="handleClose">
+                            <el-radio-group v-model="radio" v-for="(item) in classListArr" :key="item.id">
+                                <el-radio class="classRadio" :label="item.id" @click="check(item.id)">{{item.name}}</el-radio>
+                            </el-radio-group>
+                    <template #footer>
+                        <span class="dialog-footer">
+                            <el-button @click="dialogVisible = false">取 消</el-button>
+                            <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+                        </span>
+                    </template>
+                </el-dialog>
+
             </el-table-column>
         </el-table>
         <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" v-model:current-page.sync="nowPage" :page-size="pageSize" layout="sizes, prev, pager, next" :page-count="countPage" :page-sizes="[2,3,4,5,10]">
         </el-pagination>
-    </div>
-    <div class="grade" v-else>
-        <el-space wrap>
-            <el-card class="box-card" style="width: 80vw">
-                <template #header>
-                    <div class="card-header">
-                        <span>现有班级类目:</span>
-                    </div>
-                </template>
-                <el-radio-group v-model="radio" v-for="(item) in classListArr" :key="item.id">
-                    <el-radio class="classRadio" :label="item.id" @click="check(item.id)">{{item.name}}</el-radio>
-                </el-radio-group>
-            </el-card>
-        </el-space>
     </div>
 </div>
 </template>
@@ -93,10 +103,12 @@ export default {
             nowPage: 1,
             countPage: 1,
             pageSize: 10,
-            gradeShow: true,
+            dialogVisible: false,
+            dialogVisible2: false,
+            RoleListArr:[],
             classListArr: [],
             radio: 0,
-            userId: 0,
+            userId: -1,
             input: '',
             options: [{
                 value: '选项1',
@@ -110,12 +122,15 @@ export default {
             }, {
                 value: '选项4',
                 label: '按班级编号查询'
+            }, {
+                value: '选项5',
+                label: '按角色编号查询'
             }],
-            value:''
+            value: ''
         };
     },
     methods: {
-        ...mapActions(["usersList", "getClassList", "updateClass", "updateUser"]),
+        ...mapActions(["usersList","getRole", "getClassList", "updateUser"]),
         handleCurrentChange(val) {
             this.nowPage = val;
             this.getList();
@@ -127,6 +142,7 @@ export default {
         },
         updateClass(arr) {
             // console.log(arr);
+            this.dialogVisible = true;
             this.userId = arr.userId;
             this.gradeShow = false
         },
@@ -139,13 +155,36 @@ export default {
             this.getList();
             this.gradeShow = true
         },
+        handleClose(done) {
+            this.$confirm('确认关闭？')
+                .then(function () {
+                    done();
+                })
+                .catch(function () {});
+        },
+        updateRole(arr) {
+            console.log('----');
+            // console.log(arr);
+            this.dialogVisible2 = true;
+            this.userId = arr.userId;
+        },
+        async checkRole(id) {
+            let res = await this.updateUser({
+                userId: this.userId,
+                identity: id
+            })
+            console.log(res);
+            this.getList();
+            this.gradeShow = true
+        },
         async getList() {
             let usersList = await this.usersList({
                 // uuid:'vip',
                 // avatorName: '北风',
-                // classId: '25',
-                // userId:123,
-                username: '123121',
+                // classId: '7',
+                // userId:296,
+                // username: '123121',
+                // identity:18,
                 pageNum: this.nowPage,
                 pageSize: this.pageSize
             });
@@ -167,10 +206,19 @@ export default {
             console.log(classList.data);
             this.classListArr = classList.data.rows
         },
+         async getRoles() {
+            let RoleList = await this.getRole({
+
+            });
+            console.log(RoleList.data);
+            this.RoleListArr = RoleList.data.rows;
+        },
     },
     created() {
         this.getList();
         this.getClass();
+        this.getRoles();
+        console.log(this.value);
     },
 };
 </script>
@@ -182,9 +230,10 @@ export default {
     justify-content: center;
 
     & .user {
-        & .select{
+        & .select {
             width: 230px;
         }
+
         & .indexInput {
             width: 600px;
             height: 80px;
@@ -204,6 +253,9 @@ export default {
     }
 
     & .grade {
+        & .roleRadio{
+             margin-right: 30px;
+        }
         & .classRadio {
             margin-right: 30px;
         }
