@@ -354,4 +354,24 @@ export default {
 
 
     //考试结束
+
+
+    //验证码
+    /**
+     * @description  图形验证码
+     * */
+    getCaptcha() {
+        return axios.get('/user/captcha', postConfig)
+    },
+
+
+    //校验图形验证码
+    /**
+     * @description  校验图形验证码
+     * @params {captcha:'' [String]4位字符}
+     * */
+    checkCaptcha(params) {
+        return axios.post(' /user/checkCaptcha', params, postConfig)
+    },
+
 }

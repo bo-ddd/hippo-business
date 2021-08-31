@@ -162,6 +162,15 @@ export default createStore({
         createExam(ctx, payload) {
             return Api.createExam(payload);
         },
+
+
+        //验证码
+        getCaptcha() {
+            return Api.getCaptcha();
+        },
+        checkCaptcha(ctx, payload) {
+            return Api.checkCaptcha(payload);
+        },
     },
     modules: {}
 })
