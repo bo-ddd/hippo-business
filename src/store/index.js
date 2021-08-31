@@ -4,6 +4,15 @@ export default createStore({
     state: {},
     mutations: {},
     actions: {
+        //图形验证码
+        userCaptcha() {
+            return Api.userCaptcha()
+        },
+        //校验图形验证码
+        userCheckCaptcha(ctx, payload) {
+            return Api.userCheckCaptcha(payload)
+        },
+      
         //题
         createTopic(ctx, payload) {
             return Api.createTopic(payload)

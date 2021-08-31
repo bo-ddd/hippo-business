@@ -36,6 +36,22 @@ export default {
     },
 
     /**
+     * @description  图形验证码接口
+     * @params 
+     * */
+     userCaptcha: () => {
+        return `/api/user/captcha?${Math.random()}`
+    },
+
+     /**
+     * @description  校验图形验证码
+     * @params 
+     * */
+      userCheckCaptcha: (params) => {
+        return axios.post('/user/checkCaptcha', params, postConfig)
+    },
+
+    /**
      * @description  获取题列表
      * @params {id,categoryId,pageNum,pageSize} 可选 id:题id  categoryId:题目类型  pageNum:第几页数据  pageSize:每页条数
      * */
@@ -165,6 +181,7 @@ export default {
     userLogin(params) {
         return axios.post('/user/login', params, postConfig)
     },
+   
 
     /**
      * @description  用户注册接口
