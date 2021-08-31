@@ -29,13 +29,13 @@
       <!-- 这个是弄班级列表 -->
       <el-row>
          <el-col :span="24" class="pd-5_15">
-            <el-tag :class="['mg-10',item.bool ? 'bg-blue' : '']"  v-for="(item,index) in classList" @click="checkMe(index)" :key="index" v-text="item.className" ></el-tag>
+            <el-tag :class="['mg-10',item.bool ? 'bg-blue' : '',item.bool ? 'cl-white' : 'cl-black' ]"  v-for="(item,index) in classList" @click="checkMe(index)" :key="index" v-text="item.className" ></el-tag>
          </el-col>
       </el-row>
-      <el-row>
+      <el-row>  
           <el-col :span="12" class="pd-5_15">
               <div class="block">
-                <span class="demonstration">截止时间:</span>
+                <span class="demonstration pd-15">截止时间:</span>
                   <el-date-picker
                       v-model="value2"
                       type="datetimerange"
@@ -48,7 +48,7 @@
           </el-col>
       </el-row>    
       <el-row>
-          <el-col :span="24" class="uploadjob-out"> 
+          <el-col :span="8" class="uploadjob-out"> 
             <el-button type="primary" @click="publishJob">确认发布<i class="el-icon-upload el-icon--right"></i></el-button>
           </el-col>
       </el-row>
@@ -71,7 +71,6 @@ export default {
       };
     },
     async created(){
-      this.$message('布置作业');
       this.getUseMessage();
       this.getClass();
     },
@@ -86,12 +85,10 @@ export default {
               continue;
             }
         }
-        console.log(this.classArray);
         if(this.classArray.length==0){
           this.$message('您没有选择,给哪个班级布置作业');
           return;
         }else{
-          console.log('进入到调用接口')
           for(let i = 0;i<this.classArray.length;i++){
             let data = await this.createTask({
                 uuid:this.resultInformation.uuid,
@@ -120,7 +117,6 @@ export default {
       async getUseMessage(){
         let data = await this.getUserInfo();
         if(data.status){
-            console.log(data.data);
             this.resultInformation=data.data;
         }else{
           this.$message('获取个人信息失败');
@@ -132,7 +128,6 @@ export default {
           classList.data.rows.forEach(element => {
             this.classList.push({className:element.name,checked:false,classId:element.id});
           });
-          console.log(this.classList);
         }else{
           this.$message('获取班级信息失败');
         }
@@ -172,6 +167,18 @@ export default {
     margin: 20px 20px 20px 0;
   }
   .bg-blue{
-    background-color: greenyellow;
+    background-color: #1890ff;
+  }
+  .pd-15{
+    padding-right: 15px;
+  }
+  .cl-white{
+    color:#fff;
+  }
+  .cl-black{
+    color:#000;
+  }
+  .mg-10:hover{
+    cursor: pointer;
   }
 </style>
