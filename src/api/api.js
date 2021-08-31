@@ -36,6 +36,22 @@ export default {
     },
 
     /**
+     * @description  图形验证码接口
+     * @params 
+     * */
+     userCaptcha: () => {
+        return `/api/user/captcha?${Math.random()}`
+    },
+
+     /**
+     * @description  校验图形验证码
+     * @params 
+     * */
+      userCheckCaptcha: (params) => {
+        return axios.post('/user/checkCaptcha', params, postConfig)
+    },
+
+    /**
      * @description  获取题列表
      * @params {id,categoryId,pageNum,pageSize} 可选 id:题id  categoryId:题目类型  pageNum:第几页数据  pageSize:每页条数
      * */
@@ -165,6 +181,7 @@ export default {
     userLogin(params) {
         return axios.post('/user/login', params, postConfig)
     },
+   
 
     /**
      * @description  用户注册接口
@@ -345,14 +362,61 @@ export default {
 
     //考试
     /**
-     * @description  创建试题
+     * @description  创建试卷
      * @params {classId,categoryId,startTime,endTime,count}
      * */
     createExam(params) {
         return axios.post('/exam/create', params, postConfig)
     },
-
-
+    /**
+     * @description  获取试卷列表
+     * @params {classId,categoryId,startTime,endTime,count}
+     * */
+    getExamList(params) {
+        return axios.post('/exam/list', params, postConfig)
+    },
+    /**
+     * @description  删除试卷
+     * @params {id}
+     * */
+    deleteExam(params) {
+        return axios.post('/exam/delete', params, postConfig)
+    },
+    /**
+     * @description  修改试卷
+     * @params {classId,categoryId,startTime,endTime,count}
+     * */
+    updateExam(params) {
+        return axios.post('/exam/update', params, postConfig)
+    },
 
     //考试结束
+
+
+    //验证码
+    /**
+     * @description  图形验证码
+     * */
+    getCaptcha() {
+        return axios.get('/user/captcha', postConfig)
+    },
+
+
+    //校验图形验证码
+    /**
+     * @description  校验图形验证码
+     * @params {captcha:'' [String]4位字符}
+     * */
+    checkCaptcha(params) {
+        return axios.post('/user/checkCaptcha', params, postConfig)
+    },
+
+
+    //签到
+    /**
+     * @description 获取签到列表
+     * */
+    getSignList(params) {
+        return axios.post('/sign/list', params, postConfig)
+    },
 }
