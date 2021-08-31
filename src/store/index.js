@@ -179,6 +179,11 @@ export default createStore({
         checkCaptcha(ctx, payload) {
             return Api.checkCaptcha(payload);
         },
+
+        //签到
+        getSignList(ctx, payload) {
+            return Api.getSignList(payload);
+        },
     },
     modules: {}
 })

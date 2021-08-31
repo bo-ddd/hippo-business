@@ -390,7 +390,15 @@ export default {
      * @params {captcha:'' [String]4位字符}
      * */
     checkCaptcha(params) {
-        return axios.post(' /user/checkCaptcha', params, postConfig)
+        return axios.post('/user/checkCaptcha', params, postConfig)
     },
 
+
+    //签到
+    /**
+     * @description 获取签到列表
+     * */
+    getSignList(params) {
+        return axios.post('/sign/list', params, postConfig)
+    },
 }
