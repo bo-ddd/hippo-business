@@ -1,7 +1,30 @@
 import { createStore } from 'vuex'
 import Api from '@/api/api'
+import { routes } from '../router';
+console.log(routes);
+
+let getRoutes = function() {
+    let defined = ['/', '/registration', '/login'];
+    let arr = routes;
+    let res = [];
+    arr.forEach(item => {
+        if (!defined.includes(item.path)) {
+            res.push(item)
+        }
+    })
+    return res;
+}
+
 export default createStore({
-    state: {},
+    state: {
+        routes: getRoutes()
+    },
+    getters: {
+        routes: (ctx) => {
+            return ctx.routes;
+        }
+
+    },
     mutations: {},
     actions: {
         //题
@@ -139,7 +162,23 @@ export default createStore({
         createExam(ctx, payload) {
             return Api.createExam(payload);
         },
+        getExamList(ctx, payload) {
+            return Api.getExamList(payload);
+        },
+        deleteExam(ctx, payload) {
+            return Api.deleteExam(payload);
+        },
+        updateExam(ctx, payload) {
+            return Api.updateExam(payload);
+        },
+
+        //验证码
+        getCaptcha() {
+            return Api.getCaptcha();
+        },
+        checkCaptcha(ctx, payload) {
+            return Api.checkCaptcha(payload);
+        },
     },
     modules: {}
 })
-console.log(Api);

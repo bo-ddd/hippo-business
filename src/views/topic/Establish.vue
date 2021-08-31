@@ -9,7 +9,7 @@
                 <el-form-item label="所属类目" prop="data.categoryId">
                     <div class="listData-content">
                         <div class="list-content" v-for="item in listData" :key="item">
-                            <el-radio v-model="data.categoryId" :label=item.id>{{item.key}}</el-radio>
+                            <div :class="btnColor(item.id)" @click="categoryIdChange(item.id)">{{item.key}}</div>
                         </div>
                     </div>
                 </el-form-item>
@@ -109,6 +109,20 @@ export default {
 
         deleteRow(index, rows) {
             rows.splice(index, 1);
+        },
+        categoryIdChange(id){
+           this.data.categoryId = id
+           console.log(this.data.categoryId);
+        }
+        ,
+        btnColor(id){
+            let color = 'btn'
+            if(id == this.data.categoryId){
+                color = 'btn color'
+            }else{
+                color = 'btn'
+            }
+            return color
         },
 
         async submitForm() {
@@ -227,6 +241,20 @@ export default {
     min-width: 1100px;
 }
 
+.btn{
+    width: 70px;
+    background-color: #74b6f8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    color: #fff;
+}
+
+.color{
+     background-color: #0080ff;
+}
+
 .answer {
     display: flex;
     flex-wrap: wrap;
@@ -247,7 +275,7 @@ export default {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 
 .el-radio__label {

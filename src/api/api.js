@@ -344,14 +344,53 @@ export default {
 
     //考试
     /**
-     * @description  创建试题
+     * @description  创建试卷
      * @params {classId,categoryId,startTime,endTime,count}
      * */
     createExam(params) {
         return axios.post('/exam/create', params, postConfig)
     },
-
-
+    /**
+     * @description  获取试卷列表
+     * @params {classId,categoryId,startTime,endTime,count}
+     * */
+    getExamList(params) {
+        return axios.post('/exam/list', params, postConfig)
+    },
+    /**
+     * @description  删除试卷
+     * @params {id}
+     * */
+    deleteExam(params) {
+        return axios.post('/exam/delete', params, postConfig)
+    },
+    /**
+     * @description  修改试卷
+     * @params {classId,categoryId,startTime,endTime,count}
+     * */
+    updateExam(params) {
+        return axios.post('/exam/update', params, postConfig)
+    },
 
     //考试结束
+
+
+    //验证码
+    /**
+     * @description  图形验证码
+     * */
+    getCaptcha() {
+        return axios.get('/user/captcha', postConfig)
+    },
+
+
+    //校验图形验证码
+    /**
+     * @description  校验图形验证码
+     * @params {captcha:'' [String]4位字符}
+     * */
+    checkCaptcha(params) {
+        return axios.post(' /user/checkCaptcha', params, postConfig)
+    },
+
 }

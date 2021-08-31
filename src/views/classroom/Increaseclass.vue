@@ -1,7 +1,5 @@
 <template>
   <div>
-    <div @click="toArticleS">111</div>
-    
     <el-card v-if="management">
       <el-row :gutter="20">
         <el-col :span="4">
@@ -10,14 +8,16 @@
         </el-col>
       </el-row>
       <el-table :data="classlist" border stripe>
-        <el-table-column prop="id" label="序号"></el-table-column>
+        <el-table-column prop="id" label="序号"  width="50" fixed></el-table-column>
         <el-table-column prop="name" label="班级名称"></el-table-column>
         <el-table-column prop="admin" label="管理员"></el-table-column>
               <el-table-column label="操作" header-align="center" prop="id" >
                   <template #default="scope">
-                      <el-button icon="el-icon-search" size="mini" @click="toArticle(scope.row)">查看</el-button>
-                      <el-button type="primary" icon="el-icon-edit" size="mini" @click="updateArticle(scope.row)">编辑</el-button>
-                      <el-button type="danger" icon="el-icon-delete" size="mini" @click="deleteArticlee(scope.row)">删除</el-button>
+                    <div class="cella">
+                      <a href="#" class="biaodan" @click="toArticle(scope.row)">查看</a>
+                      <a href="#" class="biaodan" @click="updateArticle(scope.row)">编辑</a>
+                      <a href="#" class="biaodan" @click="deleteArticlee(scope.row)">删除</a>
+                     </div>
                   </template>
               </el-table-column> 
       </el-table>
@@ -26,11 +26,12 @@
         </el-pagination>
     </el-card>
 
-        
-        <el-container v-if="studentlist">
+        <el-card  v-if="studentlist">
+              <el-button type="primary" @click="toArticleS">返回班级</el-button>
+          <el-container>
             <el-main class="content">
-              <el-table :data="studentsNewList" border style="width: 100%">
-              <el-table-column prop="userId" label="用户ID" header-align="center">
+              <el-table :data="personnel" border style="width: 100%">
+              <el-table-column prop="userId" label="用户ID"  width="50" header-align="center">
               </el-table-column>
               <el-table-column prop="username" label="用户名" header-align="center">
               </el-table-column>
@@ -38,20 +39,19 @@
               </el-table-column>
               <el-table-column prop="" label="学习成绩" header-align="center">
               </el-table-column>
-              <el-table-column prop="" label="班级名称" width="180" header-align="center">
+              <el-table-column prop="classId" label="班级名称"  header-align="center">
               </el-table-column>
-              <el-table-column prop="" label="操作" width="180" header-align="center">
+              <el-table-column prop="" label="操作"  header-align="center">
                   <template #default="scope">
-                      <el-button type="primary" icon="el-icon-edit" size="mini" @click="updateArticle(scope.row)">加入此学生</el-button>
-                      <el-button type="danger" icon="el-icon-delete" size="mini" @click="deleteArticlee(scope.row)">移除此学生</el-button>
+                      <a href="#" class="biaodan" @click="deleteArticlee(scope.row)">移除此学生</a>
                   </template>
               </el-table-column>
           </el-table>
           <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" v-model:current-page.sync="queryInfo.nowPage" :page-size="pageSize" layout="sizes, prev, pager, next" :page-count="queryInfo.countPage" :page-sizes="[2,3,4,5,10]">
           </el-pagination>
-            </el-main>
-    </el-container>
-    
+            </el-main>    
+        </el-container>
+      </el-card>
 
 
     <!-- 添加班级的对话框 -->
@@ -122,14 +122,12 @@ export default {
         nowPage:1,
         countPage:1
       },
-      studentsNewList:[],
       pageSize: 10,
       addForm: {
         classname: "",
       },
       dialogTableVisible: false,
       dialogFormVisible: false,
-      form: {},
       Modifyid:[],
       Modifyclass:{
         name:"",
@@ -137,7 +135,7 @@ export default {
       },
       studentlist:false,
       management:true,
-      see:""
+      personnel:[],
     };
   },
   created() {
@@ -176,33 +174,14 @@ export default {
       });
       this.classlist=classlist.data.rows
       this.queryInfo.countPage = classlist.data.countPage;
-      console.log(classlist);
+      
+      // console.log(classlist);
     },
 
     async updateArticle(data){
       this.dialogTableVisible = true
       this.Modifyid=data
-      // console.log(this.Modifyid.id);
     },
-
-    async getStudentsNum() {
-      let studentsNewList = await this.usersList({
-                // uuid:'vip',
-                pageNum: this.queryInfo.nowPage,
-                pageSize: this.pageSize
-      });
-      this.studentsNewList = studentsNewList.data.rows;
-      this.countPage = studentsNewList.data.countPage;
-      console.log(studentsNewList);
-      Object.values(this.studentsNewList).forEach((item) => {
-      if(item.sex==1){
-          item.sex="男"
-          }else{
-          item.sex="女"
-          }
-        })
-      },
-
     async deleteArticlee(data){
             let delres = await this.deleteClass({
                 id:data.id.toString(),
@@ -227,25 +206,51 @@ export default {
             // location. reload()
         console.log(modify);
         this.getclasslist()
-        this.dialogFormVisible = false
+        this.dialogTableVisible = false
+        
     },
     toArticle(data){
       this.studentlist=true
       this.management=false
-      this.getStudentsNum()
-      this.see=data.id
-      console.log(this.see);
+      Object.values(this.classlist).filter((item) => {
+        if(item.id==data.id){
+          this.personnel=item.children.rows
+        }
+      })
+      Object.values(this.personnel).forEach((item) => {
+      if(item.sex==1){
+          item.sex="男"
+          }else{
+          item.sex="女"
+          }
+        })
     },
     toArticleS(){
       this.studentlist=false
       this.management=true
-    }
+    },
+    
   }
 };
 </script>
 
-
-
-<style>
-
+<style scoped>
+  .el-row{
+    margin-bottom: 15px;
+  }
+  .biaodan{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    border: solid rgb(223, 217, 217) 1.5px;
+  }
+  .biaodan:hover{
+    background-color: rgb(0, 153, 255);
+    cursor:pointer;
+  }
+  .cella{
+    display: flex;
+  }
 </style>

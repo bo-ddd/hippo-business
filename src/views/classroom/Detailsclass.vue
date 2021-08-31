@@ -1,6 +1,6 @@
 <template>
   <div>
-      管理班级
+      班级详情页
   </div>
 </template>
 
