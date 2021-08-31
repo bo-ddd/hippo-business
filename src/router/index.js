@@ -16,7 +16,8 @@ export const routes = [{
         name: 'Statistics',
         component: Home,
         meta: {
-            title: '数据统计'
+            title: '数据统计',
+            icon: 'el-icon-help'
         },
         children: [{
             path: '/statistics/datastatistics',
@@ -33,7 +34,8 @@ export const routes = [{
         name: 'Category',
         component: Home,
         meta: {
-            title: '类目管理'
+            title: '类目管理',
+            icon: 'el-icon-folder-opened'
         },
         children: [{
                 path: '/category/testquestions',
@@ -60,7 +62,8 @@ export const routes = [{
         name: 'Topic',
         component: Home,
         meta: {
-            title: '试题'
+            title: '试题',
+            icon: 'el-icon-edit'
         },
         children: [{
                 path: '/topic/establish',
@@ -96,7 +99,8 @@ export const routes = [{
         name: 'Articlefile',
         component: Home,
         meta: {
-            title: '文章'
+            title: '文章',
+            icon: 'el-icon-tickets'
         },
         children: [{
                 path: '/articlefile/writearticle',
@@ -139,7 +143,8 @@ export const routes = [{
         name: 'Role',
         component: Home,
         meta: {
-            title: '角色管理'
+            title: '角色管理',
+            icon: 'el-icon-user'
         },
         children: [{
                 path: '/role/rolemanagement',
@@ -166,7 +171,8 @@ export const routes = [{
         name: 'News',
         component: Home,
         meta: {
-            title: '消息管理'
+            title: '消息管理',
+            icon: 'el-icon-chat-dot-square'
         },
         children: [{
             path: '/news/increasenews',
@@ -191,7 +197,8 @@ export const routes = [{
         name: 'Classroom',
         component: Home,
         meta: {
-            title: '班级管理'
+            title: '班级管理',
+            icon: 'el-icon-postcard'
         },
         children: [{
                 path: '/classroom/increaseclass',
@@ -219,7 +226,8 @@ export const routes = [{
         name: 'Task',
         component: Home,
         meta: {
-            title: '作业管理'
+            title: '作业管理',
+            icon: 'el-icon-reading'
         },
         children: [{
                 path: '/task/releasetask',
@@ -265,7 +273,8 @@ export const routes = [{
         name: 'Jurisdiction',
         component: Home,
         meta: {
-            title: '我的权限'
+            title: '我的权限',
+            icon: 'el-icon-school'
         },
         children: [{
             path: '/jurisdiction/routemanage',
@@ -282,7 +291,8 @@ export const routes = [{
         name: 'Exam',
         component: Home,
         meta: {
-            title: '考试管理'
+            title: '考试管理',
+            icon: 'el-icon-edit-outline'
         },
         children: [{
                 path: '/exam/createpaper',
@@ -325,7 +335,8 @@ export const routes = [{
         name: 'Activity',
         component: Home,
         meta: {
-            title: '活动管理'
+            title: '活动管理',
+            icon: 'el-icon-coordinate'
         },
         children: [{
             path: '/activity/createactivity',
@@ -350,7 +361,8 @@ export const routes = [{
         name: 'Sign_in',
         component: Home,
         meta: {
-            title: '打卡管理'
+            title: '打卡管理',
+            icon: 'el-icon-s-flag'
         },
         children: [{
                 path: '/sign_in/historyrecord',

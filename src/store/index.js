@@ -162,7 +162,15 @@ export default createStore({
         createExam(ctx, payload) {
             return Api.createExam(payload);
         },
-
+        getExamList(ctx, payload) {
+            return Api.getExamList(payload);
+        },
+        deleteExam(ctx, payload) {
+            return Api.deleteExam(payload);
+        },
+        updateExam(ctx, payload) {
+            return Api.updateExam(payload);
+        },
 
         //验证码
         getCaptcha() {

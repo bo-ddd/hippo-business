@@ -20,7 +20,7 @@
                 <el-menu :default-active='titleIndex' :unique-opened='opened' class="el-menu-vertical-demo">
                     <el-submenu :index="item.name" v-for="(item,index) in routes" :key="index">
                         <template #title>
-                            <i class="el-icon-folder-opened"></i>
+                            <i :class="item.meta.icon"></i>
                             <span>{{item.meta.title}}</span>
                         </template>
                         <div v-if="item.children">
