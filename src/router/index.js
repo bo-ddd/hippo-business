@@ -425,7 +425,7 @@ export const routes = [{
                     import ('../views/sign_in/Signinsetup.vue'),
                 meta: {
                     title: '设置打卡',
-                    identity: [38]
+                    identity: [38, 56]
                 }
             },
         ]
