@@ -134,13 +134,14 @@ export default {
          },
     },
     async created(){
-      let data = await this.usersList();
-      console.log(data.data);
-      (data.data).rows.forEach(element => {
-          console.log(element);
-      });
-      let res = await this.getRole();
-      console.log(res);
+      let data = await this.usersList({identity:32});
+      console.log(data);
+      if(data.status){
+        this.options=[];
+        (data.data).rows.forEach(element => {
+            this.options.push({value:element.username,label:element.username});
+        });
+      }
     }
 }
 </script>
