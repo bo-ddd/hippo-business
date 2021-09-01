@@ -28,7 +28,7 @@ export const routes = [{
         meta: {
             title: '数据统计',
             icon: 'el-icon-help',
-            identity: [38, 15, 16, 18, 31, 32, 50, 51, 52, 53, 54, 55, 56, 57]
+            identity: [38, 15, 16, 18, 31, 32, 50, 51, 52, 53, 54, 55, 56, 57, 0]
         },
         children: [{
             path: '/statistics/datastatistics',
@@ -37,7 +37,7 @@ export const routes = [{
                 import ('../views/statistics/Datastatistics.vue'),
             meta: {
                 title: '数据统计',
-                identity: [38, 15, 16, 18, 31, 32, 50, 51, 52, 53, 54, 55, 56, 57]
+                identity: [38, 15, 16, 18, 31, 32, 50, 51, 52, 53, 54, 55, 56, 57, 0]
             },
         }]
     },
@@ -119,7 +119,7 @@ export const routes = [{
         meta: {
             title: '文章',
             icon: 'el-icon-tickets',
-            identity: [38, 15, 16, 18, 31, 32, 50, 51, 52, 53, 54, 55, 56, 57]
+            identity: [38, 15, 16, 18, 31, 32, 50, 51, 52, 53, 54, 55, 56, 57, 0]
         },
         children: [{
                 path: '/articlefile/writearticle',
@@ -128,7 +128,7 @@ export const routes = [{
                     import ('../views/articlefile/Writearticle.vue'),
                 meta: {
                     title: '写文章',
-                    identity: [38, 15, 16, 18, 31, 32, 50, 51, 52, 53, 54, 55, 56, 57]
+                    identity: [38, 15, 16, 18, 31, 32, 50, 51, 52, 53, 54, 55, 56, 57, 0]
                 }
             }, {
                 path: '/articlefile/mainarticle',
@@ -137,7 +137,7 @@ export const routes = [{
                     import ('../views/articlefile/Mainarticle.vue'),
                 meta: {
                     title: '文章列表',
-                    identity: [38, 15, 16, 18, 31, 32, 50, 51, 52, 53, 54, 55, 56, 57]
+                    identity: [38, 15, 16, 18, 31, 32, 50, 51, 52, 53, 54, 55, 56, 57, 0]
                 }
             }, {
                 path: '/articlefile/articleDetail',
@@ -406,7 +406,7 @@ export const routes = [{
         meta: {
             title: '打卡管理',
             icon: 'el-icon-s-flag',
-            identity: [38, 15, 16, 18, 31, 32, 50, 51, 52, 53, 54, 55, 56, 57]
+            identity: [38, 15, 16, 18, 31, 32, 50, 51, 52, 53, 54, 55, 56, 57, 0]
         },
         children: [{
                 path: '/sign_in/historyrecord',
@@ -415,7 +415,7 @@ export const routes = [{
                     import ('../views/sign_in/Historyrecord.vue'),
                 meta: {
                     title: '历史记录',
-                    identity: [38, 15, 16, 18, 31, 32, 50, 51, 52, 53, 54, 55, 56, 57]
+                    identity: [38, 15, 16, 18, 31, 32, 50, 51, 52, 53, 54, 55, 56, 57, 0]
                 }
             },
             {
