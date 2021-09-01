@@ -35,6 +35,7 @@
             <el-button type="primary">搜索</el-button>
         </div>
 
+        <!-- 用户列表表格 -->
         <el-table :data="usersListArr" border style="width: 100%">
             <el-table-column type="index" label="序号" width="50px" align="center" header-align="center">
             </el-table-column>
