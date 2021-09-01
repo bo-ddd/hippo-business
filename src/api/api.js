@@ -221,7 +221,7 @@ export default {
     //角色信息接口开始
     /**
      * @description  获取角色信息接口
-     * @params 无
+     * @params pageSize:非必填,获取几条数据,默认为10;
      * */
     getRole(params) {
         return axios.post('/role/list', params, postConfig)
