@@ -1,5 +1,4 @@
 <template>
-
 <el-table :data="tableData" max-height="750" border style="width: 100%" :row-class-name="rowClassName">
     <el-table-column label="题目类型" prop="categoryId" width="80">
     </el-table-column>
@@ -14,12 +13,13 @@
     </el-table-column>
     <el-table-column align="right">
         <template #header>
-            <el-input v-model="search" placeholder="请输入题目类型" style="width:70%">
+            <el-input v-model="search" placeholder="请输入题目类型" style="width:70%;margin-right:10px">
             </el-input>
             <el-button type="primary" icon="el-icon-search" @click="selTypeTest(this.search)">搜索</el-button>
         </template>
         <template #default="scope">
-            <el-button type="primary" icon="el-icon-search" @click="handleEdit(scope.$index, scope.row)">查看/编辑</el-button>
+            <el-button @click="handleEdit(scope.$index, scope.row)" type="text" size="small">查看 / 编辑</el-button>
+            <!-- <el-button type="primary" icon="el-icon-search" @click="handleEdit(scope.$index, scope.row)">查看/编辑</el-button> -->
         </template>
     </el-table-column>
 </el-table>
@@ -28,14 +28,6 @@
     <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 50, 500, 1000]" :page-size="pagesize" layout="total, sizes, prev, pager, next, jumper" :total="count">
     </el-pagination>
 </div>
-
-
-
-
-<!-- <div class="center-pagination">
-    <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageNum" :page-sizes="pageSizes" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="dataCount">
-    </el-pagination>
-</div> -->
 </template>
 
 <script>
@@ -74,7 +66,6 @@ export default {
                     categoryId: this.tableData[index].categoryId
                 }
             })
-
         },
 
         async TopicList() {
@@ -187,5 +178,8 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style>
+.el-table .cell {
+    text-align: center;
+}
 </style>
