@@ -19,7 +19,7 @@
             <el-aside width="200px">
                 <el-menu :default-active='titleIndex' :unique-opened='opened' class="el-menu-vertical-demo">
                     <el-submenu :index="item.name" v-show="item.meta.identity.includes(identity)" v-for="(item,index) in routes" :key="index">
-                        <template #title >
+                        <template #title>
                             <i :class="item.meta.icon"></i>
                             <span>{{item.meta.title}}</span>
                         </template>
@@ -70,8 +70,12 @@ export default {
             // 返回登录用户的信息
             this.resultUser = data.data;
             //登录后的头像
-            this.loginImage = require(`../assets/images/avator/${(this.resultUser).avatorId}.png`)
             this.identity = this.resultUser.identity
+            if (this.resultUser.avatorImg.length <= 2) {
+                this.loginImage = require('@/assets/images/avator/' + this.resultUser.avatorImg + '.png')
+            } else {
+                this.loginImage = this.resultUser.avatorImg
+            }
         }
     },
     computed: {

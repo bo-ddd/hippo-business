@@ -13,12 +13,13 @@
     </el-table-column>
     <el-table-column align="right">
         <template #header>
-            <el-input v-model="search" placeholder="请输入题目类型" style="width:70%">
+            <el-input v-model="search" placeholder="请输入题目类型" style="width:70%;margin-right:10px">
             </el-input>
             <el-button type="primary" icon="el-icon-search" @click="selTypeTest(this.search)">搜索</el-button>
         </template>
         <template #default="scope">
-            <el-button type="primary" icon="el-icon-search" @click="handleEdit(scope.$index, scope.row)">查看/编辑</el-button>
+            <el-button @click="handleEdit(scope.$index, scope.row)" type="text" size="small">查看 / 编辑</el-button>
+            <!-- <el-button type="primary" icon="el-icon-search" @click="handleEdit(scope.$index, scope.row)">查看/编辑</el-button> -->
         </template>
     </el-table-column>
 </el-table>
@@ -27,11 +28,6 @@
     <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 50, 500, 1000]" :page-size="pagesize" layout="total, sizes, prev, pager, next, jumper" :total="count">
     </el-pagination>
 </div>
-
-<!-- <div class="center-pagination">
-    <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageNum" :page-sizes="pageSizes" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="dataCount">
-    </el-pagination>
-</div> -->
 </template>
 
 <script>
@@ -48,10 +44,10 @@ export default {
             search: '',
             options: [],
 
-        currentPage:1,  //初始页是第一页
-        pagesize:10, //每页10条，
-        count:0
-    
+            currentPage: 1, //初始页是第一页
+            pagesize: 10, //每页10条，
+            count: 0
+
         }
     },
     methods: {
@@ -70,30 +66,29 @@ export default {
                     categoryId: this.tableData[index].categoryId
                 }
             })
-
         },
 
-      async   TopicList(){
-           this.res = await this.getTopicList({
-            pageNum:this.currentPage,
-            pageSize:this.pagesize
-        });
-        this.tableData = this.res.data.rows
-        console.log(this.tableData);
-         console.log(this.tableData.length);
-        console.log(this.res.data)
-        console.log(this.tableData)
-        for (let i = 0; i < this.tableData.length; i++) {
-            if (this.tableData[i].categoryId == 1) {
-                this.tableData[i].categoryId = 'HTML'
-            } else if (this.tableData[i].categoryId == 2) {
-                this.tableData[i].categoryId = 'CSS'
-            } else if (this.tableData[i].categoryId == 3) {
-                this.tableData[i].categoryId = 'JS'
-            } else if (this.tableData[i].categoryId == 4) {
-                this.tableData[i].categoryId = 'VUE'
+        async TopicList() {
+            this.res = await this.getTopicList({
+                pageNum: this.currentPage,
+                pageSize: this.pagesize
+            });
+            this.tableData = this.res.data.rows
+            console.log(this.tableData);
+            console.log(this.tableData.length);
+            console.log(this.res.data)
+            console.log(this.tableData)
+            for (let i = 0; i < this.tableData.length; i++) {
+                if (this.tableData[i].categoryId == 1) {
+                    this.tableData[i].categoryId = 'HTML'
+                } else if (this.tableData[i].categoryId == 2) {
+                    this.tableData[i].categoryId = 'CSS'
+                } else if (this.tableData[i].categoryId == 3) {
+                    this.tableData[i].categoryId = 'JS'
+                } else if (this.tableData[i].categoryId == 4) {
+                    this.tableData[i].categoryId = 'VUE'
+                }
             }
-        }
         },
 
         changeMd(val) {
@@ -103,13 +98,13 @@ export default {
         handleSizeChange(size) {
             this.pagesize = size;
             console.log(size);
-              this.currentPage = 1;
-              this.TopicList();
+            this.currentPage = 1;
+            this.TopicList();
         },
         handleCurrentChange(currentPage) {
             this.currentPage = currentPage;
             console.log(currentPage);
-              this.TopicList();
+            this.TopicList();
         },
         searchs() {
             this.pageNum = 1;
@@ -158,13 +153,13 @@ export default {
         },
     },
     async created() {
-     this.res = await this.getTopicList({
-            pageNum:1,
+        this.res = await this.getTopicList({
+            pageNum: 1,
         });
         this.count = this.res.data.rows.length
         this.tableData = this.res.data.rows
         console.log(this.tableData);
-         console.log(this.tableData.length);
+        console.log(this.tableData.length);
         console.log(this.res.data)
         console.log(this.tableData)
         for (let i = 0; i < this.tableData.length; i++) {
@@ -183,6 +178,8 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style>
+.el-table .cell {
+    text-align: center;
+}
 </style>
- 
