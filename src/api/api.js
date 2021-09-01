@@ -209,7 +209,8 @@ export default {
 
     /**
      * @description  获取用户列表信息接口
-     * @params {uuid,pageNum,pageSize}    pageNum:非必填,第几页,默认1;  pageSize:非必填,获取几条数据,默认为10;
+     * @params {uuid,avatorName[String],classId[Number],,userId[Number],username[String],identity[Number],pageNum,pageSize}    
+     *         avatorName:非必填,网名;     classId:非必填,班级ID;     userId:非必填,用户ID;     username:非必填,用户名;      identity:非必填,身份ID;   pageNum:非必填,第几页,默认1;     pageSize:非必填,获取几条数据,默认为10;
      * */
     usersList(params) {
         return axios.post('/user/list', params, postConfig)
