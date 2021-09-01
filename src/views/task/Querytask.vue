@@ -68,7 +68,7 @@
 
 <script>
   import { ref } from 'vue'
-
+  import {mapActions} from 'vuex';
 export default {
     data(){
         return{
@@ -128,10 +128,20 @@ export default {
       }
     },
      methods: {
+         ...mapActions(['usersList','getRole']),
          sayThat(){
              console.log(this.value);
-         }
+         },
     },
+    async created(){
+      let data = await this.usersList();
+      console.log(data.data);
+      (data.data).rows.forEach(element => {
+          console.log(element);
+      });
+      let res = await this.getRole();
+      console.log(res);
+    }
 }
 </script>
 
