@@ -27,6 +27,15 @@ export default createStore({
     },
     mutations: {},
     actions: {
+        //图形验证码
+        userCaptcha() {
+            return Api.userCaptcha()
+        },
+        //校验图形验证码
+        userCheckCaptcha(ctx, payload) {
+            return Api.userCheckCaptcha(payload)
+        },
+      
         //题
         createTopic(ctx, payload) {
             return Api.createTopic(payload)
@@ -178,6 +187,11 @@ export default createStore({
         },
         checkCaptcha(ctx, payload) {
             return Api.checkCaptcha(payload);
+        },
+
+        //签到
+        getSignList(ctx, payload) {
+            return Api.getSignList(payload);
         },
     },
     modules: {}
