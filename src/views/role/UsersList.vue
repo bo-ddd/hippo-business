@@ -22,17 +22,13 @@
             </el-form-item>
         </el-form> -->
         <div class="indexInput">
-            <el-select class="select" v-model="value" placeholder="请选择">
+            <!-- <el-select class="select" v-model="value" placeholder="请选择">
                 <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
                 </el-option>
-                <!-- <el-option >按用户ID查询</el-option>
-                <el-option >按用户名查询</el-option>
-                <el-option >按姓名查询</el-option>
-                <el-option >按班级编号查询</el-option> -->
-            </el-select>
+            </el-select> -->
             <el-input class="input" placeholder="请输入查询内容" prefix-icon="el-icon-search" v-model="input">
             </el-input>
-            <el-button type="primary">搜索</el-button>
+            <el-button type="primary" @click="search">搜索</el-button>
         </div>
 
         <!-- 用户列表表格 -->
@@ -57,7 +53,7 @@
             </el-table-column>
             <el-table-column label="角色分配" width="180" align="center" header-align="center" #default="scope">
                 <a class="updateClass" @click="updateRole(scope.row)">更改角色</a>
-                <el-dialog title="现有角色类目" v-model="dialogVisible2" width="60%" :before-close="handleClose">
+                <el-dialog title="现有角色类目" v-model="dialogVisible2" width="60%" :before-close="handleClose" :modal="false">
                             <el-radio-group v-model="radio" v-for="(item) in RoleListArr" :key="item.id">
                                 <el-radio class="roleRadio" :label="item.id" @click="checkRole(item.id)">{{item.name}}</el-radio>
                             </el-radio-group>
@@ -132,6 +128,9 @@ export default {
     },
     methods: {
         ...mapActions(["usersList","getRole", "getClassList", "updateUser"]),
+        search(){
+            
+        },
         handleCurrentChange(val) {
             this.nowPage = val;
             this.getList();
@@ -209,7 +208,7 @@ export default {
         },
          async getRoles() {
             let RoleList = await this.getRole({
-
+                pageSize:50
             });
             console.log(RoleList.data);
             this.RoleListArr = RoleList.data.rows;
