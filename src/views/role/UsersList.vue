@@ -1,34 +1,15 @@
 <template>
 <div class="wrap">
     <div class="user">
-        <!-- <el-form :inline="true" :model="searchParams" class="demo-form-inline">
-            <el-form-item>
-                <el-input v-model="searchParams.chanelName" style="width: 160px;" placeholder="请输入渠道名称" clearable></el-input>
-            </el-form-item>
-            <el-form-item>
-                <el-input v-model="searchParams.remark" style="width: 180px;" placeholder="请输入备注内容关键词" clearable></el-input>
-            </el-form-item>
-            <el-form-item label="">
-                <el-select style="width: 160px" v-model="searchParams.chanelType" clearable @change="channelChange" placeholder="请选择渠道类型">
-                    <el-option :label="item.name" :value="item.value" v-for="item in chanelList" :key="item.value"></el-option>
-                </el-select>
-            </el-form-item>
-            <el-form-item>
-                <el-button class="search-btn el-button--infoSearch" icon="el-icon-search" @click="submitSearch()"></el-button>
-                <el-button class="search-btn el-button--infoSearch" @click="clearListSearch">清空</el-button>
-            </el-form-item>
-            <el-form-item class="rBtn">
-                <el-button type="primary" @click="createItem('new')">新建</el-button>
-            </el-form-item>
-        </el-form> -->
+        <!-- 用户列表搜索 -->
         <div class="indexInput">
-            <!-- <el-select class="select" v-model="value" placeholder="请选择">
+            <el-select class="select" v-model="value" placeholder="请选择">
                 <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
                 </el-option>
-            </el-select> -->
+            </el-select>
             <el-input class="input" placeholder="请输入查询内容" prefix-icon="el-icon-search" v-model="input">
             </el-input>
-            <el-button type="primary" @click="search">搜索</el-button>
+            <el-button type="primary" @click="search(value)">搜索</el-button>
         </div>
 
         <!-- 用户列表表格 -->
@@ -39,7 +20,7 @@
             </el-table-column>
             <el-table-column prop="username" label="用户名" width="120px" align="center" header-align="center">
             </el-table-column>
-            <el-table-column prop="avatorName" label="姓名" width="120px" align="center" header-align="center">
+            <el-table-column prop="avatorName" label="昵称" width="120px" align="center" header-align="center">
             </el-table-column>
             <el-table-column prop="sex" label="性别" width="50px" align="center" header-align="center">
             </el-table-column>
@@ -53,7 +34,8 @@
             </el-table-column>
             <el-table-column label="角色分配" width="180" align="center" header-align="center" #default="scope">
                 <a class="updateClass" @click="updateRole(scope.row)">更改角色</a>
-                <el-dialog title="现有角色类目" v-model="dialogVisible2" width="60%" :before-close="handleClose" :modal="false">
+                
+                <el-dialog title="现有角色类目" v-model="dialogVisible2" width="60%" :before-close="handleClose" :append-to-body='true'>
                             <el-radio-group v-model="radio" v-for="(item) in RoleListArr" :key="item.id">
                                 <el-radio class="roleRadio" :label="item.id" @click="checkRole(item.id)">{{item.name}}</el-radio>
                             </el-radio-group>
@@ -64,12 +46,13 @@
                         </span>
                     </template>
                 </el-dialog>
+                
             </el-table-column>
             <el-table-column prop="classId" label="班级编号" width="100px" align="center" header-align="center">
             </el-table-column>
             <el-table-column label="班级分配" width="180" align="center" header-align="center" #default="scope">
                 <a class="updateClass" @click="updateClass(scope.row)">更改班级</a>
-                <el-dialog title="现有班级类目" v-model="dialogVisible" width="60%" :before-close="handleClose">
+                <el-dialog title="现有班级类目" v-model="dialogVisible" width="60%" :before-close="handleClose" :modal="false">
                             <el-radio-group v-model="radio" v-for="(item) in classListArr" :key="item.id">
                                 <el-radio class="classRadio" :label="item.id" @click="check(item.id)">{{item.name}}</el-radio>
                             </el-radio-group>
@@ -96,6 +79,11 @@ import {
 export default {
     data() {
         return {
+            avatorName:'',
+            classId: 0,
+            userId:0,
+            username: '',
+            identity:0,
             usersListArr: [],
             nowPage: 1,
             countPage: 1,
@@ -105,7 +93,6 @@ export default {
             RoleListArr:[],
             classListArr: [],
             radio: 0,
-            userId: -1,
             input: '',
             options: [{
                 value: '选项1',
@@ -122,14 +109,47 @@ export default {
             }, {
                 value: '选项5',
                 label: '按角色编号查询'
+            }, {
+                value: '选项6',
+                label: '全部'
             }],
             value: ''
         };
     },
     methods: {
         ...mapActions(["usersList","getRole", "getClassList", "updateUser"]),
-        search(){
-            
+        search(value){
+            console.log(value);    
+            if(value=='选项1'){
+                this.userId=this.input;
+                this.getList();
+            }else if(value=='选项2'){
+                this.username=this.input;
+                this.getList();
+            }else if(value=='选项3'){
+                console.log('姓名');
+                this.avatorName=this.input;
+                console.log(this.input);
+                console.log(this.avatorName);
+                this.getList();
+            }else if(value=='选项4'){
+                this.classId=this.input;
+                this.getList();
+            }else if(value=='选项5'){
+                this.identity=this.input;
+                this.getList();
+            }else if(value=='选项6'){
+                this.userId=0;
+                this.username='';
+                this.avatorName='';
+                this.classId=0;
+                this.identity=0;
+                this.input='';
+                this.getList();
+            }else{
+                alert('请先选择搜索条目')
+            }    
+
         },
         handleCurrentChange(val) {
             this.nowPage = val;
@@ -141,7 +161,6 @@ export default {
             this.getList();
         },
         updateClass(arr) {
-            // console.log(arr);
             this.dialogVisible = true;
             this.userId = arr.userId;
             this.gradeShow = false
@@ -163,8 +182,6 @@ export default {
                 .catch(function () {});
         },
         updateRole(arr) {
-            console.log('----');
-            // console.log(arr);
             this.dialogVisible2 = true;
             this.userId = arr.userId;
         },
@@ -180,11 +197,11 @@ export default {
         async getList() {
             let usersList = await this.usersList({
                 // uuid:'vip',
-                // avatorName: '北风',
-                // classId: '7',
-                // userId:296,
-                // username: '123121',
-                // identity:18,
+                userId:this.userId,
+                username: this.username,
+                avatorName: this.avatorName,
+                classId: this.classId,
+                identity:this.identity,
                 pageNum: this.nowPage,
                 pageSize: this.pageSize
             });
@@ -218,7 +235,6 @@ export default {
         this.getList();
         this.getClass();
         this.getRoles();
-        console.log(this.value);
     },
 };
 </script>
@@ -240,9 +256,6 @@ export default {
             display: flex;
             align-items: center;
             justify-content: space-around;
-            // & .input{
-            //     width: 200px;
-            // }
         }
 
         & .updateClass {
@@ -253,12 +266,14 @@ export default {
     }
 
     & .grade {
+        
         & .roleRadio{
-             margin-right: 30px;
+             margin-left: 30px;
         }
         & .classRadio {
             margin-right: 30px;
         }
+
     }
 }
 </style>
