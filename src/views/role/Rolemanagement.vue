@@ -129,7 +129,7 @@ export default {
         },
         async getRoles() {
             let RoleList = await this.getRole({
-
+                pageSize:50
             });
             console.log(RoleList);
             this.RoleListArr = RoleList.data.rows;

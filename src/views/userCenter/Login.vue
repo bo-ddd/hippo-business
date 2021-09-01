@@ -109,6 +109,7 @@ export default {
             let res = await this.userCaptcha({
 
             })
+            console.log(res)
             this.captchaImg = res
         },
         submitForm(formName) {
@@ -161,6 +162,8 @@ export default {
                  } else {
                      this.$message("账号或者密码有误");
                  }
+               }else{
+                  this.$message('验证码错误')
                }
                 
 

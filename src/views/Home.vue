@@ -53,6 +53,7 @@ export default {
             resultUser: '',
             loginImage: '',
             opened: true,
+            identity: 0
         }
     },
     methods: {
@@ -70,6 +71,7 @@ export default {
             this.resultUser = data.data;
             //登录后的头像
             this.loginImage = require(`../assets/images/avator/${(this.resultUser).avatorId}.png`)
+            this.identity = this.resultUser.identity
         }
     },
     computed: {
