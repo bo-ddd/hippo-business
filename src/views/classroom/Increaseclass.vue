@@ -174,6 +174,12 @@ export default {
         location. reload()
     },
     async mdifyclass(){
+        if(this.Modifyclass.admin == ''){
+          this.Modifyclass.admin = this.Modifyid.admin
+        }
+        if(this.Modifyclass.name == ''){
+          this.Modifyclass.name = this.Modifyid.name
+        }
         let modify = await this.updateClass({
                 id:this.Modifyid.id,
                 name:this.Modifyclass.name,
@@ -184,7 +190,6 @@ export default {
         console.log(modify);
         this.getclasslist()
         this.dialogTableVisible = false
-        
     },
     toArticle(data){
       console.log(data);
