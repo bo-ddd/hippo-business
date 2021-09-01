@@ -10,6 +10,7 @@ import Registration from '../views/userCenter/Registration.vue'
  * id:18,name:'教官'
  * id:31,name:'校长'
  * id:32,name:'老师'
+ * 
  */
 
 export const routes = [{
@@ -27,7 +28,7 @@ export const routes = [{
         meta: {
             title: '数据统计',
             icon: 'el-icon-help',
-            identity: [38, 15, 16, 18, 31, 32]
+            identity: [38, 15, 16, 18, 31, 32, 50, 51, 52, 53, 54, 55, 56, 57]
         },
         children: [{
             path: '/statistics/datastatistics',
@@ -36,7 +37,7 @@ export const routes = [{
                 import ('../views/statistics/Datastatistics.vue'),
             meta: {
                 title: '数据统计',
-                identity: [38, 15, 16, 18, 31, 32]
+                identity: [38, 15, 16, 18, 31, 32, 50, 51, 52, 53, 54, 55, 56, 57]
             },
         }]
     },
@@ -47,7 +48,7 @@ export const routes = [{
         meta: {
             title: '类目管理',
             icon: 'el-icon-folder-opened',
-            identity: [38, 31]
+            identity: [38, 31, 54, 57]
         },
         children: [{
                 path: '/category/testquestions',
@@ -56,7 +57,7 @@ export const routes = [{
                     import ('../views/category/Testquestions.vue'),
                 meta: {
                     title: '试题',
-                    identity: [38, 31]
+                    identity: [38, 31, 57]
                 }
             },
             {
@@ -66,7 +67,7 @@ export const routes = [{
                     import ('../views/category/Article.vue'),
                 meta: {
                     title: '文章',
-                    identity: [38, 31]
+                    identity: [38, 31, 54]
                 }
             },
         ]
@@ -78,7 +79,7 @@ export const routes = [{
         meta: {
             title: '试题',
             icon: 'el-icon-edit',
-            identity: [38, 31]
+            identity: [38, 31, 55]
         },
         children: [{
                 path: '/topic/establish',
@@ -87,7 +88,7 @@ export const routes = [{
                     import ('../views/topic/Establish.vue'),
                 meta: {
                     title: '创建',
-                    identity: [38, 31]
+                    identity: [38, 31, 55]
                 }
             },
             {
@@ -97,7 +98,7 @@ export const routes = [{
                     import ('../views/topic/Listpage.vue'),
                 meta: {
                     title: '列表',
-                    identity: [38, 31]
+                    identity: [38, 31, 55]
                 }
             },
             {
@@ -118,7 +119,7 @@ export const routes = [{
         meta: {
             title: '文章',
             icon: 'el-icon-tickets',
-            identity: [38, 31, 15, 16, 18, 32]
+            identity: [38, 15, 16, 18, 31, 32, 50, 51, 52, 53, 54, 55, 56, 57]
         },
         children: [{
                 path: '/articlefile/writearticle',
@@ -127,7 +128,7 @@ export const routes = [{
                     import ('../views/articlefile/Writearticle.vue'),
                 meta: {
                     title: '写文章',
-                    identity: [38, 31, 15, 16, 18, 32]
+                    identity: [38, 15, 16, 18, 31, 32, 50, 51, 52, 53, 54, 55, 56, 57]
                 }
             }, {
                 path: '/articlefile/mainarticle',
@@ -136,7 +137,7 @@ export const routes = [{
                     import ('../views/articlefile/Mainarticle.vue'),
                 meta: {
                     title: '文章列表',
-                    identity: [38, 31, 15, 16, 18, 32]
+                    identity: [38, 15, 16, 18, 31, 32, 50, 51, 52, 53, 54, 55, 56, 57]
                 }
             }, {
                 path: '/articlefile/articleDetail',
@@ -165,7 +166,7 @@ export const routes = [{
         meta: {
             title: '角色管理',
             icon: 'el-icon-user',
-            identity: [38, 31, 18, 32]
+            identity: [38, 31, 18, 32, 50]
         },
         children: [{
                 path: '/role/rolemanagement',
@@ -174,7 +175,7 @@ export const routes = [{
                     import ('../views/role/Rolemanagement.vue'),
                 meta: {
                     title: '创建角色',
-                    identity: [38]
+                    identity: [38, 50]
                 }
             },
             {
@@ -184,7 +185,7 @@ export const routes = [{
                     import ('../views/role/UsersList.vue'),
                 meta: {
                     title: '用户列表',
-                    identity: [38, 31, 18, 32]
+                    identity: [38, 31, 18, 32, 50]
                 }
             },
         ]
@@ -196,7 +197,7 @@ export const routes = [{
         meta: {
             title: '消息管理',
             icon: 'el-icon-chat-dot-square',
-            identity: [38, 32, 18, 31]
+            identity: [38, 32, 18, 31, 51]
         },
         children: [{
             path: '/news/increasenews',
@@ -205,7 +206,7 @@ export const routes = [{
                 import ('../views/news/Increasenews.vue'),
             meta: {
                 title: '添加消息',
-                identity: [38, 32, 18, 31]
+                identity: [38, 32, 18, 31, 51]
             }
         }, {
             path: '/news/systemnews',
@@ -214,7 +215,7 @@ export const routes = [{
                 import ('../views/news/Systemnews.vue'),
             meta: {
                 title: '系统消息管理',
-                identity: [38, 32, 18, 31]
+                identity: [38, 32, 18, 31, 51]
             }
         }]
     },
@@ -225,7 +226,7 @@ export const routes = [{
         meta: {
             title: '班级管理',
             icon: 'el-icon-postcard',
-            identity: [38, 32]
+            identity: [38, 32, 52]
         },
         children: [{
                 path: '/classroom/increaseclass',
@@ -234,7 +235,7 @@ export const routes = [{
                     import ('../views/classroom/Increaseclass.vue'),
                 meta: {
                     title: '管理班级',
-                    identity: [38, 32]
+                    identity: [38, 32, 52]
                 }
             },
             {
@@ -256,7 +257,7 @@ export const routes = [{
         meta: {
             title: '作业管理',
             icon: 'el-icon-reading',
-            identity: [38, 32]
+            identity: [38, 32, 53]
         },
         children: [{
                 path: '/task/releasetask',
@@ -265,7 +266,7 @@ export const routes = [{
                     import ('../views/task/Releasetask.vue'),
                 meta: {
                     title: '发布作业',
-                    identity: [38, 32]
+                    identity: [38, 32, 53]
                 }
             },
             {
@@ -275,7 +276,7 @@ export const routes = [{
                     import ('../views/task/Correcttask.vue'),
                 meta: {
                     title: '批改作业',
-                    identity: [38, 32]
+                    identity: [38, 32, 53]
                 }
             },
             {
@@ -285,7 +286,7 @@ export const routes = [{
                     import ('../views/task/Modifytask.vue'),
                 meta: {
                     title: '修改作业',
-                    identity: [38, 32]
+                    identity: [38, 32, 53]
                 }
             },
             {
@@ -295,7 +296,7 @@ export const routes = [{
                     import ('../views/task/Querytask.vue'),
                 meta: {
                     title: '查询作业',
-                    identity: [38, 32]
+                    identity: [38, 32, 53]
                 }
             },
 
@@ -328,7 +329,7 @@ export const routes = [{
         meta: {
             title: '考试管理',
             icon: 'el-icon-edit-outline',
-            identity: [38, 32]
+            identity: [38, 32, 55]
         },
         children: [{
                 path: '/exam/createpaper',
@@ -337,7 +338,7 @@ export const routes = [{
                     import ('../views/exam/Createpaper.vue'),
                 meta: {
                     title: '创建考试',
-                    identity: [38, 32]
+                    identity: [38, 32, 55]
                 }
             }, {
                 path: '/exam/examrecord',
@@ -346,7 +347,7 @@ export const routes = [{
                     import ('../views/exam/Examrecord.vue'),
                 meta: {
                     title: '考试记录',
-                    identity: [38, 32]
+                    identity: [38, 32, 55]
                 }
             },
             {
@@ -356,7 +357,7 @@ export const routes = [{
                     import ('../views/exam/Paperlist.vue'),
                 meta: {
                     title: '试卷列表',
-                    identity: [38, 32]
+                    identity: [38, 32, 55]
                 }
             }, {
                 path: '/exam/paperdetails',
@@ -376,7 +377,7 @@ export const routes = [{
         meta: {
             title: '活动管理',
             icon: 'el-icon-coordinate',
-            identity: [38, 32, 31, 18]
+            identity: [38, 32, 31, 18, 56]
         },
         children: [{
             path: '/activity/createactivity',
@@ -385,7 +386,7 @@ export const routes = [{
                 import ('../views/activity/Createactivity.vue'),
             meta: {
                 title: '创建活动',
-                identity: [38, 32, 31, 18]
+                identity: [38, 32, 31, 18, 56]
             }
         }, {
             path: '/activity/activitylist',
@@ -394,7 +395,7 @@ export const routes = [{
                 import ('../views/activity/Activitylist.vue'),
             meta: {
                 title: '活动列表',
-                identity: [38, 32, 31, 18]
+                identity: [38, 32, 31, 18, 56]
             }
         }]
     },
@@ -405,7 +406,7 @@ export const routes = [{
         meta: {
             title: '打卡管理',
             icon: 'el-icon-s-flag',
-            identity: [38, 32, 31, 18, 15, 16]
+            identity: [38, 15, 16, 18, 31, 32, 50, 51, 52, 53, 54, 55, 56, 57]
         },
         children: [{
                 path: '/sign_in/historyrecord',
@@ -414,7 +415,7 @@ export const routes = [{
                     import ('../views/sign_in/Historyrecord.vue'),
                 meta: {
                     title: '历史记录',
-                    identity: [38, 32, 31, 18, 15, 16]
+                    identity: [38, 15, 16, 18, 31, 32, 50, 51, 52, 53, 54, 55, 56, 57]
                 }
             },
             {

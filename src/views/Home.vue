@@ -18,13 +18,13 @@
         <el-container>
             <el-aside width="200px">
                 <el-menu :default-active='titleIndex' :unique-opened='opened' class="el-menu-vertical-demo">
-                    <el-submenu :index="item.name" v-for="(item,index) in routes" :key="index">
+                    <el-submenu :index="item.name" :v-show="item.meta.identity.includes(identity)" v-for="(item,index) in routes" :key="index">
                         <template #title>
                             <i :class="item.meta.icon"></i>
                             <span>{{item.meta.title}}</span>
                         </template>
                         <div v-if="item.children">
-                            <el-menu-item-group v-show="children.meta.title" v-for="(children,childIdx) in item.children" :key="childIdx">
+                            <el-menu-item-group v-show="children.meta.title && children.meta.identity.includes(identity)" v-for="(children,childIdx) in item.children" :key="childIdx">
                                 <el-menu-item @click="jumpPage(children.path)" :index="children.name">{{children.meta.title}}</el-menu-item>
                             </el-menu-item-group>
                         </div>
