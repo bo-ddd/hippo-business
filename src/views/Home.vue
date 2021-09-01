@@ -18,8 +18,8 @@
         <el-container>
             <el-aside width="200px">
                 <el-menu :default-active='titleIndex' :unique-opened='opened' class="el-menu-vertical-demo">
-                    <el-submenu :index="item.name"  v-for="(item,index) in routes" :key="index">
-                        <template #title :v-show="item.meta.identity.includes(identity)">
+                    <el-submenu :index="item.name" v-show="item.meta.identity.includes(identity)" v-for="(item,index) in routes" :key="index">
+                        <template #title >
                             <i :class="item.meta.icon"></i>
                             <span>{{item.meta.title}}</span>
                         </template>
