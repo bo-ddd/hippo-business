@@ -59,8 +59,20 @@
       </el-tab-pane>
       <el-tab-pane label="个人作业" name="second">
             <el-row>
+                <el-col :span="10">
+                        <el-select v-model="classValue" placeholder="请选择">
+                          <el-option
+                            v-for="(item,index) in classList"
+                            :key="index"
+                            :label="item.className"
+                            :value="item.className">
+                          </el-option>
+                        </el-select>
+                </el-col>
+            </el-row>
+            <el-row>
               <el-col :span="10" class="article-content">
-                <el-input type="textareaOne" :rows="5" placeholder="开始进行布置作业吧！" v-model="textarea"></el-input>
+                <el-input type="textarea" :rows="5" placeholder="开始进行布置作业吧！" v-model="textareaOne"></el-input>
               </el-col>
               <!-- <el-col :span="24" class="pd-5_15">
                       <el-upload
@@ -131,6 +143,7 @@ export default {
         activeName: 'first',//标签选择
         dateValueOne:'',
         textareaOne:'',
+        classValue:'',
       };
     },
     async created(){
@@ -254,5 +267,8 @@ export default {
   .btn-out{
     display: flex;
     align-items: center;
+
+
+    
   }
 </style>
