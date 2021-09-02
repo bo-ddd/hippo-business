@@ -34,10 +34,9 @@
             </el-table-column>
             <el-table-column label="角色分配" width="180" align="center" header-align="center" #default="scope">
                 <a class="updateClass" @click="updateRole(scope.row)">更改角色</a>
-                
-                <el-dialog title="现有角色类目" v-model="dialogVisible2" width="60%" :before-close="handleClose" :append-to-body='true'>
+                <el-dialog title="现有角色类目" v-model="dialogVisible2" width="60%" :before-close="handleClose" :modal="false">
                             <el-radio-group v-model="radio" v-for="(item) in RoleListArr" :key="item.id">
-                                <el-radio class="roleRadio" :label="item.id" @click="checkRole(item.id)">{{item.name}}</el-radio>
+                                <el-radio class="roleRadio" v-model="radio" :label="item.id" @click="checkRole(item.id)">{{item.name}}</el-radio>
                             </el-radio-group>
                     <template #footer>
                         <span class="dialog-footer">
@@ -46,7 +45,6 @@
                         </span>
                     </template>
                 </el-dialog>
-                
             </el-table-column>
             <el-table-column prop="classId" label="班级编号" width="100px" align="center" header-align="center">
             </el-table-column>
@@ -54,7 +52,7 @@
                 <a class="updateClass" @click="updateClass(scope.row)">更改班级</a>
                 <el-dialog title="现有班级类目" v-model="dialogVisible" width="60%" :before-close="handleClose" :modal="false">
                             <el-radio-group v-model="radio" v-for="(item) in classListArr" :key="item.id">
-                                <el-radio class="classRadio" :label="item.id" @click="check(item.id)">{{item.name}}</el-radio>
+                                <el-radio class="classRadio"  :label="item.id" @click="check(item.id)">{{item.name}}</el-radio>
                             </el-radio-group>
                     <template #footer>
                         <span class="dialog-footer">
@@ -63,7 +61,6 @@
                         </span>
                     </template>
                 </el-dialog>
-
             </el-table-column>
         </el-table>
         <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" v-model:current-page.sync="nowPage" :page-size="pageSize" layout="sizes, prev, pager, next" :page-count="countPage" :page-sizes="[2,3,4,5,10]">
@@ -102,7 +99,7 @@ export default {
                 label: '按用户名查询'
             }, {
                 value: '选项3',
-                label: '按姓名查询'
+                label: '按昵称查询'
             }, {
                 value: '选项4',
                 label: '按班级编号查询'
@@ -118,8 +115,7 @@ export default {
     },
     methods: {
         ...mapActions(["usersList","getRole", "getClassList", "updateUser"]),
-        search(value){
-            console.log(value);    
+        search(value){    
             if(value=='选项1'){
                 this.userId=this.input;
                 this.getList();
@@ -127,10 +123,7 @@ export default {
                 this.username=this.input;
                 this.getList();
             }else if(value=='选项3'){
-                console.log('姓名');
                 this.avatorName=this.input;
-                console.log(this.input);
-                console.log(this.avatorName);
                 this.getList();
             }else if(value=='选项4'){
                 this.classId=this.input;
@@ -147,7 +140,9 @@ export default {
                 this.input='';
                 this.getList();
             }else{
-                alert('请先选择搜索条目')
+                this.$alert('请先选择搜索条目!', '提示', {
+                    confirmButtonText: '确定',
+                });
             }    
 
         },
@@ -184,6 +179,7 @@ export default {
         updateRole(arr) {
             this.dialogVisible2 = true;
             this.userId = arr.userId;
+            this.radio=arr.identity;
         },
         async checkRole(id) {
             let res = await this.updateUser({
@@ -225,7 +221,7 @@ export default {
         },
          async getRoles() {
             let RoleList = await this.getRole({
-                pageSize:50
+                pageSize:100
             });
             console.log(RoleList.data);
             this.RoleListArr = RoleList.data.rows;

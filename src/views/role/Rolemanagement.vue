@@ -1,6 +1,6 @@
 <template>
 <div class="wrap">
-
+    <!-- 现有角色类目 -->
     <el-space wrap>
         <el-card class="box-card" style="width: 80vw">
             <template #header>
@@ -12,6 +12,7 @@
         </el-card>
     </el-space>
 
+    <!-- 管理角色 -->
     <div class="operate">
         <el-space wrap>
             <el-card class="box-card" style="width: 80vw">
@@ -51,17 +52,28 @@ export default {
             inputValue: '',
             roleShow: false,
             currentTagIndex: 0,
-            roleId: 100,
+            roleId: 0,
+            usersListArr: [],
         }
     },
     methods: {
-        ...mapActions(["getRole", "createRole", "updateRole", "deleteRole"]),
+        ...mapActions(["getRole", "createRole", "updateRole", "deleteRole", "usersList"]),
         handleClose(tag) {
             this.rolesArr.splice(this.rolesArr.indexOf(tag), 1);
-            this.RoleListArr.forEach(item => {
+            this.RoleListArr.forEach(async item => {
                 if (item.name == tag) {
                     this.roleId = item.id;
-                    this.deleteRoles();
+                    await this.getList(this.roleId);
+                    if (!this.usersListArr.length) {
+                        this.deleteRoles();
+                        this.$alert('删除成功!', '删除提示', {
+                            confirmButtonText: '确定',
+                        });
+                    } else {
+                        this.$alert('该角色类目下有人,删除失败!', '删除提示', {
+                            confirmButtonText: '确定',
+                        });
+                    }
                 }
             })
         },
@@ -129,7 +141,7 @@ export default {
         },
         async getRoles() {
             let RoleList = await this.getRole({
-                pageSize:50
+                pageSize: 100
             });
             console.log(RoleList);
             this.RoleListArr = RoleList.data.rows;
@@ -155,7 +167,14 @@ export default {
                 id: this.roleId
             });
             console.log(RoleList);
-        }
+        },
+        async getList(id) {
+            let usersList = await this.usersList({
+                identity: id,
+            });
+            console.log(usersList.data);
+            this.usersListArr = usersList.data.rows;
+        },
     },
     created() {
         this.getRoles();
