@@ -30,7 +30,7 @@
                 </el-form-item>
                 <el-form-item>
                     <center>
-                        <el-button class="btn-login" type="primary" @click="submitForm('ruleForm'), loginUser()">登录</el-button>
+                        <el-button class="btn-login" type="primary" @click="loginUser()">登录</el-button>
                     </center>
                 </el-form-item>
                 <el-row class="text-btm">
@@ -122,9 +122,7 @@ export default {
                 }
             });
         },
-        resetForm(formName) {
-            this.$refs[formName].resetFields();
-        },
+       
         toRegister() {
             this.$router.push({
                 name: "Registration",
@@ -155,6 +153,7 @@ export default {
                      password: this.ruleForm.checkPass,
                  });
                  if (data.status) {
+                     this.$message('登录成功');
                      sessionStorage.setItem("token", data.data);
                      this.$router.push({
                          path: "/",
