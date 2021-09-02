@@ -212,10 +212,8 @@ export default {
     display: flex;
     justify-content: center;
     align-content: center;
-    border: solid rgb(223, 217, 217) 1.5px;
   }
   .biaodan:hover{
-    background-color: rgb(0, 153, 255);
     cursor:pointer;
   }
   .cella{
