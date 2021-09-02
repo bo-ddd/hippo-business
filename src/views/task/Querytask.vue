@@ -1,7 +1,7 @@
 <template>
 <div class="wrap">
     <el-row>
-        <el-col :span="14" class="article-content ipt-out">
+        <el-col :span="16" class="article-content ipt-out">
              <div class="block article-content">
                 <span class="demonstration pd-r_15">选择日期:</span>
                 <el-date-picker
@@ -29,7 +29,7 @@
         </el-col>
     </el-row>
      <el-row>
-        <el-col :span="14" class="article-content">
+        <el-col :span="16" class="article-content">
             <el-table
                 :data="tableData"
             >
@@ -55,11 +55,16 @@
                 width="180"
                 label="任务执行人">
                 </el-table-column>
+                <el-table-column
+                class="tx-center"
+                width="180"
+                label="所用时间">
+                </el-table-column>
             </el-table>
         </el-col>
     </el-row>
     <el-row>
-        <el-col :span="14" class="btn-out">
+        <el-col :span="16" class="btn-out">
               <el-button type="primary" @click="sayThat">查询信息</el-button>
         </el-col>
     </el-row>
