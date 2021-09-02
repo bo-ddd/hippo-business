@@ -1,7 +1,6 @@
 <template>
   <div>
-    <el-button type="primary" @click="toArticleS" v-if="listb">返回班级</el-button>
-    <el-card v-if="management">
+    <el-card>
       <el-row :gutter="20">
         <el-col :span="4">
           <el-button type="primary"
@@ -9,14 +8,16 @@
         </el-col>
       </el-row>
       <el-table :data="classlist" border stripe>
-        <el-table-column prop="id" label="序号"></el-table-column>
+        <el-table-column prop="id" label="序号"  width="50" fixed></el-table-column>
         <el-table-column prop="name" label="班级名称"></el-table-column>
         <el-table-column prop="admin" label="管理员"></el-table-column>
               <el-table-column label="操作" header-align="center" prop="id" >
                   <template #default="scope">
-                      <el-button icon="el-icon-search" size="mini" @click="toArticle(scope.row)">查看</el-button>
-                      <el-button type="primary" icon="el-icon-edit" size="mini" @click="updateArticle(scope.row)">编辑</el-button>
-                      <el-button type="danger" icon="el-icon-delete" size="mini" @click="deleteArticlee(scope.row)">删除</el-button>
+                    <div class="cella">
+                      <a href="#" class="biaodan" @click="toArticle(scope.row.id)">查看</a>
+                      <a href="#" class="biaodan" @click="updateArticle(scope.row)">编辑</a>
+                      <a href="#" class="biaodan" @click="deleteArticlee(scope.row)">删除</a>
+                     </div>
                   </template>
               </el-table-column> 
       </el-table>
@@ -24,32 +25,6 @@
         <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" v-model:current-page.sync="queryInfo.nowPage" :page-size="pageSize" layout="sizes, prev, pager, next" :page-count="queryInfo.countPage" :page-sizes="[2,3,4,5,10]">
         </el-pagination>
     </el-card>
-
-        
-        <el-container v-if="studentlist">
-            <el-main class="content">
-              <el-table :data="personnel" border style="width: 100%">
-              <el-table-column prop="userId" label="用户ID" header-align="center">
-              </el-table-column>
-              <el-table-column prop="username" label="用户名" header-align="center">
-              </el-table-column>
-              <el-table-column prop="sex" label="性别" header-align="center">
-              </el-table-column>
-              <el-table-column prop="" label="学习成绩" header-align="center">
-              </el-table-column>
-              <el-table-column prop="classId" label="班级名称"  header-align="center">
-              </el-table-column>
-              <el-table-column prop="" label="操作"  header-align="center">
-                  <template #default="scope">
-                      <el-button type="danger" icon="el-icon-delete"  @click="deleteArticlee(scope.row)">移除此学生</el-button>
-                  </template>
-              </el-table-column>
-          </el-table>
-          <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" v-model:current-page.sync="queryInfo.nowPage" :page-size="pageSize" layout="sizes, prev, pager, next" :page-count="queryInfo.countPage" :page-sizes="[2,3,4,5,10]">
-          </el-pagination>
-            </el-main>
-    </el-container>
-    
 
 
     <!-- 添加班级的对话框 -->
@@ -131,10 +106,6 @@ export default {
         name:"",
         admin:"",
       },
-      studentlist:false,
-      management:true,
-      personnel:[],
-      listb:false
     };
   },
   created() {
@@ -142,7 +113,7 @@ export default {
       this.getclasslist()
   },
   methods:{
-    ...mapActions(["createClass","getUserInfo","getClassList",'deleteClass',"updateClass","usersList"]),
+    ...mapActions(["createClass","getUserInfo","getClassList",'deleteClass',"updateClass","usersList","updateUser"]),
         handleCurrentChange(val) {
             this.nowPage = val;
             this.getclasslist();
@@ -176,7 +147,14 @@ export default {
       
       // console.log(classlist);
     },
-
+    async check(id) {
+      let res = await this.updateUser({
+                userId:id.userId,
+                classId:0
+    })
+      console.log(res);
+      this.getclasslist()
+    },
     async updateArticle(data){
       this.dialogTableVisible = true
       this.Modifyid=data
@@ -196,6 +174,12 @@ export default {
         location. reload()
     },
     async mdifyclass(){
+        if(this.Modifyclass.admin == ''){
+          this.Modifyclass.admin = this.Modifyid.admin
+        }
+        if(this.Modifyclass.name == ''){
+          this.Modifyclass.name = this.Modifyid.name
+        }
         let modify = await this.updateClass({
                 id:this.Modifyid.id,
                 name:this.Modifyclass.name,
@@ -206,37 +190,33 @@ export default {
         console.log(modify);
         this.getclasslist()
         this.dialogTableVisible = false
-        
     },
     toArticle(data){
-      this.studentlist=true
-      this.management=false
-      this.listb=true
-      Object.values(this.classlist).filter((item) => {
-        if(item.id==data.id){
-          this.personnel=item.children.rows
-        }
-      })
-      Object.values(this.personnel).forEach((item) => {
-      if(item.sex==1){
-          item.sex="男"
-          }else{
-          item.sex="女"
-          }
-        })
-    },
-    toArticleS(){
-      this.studentlist=false
-      this.management=true
-      this.listb=false
-    },
-    
+      console.log(data);
+          this.$router.push({
+                path: '/classroom/detailsclass',
+                query:{data}
+          })
+    },   
   }
 };
 </script>
 
-
-
-<style>
-
+<style scoped>
+  .el-row{
+    margin-bottom: 15px;
+  }
+  .biaodan{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+  }
+  .biaodan:hover{
+    cursor:pointer;
+  }
+  .cella{
+    display: flex;
+  }
 </style>

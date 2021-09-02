@@ -8,7 +8,7 @@
                     <span>现有角色类目:</span>
                 </div>
             </template>
-            <el-tag class="currentRole-item" v-for="item in rolesArr" :key="item" type="success">{{item}}</el-tag>
+            <el-tag class="currentRole-item" v-for="item in rolesArr" :key="item">{{item}}</el-tag>
         </el-card>
     </el-space>
 
@@ -129,7 +129,7 @@ export default {
         },
         async getRoles() {
             let RoleList = await this.getRole({
-
+                pageSize:50
             });
             console.log(RoleList);
             this.RoleListArr = RoleList.data.rows;

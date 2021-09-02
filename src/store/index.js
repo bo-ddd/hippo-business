@@ -1,9 +1,41 @@
 import { createStore } from 'vuex'
 import Api from '@/api/api'
+import { routes } from '../router';
+console.log(routes);
+
+let getRoutes = function() {
+    let defined = ['/', '/registration', '/login'];
+    let arr = routes;
+    let res = [];
+    arr.forEach(item => {
+        if (!defined.includes(item.path)) {
+            res.push(item)
+        }
+    })
+    return res;
+}
+
 export default createStore({
-    state: {},
+    state: {
+        routes: getRoutes()
+    },
+    getters: {
+        routes: (ctx) => {
+            return ctx.routes;
+        }
+
+    },
     mutations: {},
     actions: {
+        //图形验证码
+        userCaptcha() {
+            return Api.userCaptcha()
+        },
+        //校验图形验证码
+        userCheckCaptcha(ctx, payload) {
+            return Api.userCheckCaptcha(payload)
+        },
+      
         //题
         createTopic(ctx, payload) {
             return Api.createTopic(payload)
@@ -138,6 +170,28 @@ export default createStore({
         //考试
         createExam(ctx, payload) {
             return Api.createExam(payload);
+        },
+        getExamList(ctx, payload) {
+            return Api.getExamList(payload);
+        },
+        deleteExam(ctx, payload) {
+            return Api.deleteExam(payload);
+        },
+        updateExam(ctx, payload) {
+            return Api.updateExam(payload);
+        },
+
+        //验证码
+        getCaptcha() {
+            return Api.getCaptcha();
+        },
+        checkCaptcha(ctx, payload) {
+            return Api.checkCaptcha(payload);
+        },
+
+        //签到
+        getSignList(ctx, payload) {
+            return Api.getSignList(payload);
         },
     },
     modules: {}
