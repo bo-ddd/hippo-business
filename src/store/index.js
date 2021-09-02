@@ -142,4 +142,3 @@ export default createStore({
     },
     modules: {}
 })
-console.log(Api);
