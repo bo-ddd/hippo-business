@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-card v-if="management">
+    <el-card>
       <el-row :gutter="20">
         <el-col :span="4">
           <el-button type="primary"
@@ -14,7 +14,7 @@
               <el-table-column label="操作" header-align="center" prop="id" >
                   <template #default="scope">
                     <div class="cella">
-                      <a href="#" class="biaodan" @click="toArticle(scope.row)">查看</a>
+                      <a href="#" class="biaodan" @click="toArticle(scope.row.id)">查看</a>
                       <a href="#" class="biaodan" @click="updateArticle(scope.row)">编辑</a>
                       <a href="#" class="biaodan" @click="deleteArticlee(scope.row)">删除</a>
                      </div>
@@ -25,33 +25,6 @@
         <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" v-model:current-page.sync="queryInfo.nowPage" :page-size="pageSize" layout="sizes, prev, pager, next" :page-count="queryInfo.countPage" :page-sizes="[2,3,4,5,10]">
         </el-pagination>
     </el-card>
-
-        <el-card  v-if="studentlist">
-              <el-button type="primary" @click="toArticleS">返回班级</el-button>
-          <el-container>
-            <el-main class="content">
-              <el-table :data="personnel" border style="width: 100%">
-              <el-table-column prop="userId" label="用户ID"  width="50" header-align="center">
-              </el-table-column>
-              <el-table-column prop="username" label="用户名" header-align="center">
-              </el-table-column>
-              <el-table-column prop="sex" label="性别" header-align="center">
-              </el-table-column>
-              <el-table-column prop="" label="学习成绩" header-align="center">
-              </el-table-column>
-              <el-table-column prop="classId" label="班级名称"  header-align="center">
-              </el-table-column>
-              <el-table-column prop="" label="操作"  header-align="center">
-                  <template #default="scope">
-                      <a href="#" class="biaodan" @click="deleteArticlee(scope.row)">移除此学生</a>
-                  </template>
-              </el-table-column>
-          </el-table>
-          <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" v-model:current-page.sync="queryInfo.nowPage" :page-size="pageSize" layout="sizes, prev, pager, next" :page-count="queryInfo.countPage" :page-sizes="[2,3,4,5,10]">
-          </el-pagination>
-            </el-main>    
-        </el-container>
-      </el-card>
 
 
     <!-- 添加班级的对话框 -->
@@ -133,9 +106,6 @@ export default {
         name:"",
         admin:"",
       },
-      studentlist:false,
-      management:true,
-      personnel:[],
     };
   },
   created() {
@@ -143,7 +113,7 @@ export default {
       this.getclasslist()
   },
   methods:{
-    ...mapActions(["createClass","getUserInfo","getClassList",'deleteClass',"updateClass","usersList"]),
+    ...mapActions(["createClass","getUserInfo","getClassList",'deleteClass',"updateClass","usersList","updateUser"]),
         handleCurrentChange(val) {
             this.nowPage = val;
             this.getclasslist();
@@ -177,7 +147,14 @@ export default {
       
       // console.log(classlist);
     },
-
+    async check(id) {
+      let res = await this.updateUser({
+                userId:id.userId,
+                classId:0
+    })
+      console.log(res);
+      this.getclasslist()
+    },
     async updateArticle(data){
       this.dialogTableVisible = true
       this.Modifyid=data
@@ -197,6 +174,12 @@ export default {
         location. reload()
     },
     async mdifyclass(){
+        if(this.Modifyclass.admin == ''){
+          this.Modifyclass.admin = this.Modifyid.admin
+        }
+        if(this.Modifyclass.name == ''){
+          this.Modifyclass.name = this.Modifyid.name
+        }
         let modify = await this.updateClass({
                 id:this.Modifyid.id,
                 name:this.Modifyclass.name,
@@ -207,29 +190,14 @@ export default {
         console.log(modify);
         this.getclasslist()
         this.dialogTableVisible = false
-        
     },
     toArticle(data){
-      this.studentlist=true
-      this.management=false
-      Object.values(this.classlist).filter((item) => {
-        if(item.id==data.id){
-          this.personnel=item.children.rows
-        }
-      })
-      Object.values(this.personnel).forEach((item) => {
-      if(item.sex==1){
-          item.sex="男"
-          }else{
-          item.sex="女"
-          }
-        })
-    },
-    toArticleS(){
-      this.studentlist=false
-      this.management=true
-    },
-    
+      console.log(data);
+          this.$router.push({
+                path: '/classroom/detailsclass',
+                query:{data}
+          })
+    },   
   }
 };
 </script>
@@ -244,10 +212,8 @@ export default {
     display: flex;
     justify-content: center;
     align-content: center;
-    border: solid rgb(223, 217, 217) 1.5px;
   }
   .biaodan:hover{
-    background-color: rgb(0, 153, 255);
     cursor:pointer;
   }
   .cella{

@@ -23,7 +23,7 @@
     <el-table-column fixed="right" label="操作" width="280">
         <template #default="scope" class="operation">
 
-            <el-button type="primary" @click="dialogFormVisible = true" icon="el-icon-delete">编辑</el-button>
+            <el-button type="text" @click="dialogFormVisible = true" icon="el-icon-edit">编辑</el-button>
 
             <el-dialog title="修改信息" v-model="dialogFormVisible">
                 <el-form :model="form">
@@ -34,7 +34,7 @@
                     <el-form-item label="所属类目">
                         <div class="listData-content">
                             <div class="list-content" v-for="(item,index) in listData" :key="(item,index)">
-                                <el-tag :class="{active: currentIndex === index}" plain @click="changeColor(index,item.id)" type="button" style="cursor:pointer;">{{item.key}}</el-tag>
+                                <el-tag :class="{ active : currentIndex === index }" plain @click="changeColor(index,item.id)" type="button" style="cursor:pointer;">{{item.key}}</el-tag>
                             </div>
                         </div>
                     </el-form-item>
@@ -110,7 +110,7 @@
                 </template>
             </el-dialog>
 
-            <el-button @click="deleteRow(scope.$index,form)" type="primary" icon="el-icon-delete">
+            <el-button @click="deleteRow(scope.$index,form)" type="text" icon="el-icon-delete">
                 移除
             </el-button>
         </template>
@@ -127,6 +127,7 @@ import {
 export default {
     data() {
         return {
+            currentIndex: 0,
             tableData: [],
             options: [],
             dialogFormVisible: false,
@@ -138,7 +139,6 @@ export default {
             single: '',
             result: [],
             listData: [],
-            currentIndex: 0,
             zhuangtai: 'button',
             form: {
                 id: '',
@@ -330,8 +330,8 @@ li {
 
 .active {
     cursor: pointer;
-    background: #409eff;
-    color: #fff;
+    background-color: #017efb !important;
+    color: #fff !important;
 }
 
 .icon-button {
