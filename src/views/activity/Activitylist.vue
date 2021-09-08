@@ -20,11 +20,11 @@
         <el-table-column prop="region" label="活动地址" width="200">
         </el-table-column>
         <el-table-column  prop="nature"  label="活动类型"  width="120">
-           <template #default="scope">
+           <!-- <template #default="scope">
             <span>{{updateType(scope.row)}}
          
             </span>
-          </template>
+          </template> -->
         </el-table-column>
         <el-table-column label="活动开始到结束时间" width="300">
           <template #default="scope">
@@ -42,14 +42,53 @@
         <el-table-column label="操作" width="120">
           <template #default="scope">
             <el-button @click.prevent="deleteRow(scope.row)" type="text"  size="small">删除</el-button>
-            <el-button type="text" size="small" @click="update(scope.row)">修改</el-button
+            <el-button type="text" size="small" @click="showupdate(scope.row)">修改</el-button
             >
           </template>
         </el-table-column>
       </el-table>
-
-        
     </div>
+
+    <!-- <el-button type="text" @click="dialogFormVisible = true">打开嵌套表单的 Dialog</el-button> -->
+
+
+   <el-dialog title="修改活动信息" v-model="dialogFormVisible">
+  <el-form :model="form">
+    <el-form-item label="活动名称" :label-width="formLabelWidth">
+      <el-input v-model="form.name" autocomplete="off"></el-input>
+    </el-form-item>
+
+      <el-form-item label="活动地址" :label-width="formLabelWidth">
+      <el-input v-model="form.region" autocomplete="off"></el-input>
+    </el-form-item>
+
+      <el-form-item label="活动类型" :label-width="formLabelWidth">
+      <el-input v-model="form.type" autocomplete="off"></el-input>
+    </el-form-item>
+
+      <el-form-item label="活动开始时间·" :label-width="formLabelWidth">
+      <el-input v-model="form.startTime" autocomplete="off"></el-input>
+    </el-form-item>
+
+     <el-form-item label="活动结束时间·" :label-width="formLabelWidth">
+      <el-input v-model="form.endTime" autocomplete="off"></el-input>
+    </el-form-item>
+
+      <el-form-item label="活动banner" :label-width="formLabelWidth">
+      <el-input v-model="form.banner" autocomplete="off"></el-input>
+    </el-form-item>
+
+  </el-form>
+  <template #footer>
+    <span class="dialog-footer">
+      <el-button @click="dialogFormVisible = false">取 消</el-button>
+      <el-button type="primary" @click="update">确 定</el-button>
+    </span>
+  </template>
+</el-dialog>
+
+    
+
   </div>
 </template>
 
@@ -62,8 +101,6 @@ export default {
       activeList: [],
       typeN: " ",
       loading: true,
-      dialogTableVisible: false,
-      dialogFormVisible: false,
       svg: `
           <path class="path" d="
             M 30 15
@@ -74,11 +111,48 @@ export default {
             L 15 15
           " style="stroke-width: 4px; fill: rgba(0, 0, 0, 0);"/>
         `,
+      
+        dialogTableVisible: false,
+        dialogFormVisible: false,
+        form: {
+          name: '',
+          region: '',
+          type: '',
+          startTime: '',
+          endTime: '',
+          banner:'',
+        },
+        formLabelWidth: '120px',
+        updateId:""
     };
   },
 
   methods: {
-    ...mapActions(["getActiveList", "deleteActive"]),
+    ...mapActions(["getActiveList", "deleteActive","updateActive"]),
+    
+   async showupdate(data){
+      console.log(data);
+      this.dialogFormVisible = true;
+      this.updateId=data.id
+    },
+
+  async update(){
+      let res = await this.updateActive({
+        id:this.updateId,
+        title:this.form.name,
+        nature:this.form.type,
+        region:this.form.region,
+        startTime:this.form.startTime,
+        endTime:this.form.endTime,
+        banner:this.form.banner
+      })
+      console.log(res);
+      this.getActiveData();
+      this.dialogFormVisible = false
+  },
+
+      
+
     async getActiveData() {
       let res = await this.getActiveList({});
       this.activeList = res.data.rows;
@@ -133,33 +207,33 @@ export default {
       return `${y}-${m}-${d} ${h}:${minute}:${second}`;
     },
 
-    updateType(val) {
-      switch (val.nature) {
-        case 1:
-          this.typeN = "美食活动";
-          break;
+    // updateType(val) {
+    //   switch (val.nature) {
+    //     case 1:
+    //       this.typeN = "美食活动";
+    //       break;
 
-        case 2:
-          this.typeN = "游戏比赛";
-          break;
+    //     case 2:
+    //       this.typeN = "游戏比赛";
+    //       break;
 
-        case 3:
-          this.typeN = "主题活动";
-          break;
+    //     case 3:
+    //       this.typeN = "主题活动";
+    //       break;
 
-        case 4:
-          this.typeN = "校园娱乐";
-          break;
+    //     case 4:
+    //       this.typeN = "校园娱乐";
+    //       break;
 
-        case 5:
-          this.typeN = "其他";
-          break;
+    //     case 5:
+    //       this.typeN = "其他";
+    //       break;
 
-        default:
-          break;
-      }
-         return this.typeN
-    },
+    //     default:
+    //       break;
+    //   }
+    //      return this.typeN
+    // },
   },
   async created() {
     this.getActiveData();
